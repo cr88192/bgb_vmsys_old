@@ -1,0 +1,81 @@
+I will attempt to define a protocol, at the same time I will exercise
+some creativity and also try to design the protocol such that it could
+be used as a spoken language.
+
+I will thus begin by explaining phonetic and spelling rules:
+words will be composed from syllables. a syllable begins with a consonant,
+has a vowel, and may end with a consonant.
+
+_ will be silent at the start of a syllable.
+
+_ will only be allowed in the first syllable of a word or where a syllable
+ending in a vowel is followed by a syllable beginning in a vowel, in which
+case _ is used as a seperator.
+
+h will be used as a modifier when following a consonant.
+a plain h will be the normal h sound: hi=he
+
+y will be a noun modifier when following a noun. y may also be used as
+a silent vowel to hold the syllable rule for words that end in an extra
+consonant (it can also be the uh or oo sound if needed).
+
+in general combinations of nouns will be diphongs, ai=I, ae=A.
+
+2 of the same vowel in a row will show emphasis on that vowel.
+2 of the same consonant together will show that it is hard/aspirated.
+
+in the general sounds need to be figured out though.
+
+a: ah
+e; eh, get
+i: ee, key, knee
+o: oh, mow, tow
+u: oo, knew, shoe, ...
+
+ai: I
+iy: in, it, is
+ae: A, name, rain
+
+consonansts: I will leave a basic set of consonants.
+c, q, and x, are removed.
+g allways sounds like g: get, go
+non-aspirated consonants may be allowed to be ambiguous: t/d, b/v, r/l, ...
+
+
+there will only be a single basic form of each word, conjugation will be 
+accomplished through adjectives (possibly I could allow such adjectives to 
+be merged with the root word...).
+the basic word will have a default type, however adjectives may be used to 
+alter the type/behavior of a word.
+
+though only if used as a spoken lang.
+
+adjectives may also effect the meaning of following word groups as well
+(I will rename these to particles).
+
+the word base will be based on english (since this is not a "real" language
+I am not going to bother with more).
+
+
+a noun will be directly pushed on the stack.
+verb may pop values off the stack and may also push results.
+adjectives will be defined as largely pop modify push operations, but may exhibit behavior similar to verbs.
+
+particles will be gramatic elements which do not fit under other catagories.
+
+beg and begi will be marks, beg will exist in the noun/verb pass and begi in the adjective pass.
+
+
+this will involve 2 passes, the first will handle adjectives. in the
+first pass nouns and verbs are pushed unmodified, and manipulation is
+done on the words themselves (rather than the meaning).
+in the second pass nouns are pushed (or more the values they refer to),
+and verbs modify the pushed values.
+
+in written form ( and ) will be used for comments (or side notes), " and "
+will indicate strings. when data is comming from elsewhere it will not
+necissarily follow the spelling rules.
+
+listu will compose a list, popping values until the last mark and pushing the resulting list-object.
+dup will copy an element on the stack.
+formu will be an adjective which will group words since the last begi into a logical form (analogous to a block or closure).

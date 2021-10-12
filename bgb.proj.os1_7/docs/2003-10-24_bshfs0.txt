@@ -1,0 +1,151 @@
+I was looking at some protocol specs (tftp, ftp, smb, ...) to try to decide what to implement.
+
+tftp: simple, but not particularly suited to being a shared fs (though client/server extensions could be added to kludge over this).
+ftp: a little better, but has a certain limitation that seems apparent with ftp type protocols (and is a bit more than I feel like implementing right now).
+
+smb: well, it is a shared fs, but it is complicated to the point that I will not consider implementing it for the time being.
+
+tftp kludge:
+a few things could be worked over by a kludge, eg: adding a "dir" mode, which could be a way to get dir contents.
+
+a limitation with ftp type protocols is that they work under the idea that you are either sending/recieving a whole file. thus an ftp fs would be either:
+read only, possibly locally caching files;
+read/write, not maintaining operations on the server (working on local cache only);
+read/write, uploading the file to make changes.
+
+similarly, another kludge would be to "delta" the files, eg: special file names/types that would be like:
+sent file is actually a set of delta records to be applied to the source file.
+
+
+but I was then thinking "I could just think up my own, simpler shared fs protocol for the time being"...
+eg:
+I will base the design to some extent on tftp, as such it will be based on udp.
+
+I use a basic message structure, eg:
+packet {
+short opcode;
+byte pad;
+byte headlen; //length of opcode specific header
+byte header[headlen]; //the header for this opcode
+byte data[]; //data, the rest of the packet
+}
+
+string {
+byte len;
+byte chars[len];
+}
+
+open files will be based on handles. io operations will be "random" (eg: seek before every operation, even if packets get out of order they will still work...).
+I will state that the data for an operation be limited to 512 bytes (larger operations will be broken up).
+io sequence numbers start at 0 and loop around to 0 (after at most about 32MB of operations).
+
+request sequence numbers also start at 0 and wrap around, each new "request" (open/info) has a request sequence, io and dirop use io sequence numbers.
+request sequence numbers are global, io sequence numbers are relative to a given handle.
+
+I was thinking of using port 50000 (since it seems that iana now controls everything up to 49151...). I may change this later though...
+
+opcodes defined here:
+32 open request;
+33 open response;
+34 io request;
+35 io response;
+36 dirop request;
+37 dirop response;
+38 info request;
+39 info response.
+
+
+opcodes:
+32 open request
+    special header:
+    {
+    u16 flags; //none, 1&=dir
+    u16 reqseq; //request sequence, sync requests/responses
+    string name; //file name
+    string access; //access, same as for fopen
+    }
+33 open response
+    special header:
+    {
+    u32 handle; //file handle, -1(0xffffffff) for error
+    u16 reqseq; //request sequence from the original request
+    u16 error_code;
+    u64 size; //size of the file
+    string error_text; //description of error
+    }
+    data may be some file specific data.
+
+    in the case of dirs it will be a string defining the layout of directory records, it will be a list of names with the syntax:
+        <name><type-char>, type char is either: '%' for integer args, '$' for string args.
+
+34 io request
+    special header:
+    {
+    byte type; //1=read, 2=write, 3=close
+    byte flag; //op type specific, none
+    u16 sequence; //sequence number
+    u32 handle;
+    u64 offset; //wtf not?...
+    }
+    data is used by write to contain file data.
+    a read with an offset of -1 will send a response with the offset set to eof.
+35 io response
+    special header:
+    {
+    byte type; //0=failed, 1=read ok, 2=write ok, 3=close ok
+    byte flag; //none
+    u16 sequence; //sequence number (same as io request)
+    u32 handle;
+    u64 offset;
+    }
+    data is used by read and contains file data.
+
+if dirs are supported:
+36 dirop request
+    special header:
+    {
+    byte type; //1=readdir, 2=mkdir, 3=delete
+    byte flag; //none
+    u16 sequence; //sequence number
+    u32 handle;
+    u32 index; //index into directory, 0 for start/none.
+    }
+    data is used for dirop specific data.
+    mkdir includes the new dir name.
+    delete includes the file/dir name.
+
+37 dirop response
+    special header:
+    {
+    byte type; //0=failed, 1=readdir ok, 2=mkdir ok, 3=delete ok
+    byte flag; //none
+    u16 sequence; //sequence number
+    u32 handle;
+    u32 index; //index into directory, adjusted after op
+    }
+    data is used for dirop specific data.
+    in the case of readdir it is a glob of lines (lf seperated).
+    each line has fields mathing the template given in the open response.
+
+38 info request
+    special header:
+    {
+    byte op; //1=request
+    byte flags; //none
+    u16 reqseq; //request sequence, sync requests/responses
+    string name; //name of requested property
+    }
+39 info response
+    special header:
+    {
+    byte op; //0=request failed, 1=request ok
+    byte flags; //none
+    u16 reqseq; //request sequence, sync requests/responses
+    string name; //name of requested property (possibly altered, eg: to add type info or such).
+    }
+    data contains the value of the property.
+
+an example property would be "ServerID", which would give a string identifying the server implementation.
+another would be "ServerName", giving the name of the server.
+
+this was just a rough thought, fixes would probably be made once I actually try to implement something like this...

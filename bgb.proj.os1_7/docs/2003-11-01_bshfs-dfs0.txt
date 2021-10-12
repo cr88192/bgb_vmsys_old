@@ -1,0 +1,42 @@
+BSHFS Distributed FS 0
+
+an extension, bshfs over tcp:
+{
+u32 len;		//packet length
+byte data[len];	//packet data
+}
+
+each file has an id block.
+FileID {
+GUID originator;	//guid of source file
+GUID lastid;	//guid of last version of the file
+GUID curid;		//current guid
+u64 crc1;		//eg: 1's complement
+u64 crc2;		//eg: xor
+}
+
+an id block identifies a given version of a file. concurrent modification by multiple parties will lead to splits in the file.
+files will be active or inactive, inactive files are not presently being modified, active files are being modified and thus are controlled by a single entity (multiple writers may exist by going through this entity...).
+
+nodes may hold multiple versions of files, eventually purging those that are not listed in "the directory". if possible it will be useful to keep those that are direct ancestors of files in the directory. it may also be useful to keep a list of fileid's around for the process of tracing file mutation path.
+
+
+"the directory" will be a directory tree existing between multiple nodes. the directory will not have a central controller.
+
+each directory will be a collection of data about files. the data will consist of a file id and maybe some other data useful for the file (names, dates, ...).
+file identity will be based on file id. in case of a name conflict multiple files with the same name will exist, possibly requiring the attention of someone to fix (or may be viewed as a natural progression of the system). within a given set of nodes operating on a directory it will be preferable to avoid such conflict (depending on the file type it may be possible to merge them...).
+the directory on each node will consist primarily of locally contained files, optionally followed by info about files it knows but does not have. queries will normally only list local files.
+
+directories will be identified by names, or a combination of a name and 2 guids (one for the root and another the current directory), or a single directory guid.
+
+
+special names will be used for accessing files based on id:
+	'curid:<curid>', try to open file based on curid;
+	'dirid:<dirid>', try to open a dir based on dirid.
+
+a node should try to open the dirs on each node first and get an idea of what nodes contain the desired files.
+
+thought, there could be "query servers" which will contain info about what nodes have what dirs/files. the query server will be expected to have a fairly up to date version of the directory listings. each node will also contain a copy of directories it has files in.
+
+on connect each node will try to upload it's version of the directory tree to the query server (which will collect file lists and mirror nodes). different versions of files with the same name will be renamed (eg: by appending/changing a number on the name).
+files will be removed when there are no accessible mirrors.

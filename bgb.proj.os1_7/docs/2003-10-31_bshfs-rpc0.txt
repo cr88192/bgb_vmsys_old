@@ -1,0 +1,50 @@
+BSHFS-RPC will be based on bshfs (or at least use the same basic message encoding).
+
+a broadcast to port 50000 (or whatever port is being used) will be able to detect other nodes. eg: sending an info request with asking the name of the nodes may generate responses enumerating the nodes on the network.
+
+opcodes 40 and 41 may be used for basic message delivery.
+
+the other opcodes will remain as before:
+32 open request;
+33 open response;
+34 io request;
+35 io response;
+36 dirop request;
+37 dirop response;
+38 info request;
+39 info response.
+
+this will be specific to my os.
+
+40 ipc message
+    header:
+    {
+    u32 pid;    //pid on target
+    u32 cid;    //connection id
+    u32 tag;    //message tag, 8.24(major.minor)
+    u16 seq;    //sequence number
+    byte ptag;  //packet tag, 1=normal (raw data)
+    byte resv;  //reserved
+    //the rest of the header will be ptag specific
+    }
+    //data will contain the message body
+41 ipc ack
+    header:
+    {
+    u32 pid;    //pid on target
+    u32 cid;    //connection id
+    u32 tag;    //message tag, 8.24(major.minor)
+    u16 seq;    //sequence number
+    byte ptag;  //packet tag, 0=error, 1=normal (raw data)
+    byte resv;  //reserved
+    //the rest of the header will be ptag specific
+    }
+    //data may contain response information
+
+major:
+	0=app specific;
+	1=connection;
+	2=rpc, minor=8.16(enc.contid), contid is the continuation:
+		0=unused;
+		1=xml-rpc;
+		2=xml-rpc/wbxml.

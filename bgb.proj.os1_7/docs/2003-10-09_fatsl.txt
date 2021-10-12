@@ -1,0 +1,140 @@
+FAT-SL
+
+2003-10-08: updated spec, design changes (dropped forks).
+2003-10-09: changed type system.
+
+any semantic stuff will be seperated from the storage layer, this spec will just cover the storage layer.
+
+all files related to the SL contents will be located in the dir "/slvol", with the exception of a few info files that will be located in the root.
+
+the directory contents of slvol will be treated as a single, indexed array. it is assumed that another os will not come and reorganize this dir (a recovery tool may be helpful though, which could either put things back in the appropriate slots or restructure the contents to match).
+
+names are now '#NNNNNNN.TTT':
+	N is the slot number, this is stored to make dirs more recoverable 
+		(eg, in the case where it is copied), by allowing the system
+		to detect if the wrong object is in a given slot;
+	T identifies the object type.
+
+in the root will be a file called '@slinfo.txt', which will identify the contents/structure of the sl volume.
+this will be a text file, with lines structured as:
+	'T <Num> <Name>' (dropped), defines a object type,
+		Num is the decimal type number (0 is reserved);
+		Name is the type name, which may not contain spaces.
+
+	'E <Slot> <VolName>', defines an entry point,
+		Slot is a base32 number;
+		VolName is a name used to identify the volume.
+
+	'P <Slot>', defines the end-packing index,
+		the SL will be responsible for end packing,
+		Slot is a base32 number identifying the slot with the end-packing table.
+
+	'O <Slot>', defines object type table.
+
+it is assumed that this file will be written on format and not modified afterwards, so I removed stuff that may change over time...
+
+
+Object Type Table
+this will be an array of entries with indices matching the type codes for objects.
+type 0 will be unused (but will still have a slot).
+Type: "FATSL/TypeTable"(M)
+
+the intent of this is not to be a file-type mechanism, but instead to offer a general means for identifying types that might be involved with the fs metadata (though this may be considered more reliable)
+
+the header will be 64 bytes and have the structure:
+{
+int32 tag;		//"OTT\0"
+int32 cnt;		//how many indices are in the file
+byte _resv[64-8];
+}
+
+each index will have the form:
+{
+char name[48];	//name of the type, terminated with 0. name[0]!=0 if in use.
+char _resv[8];
+int32	usecnt;	//usecount, 0 for free, -1 for infinite/no counting, >0 for counts
+short flags;	//behavior/informational hint flags (0 if unused):
+			//1&=(M)metadata (don't show or alter if unknown)
+			//2&=(D)directory (show, but don't allow access or use if unknown)
+			//4&=(A)application (type is owned by an app, raw data if unknown)
+			//8&=(B)binary (type is a binary/lib/...)
+short osflags;	//os specific flags
+}
+
+recommended types will be indicated, eg:
+	Type: "FATSL/RawData"(A)
+	it is named "FATSL/RawData" and is an application type;
+	this example type is recommended for unknown/unspecified file data.
+
+End Packing
+end packing is only optionally used, but it is recomended to at least be able to read end-packed volumes. reading should behave similar with both end-pack and non-end-packed volumes.
+
+end packing will be pulled off with multiple files:
+	the index file, associates file indices with given ends;
+	index bitmap, bitmap of free slots in dir/index table;
+	data files, hold the ends referenced by the index;
+	the free-spans list, this will help locate free space in the data files.
+
+Index File
+this will locate the ends for end-packed files. this file will not be end-packed.
+Type: "FATSL/Ends.Index"(M)
+
+this will have a fixed 256 byte header.
+{
+int32 tag;			//"IDX\0"
+int32 cnt;			//number if indices in index file, 0 will indicate
+				//end-packing is disabled
+int32 bmap_idx;		//index of slot with bitmap
+int32 fspans_idx;		//index of file with spans list
+byte _resv[256-16];	//reserved
+}
+
+this header will be followed by indices, each with the form:
+{
+int32 idx;		//index of datafile containing end
+int32 offset;	//offset in data file of end
+int16 size;		//size of end
+int16 flags;	//flags for end, none at present
+int32 _resv;
+}
+
+Index Bitmap
+this will tell used/free index slots (in both the directory and the index file).
+this will follow hi-lo bit ordering, and may be end-packed.
+Type: "FATSL/Ends.Bitmap"(M)
+
+Data Files
+these are unstructured, and will just contain the data for file ends. there will be no specific alignment requirements.
+Type: "FATSL/Ends.Data"(M)
+
+Free-Spans List
+this will be a set of lists to help locate space to pack ends into. this file may also be end packed.
+Type: "FATSL/Ends.FreeSpansList"(M)
+
+this file will also have a 256 byte header:
+{
+int32 tag;			//"FSL\0"
+int32 cnt;			//count of spans in file
+byte _resv[256-64-8];	//reserved
+int32 free;			//list of free slots in spans list
+int32 under16;		//list of spans <16bytes
+int32 ranges[12];		//lists for each range:
+				//16,32,64,128,256,512,1024,2048,4096,8192,16384,32768
+int32 _resv2[2];		//2 reserved lists
+}
+
+the reason for dividing the spans up like this is to try to allow faster location of correctly sized spans.
+all the spans (excepting the free list and possibly the under-16 list) are required to be linked in ascending order.
+
+the header will be followed by an array of spans, each with the form:
+{
+int32 idx;		//index of datafile containing end
+int32 offset;	//offset in data file of span
+int16 size;		//size of span
+int16 flags;	//flags for span, none at present
+int32 next;		//next span in list
+}
+
+part of the reason for this being a linked list is so that io can be done without possibly having to rewrite/compact the list.
+
+thought: a b-tree like structure may be more efficient, but would likely be more complex.

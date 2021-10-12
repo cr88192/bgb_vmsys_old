@@ -1,0 +1,28 @@
+will aim to be a fairly simplistic lib for persistence and limited distributed processing.
+I will first need to define basic support for structs and mm.
+
+it should be possible to query all live allocs, all objects will be typed.
+deciding whether to implement a full mm:
+maybe, thought: reuse mm2, modify for more type info. do not bother with gc, or maybe include just a simple ref counter.
+
+
+type notation:
+DEF = TYPE ';' | TYPE ':' NAME ';' | TYPE '+'
+TYPE = TypeName | SHAPE TypeName | '*' TypeName | SHAPE '*' TypeName
+SHAPE = Int | Int ',' SHAPE
+
+TypeName:
+single words will flag inlined types.
+'*type' will indicate a pointer to the type.
+'type+' will indicate a terminal array of that type.
+
+'sbyte': 8 bit signed int;
+'byte': 8 bit unsigned int;
+'short': 16 bit signed int;
+'ushort': 16 bit unsigned int;
+'int': 32 bit signed int;
+'uint': 32 bit unsigned int;
+
+'float': 32 bit float;
+'*string': string pointer;
+'*struct': reference to a struct.

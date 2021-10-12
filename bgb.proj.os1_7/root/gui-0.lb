@@ -1,0 +1,417 @@
+
+define render-obj
+	newobject root-obj
+		class-major 'widget
+		origin #(0 0)
+		size #(0 0)
+
+		(render:) #z
+		(use:) #z
+		(drag: p)
+			self.origin := #[((self.origin 0) + (p 0))  ((self.origin 1) + (p 1))]
+
+//			vector-set! (self 'origin) 0 (+ (vector-ref p 0) (vector-ref (self 'origin) 0))
+//			vector-set! (self 'origin) 1 (+ (vector-ref p 1) (vector-ref (self 'origin) 1))
+
+
+define text-obj
+	newobject render-obj
+		class-minor 'text
+		text ""
+		origin #(0 0)
+		height 25
+		color #(255 255 255 255)
+
+		(render:)
+			render-text self.text self.origin self.height self.color
+
+/*
+//define title-obj
+//	newobject root-obj
+//		(text "(NONE)"
+//		height 25
+//		origin #(0 0)
+//		size #(125 25)
+//		color #(255 0 0 255)
+//		body #z)
+
+//		(use:) #z
+
+*/
+
+/* /* a */ b */
+
+define title-obj
+	newobject root-obj
+		class-major 'widget
+		class-minor 'title
+
+		text "(NONE)"
+		height 25
+		origin #(0 0)
+		size #(125 25)
+		color #(255 0 0 255)
+		body #z
+
+		(use:) #z
+
+		(render:)
+			self.body render:
+			render-square self.origin self.size self.color
+			render-text self.text self.origin self.height #(255 255 255 255)
+
+		(drag: p)
+			self.origin := #[((p 0) + (self.origin 0)) ((p 1) + (self.origin 1))]
+			self.body.origin := #[((p 0) + (self.body.origin 0)) ((p 1) + (self.body.origin 1))]
+
+		(add: p)
+			self.body.children := (cons p self.body.children)
+
+//render-show title-obj
+
+define container-obj (render-obj clone:)
+container-obj 'offset #(0 0)
+container-obj 'scale #(1024 1024)
+container-obj 'children '()
+container-obj (plambda (render:) (render-container self))
+container-obj
+	plambda (add: x)
+		begin
+//			display "container add:\n"
+			self 'children (cons x (self 'children))
+
+define container2-obj (render-obj clone:)
+container2-obj 'offset #(0 0)
+container2-obj 'scale #(1024 1024)
+container2-obj 'children '()
+container2-obj
+	plambda (render:)
+		begin
+			render-square (self 'origin) (self 'size) #(127 127 127 255)
+			render-container self
+
+container2-obj
+	plambda (add: x)
+		begin
+//			display "container add:\n"
+			self 'children (cons x (self 'children))
+
+//define win-body (container-obj clone:)
+//win-body 'origin #(-500 0)
+//win-body 'size #(500 500)
+
+//render-show win-body
+
+//define win-tst (title-obj clone:)
+//win-tst 'origin #(-500 0)
+//win-tst 'size #(500 25)
+//win-tst 'text "test-0"
+//win-tst 'body win-body
+
+function window (label pos size . args)
+	let ((title (title-obj clone:)) (body (container2-obj clone:)))
+		body 'origin pos
+		body 'size size
+
+		title 'origin (vector (pos 0) (- (pos 1) 25))
+//		title 'origin pos
+		title 'size (vector (size 0) 25)
+		title 'text label
+		title 'body body
+
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) title
+					f (cdr cur)
+
+		^ title
+
+define my-text (text-obj clone:)
+my-text 'text "SK test string"
+my-text 'origin #(500 500)
+my-text 'size #(125 25)
+
+// render-show my-text
+
+
+define heap-obj (render-obj clone:)
+heap-obj 'origin #(500 600)
+heap-obj 'size #(125 25)
+heap-obj 'height 25
+
+heap-obj
+	plambda (render:)
+		render-text
+			string-append "Heap: " (number->string (heap-usage)) "/" (number->string (heap-size))
+			^ self.origin
+			^ self.height
+			^ #(255 255 255 255)
+
+//render-show heap-obj
+
+define square-obj (render-obj clone:)
+square-obj 'origin #(400 400)
+square-obj 'size #(100 100)
+square-obj 'color #(255 0 0 255)
+square-obj 'csel 1
+
+square-obj
+	plambda (render:)
+		render-square (self 'origin) (self 'size) (self 'color)
+
+square-obj
+	plambda (use:)
+		self 'csel (+ self.csel 1)
+		if (> self.csel 7) (self 'csel 1)
+		if (bit-and? self.csel 1)
+			self.color 0 255
+			self.color 0 0
+		if (bit-and? self.csel 2)
+			self.color 1 255
+			self.color 1 0
+		if (bit-and? self.csel 4)
+			self.color 2 255
+			self.color 2 0
+
+//render-show square-obj
+
+
+define cont-tst (container-obj clone:)
+cont-tst 'children (list my-text)
+cont-tst 'size #(900 900)
+
+
+define win-tst2 (window "test-1" #(-2000 0) #(1000 1000))
+//render-show win-tst2
+
+define win-body (container-obj clone:)
+win-body 'origin #(-500 0)
+win-body 'size #(500 500)
+
+//render-show win-body
+
+define win-tst (title-obj clone:)
+win-tst 'origin #(-500 0)
+win-tst 'size #(500 25)
+win-tst 'text "test-0"
+//win-tst 'body cont-tst
+win-tst 'body win-body
+
+
+
+
+define image-obj (render-obj clone:)
+image-obj 'image #z
+
+image-obj
+	plambda (render:)
+		begin
+//			display "image render\n"
+			render-image (self 'image) (self 'origin) (self 'size)
+
+
+//define img (render-load-image "grid0.tga")
+//define my-img (image-obj clone:)
+//my-img 'origin #(0 0)
+//my-img 'size #(500 500)
+//my-img 'image img
+
+// render-show my-img
+//win-tst2 add: my-img
+
+function stack-horizontal objs
+	let ((this (container-obj clone:)) (adder #z))
+		this 'origin (vector 0 0)
+		this 'size (vector 0 0)
+		rlet adder ((cur objs))
+			if (eq? cur '()) #z
+				begin
+//					display "adder\n"
+					(car cur) (plambda (drag: p) #z)
+					(car cur) 'origin (vector (this.size 0) 0)
+					this.size 0
+						+ (this.size 0) (((car cur) 'size) 0)
+					if (> (((car cur) 'size) 1) (this.size 1))
+						this.size 1 (((car cur) 'size) 1)
+					adder (cdr cur)
+		display this.size
+		display "\n"
+		this 'children objs
+		^ this
+
+function stack-vertical objs
+	let ((this (container-obj clone:)) (adder #z))
+		this 'origin (vector 0 0)
+		this 'size (vector 0 0)
+		rlet adder ((cur objs))
+			if (eq? cur '()) #z
+				begin
+//					display "adder\n"
+					(car cur) (plambda (drag: p) #z)
+					(car cur) 'origin (vector 0 (this.size 1))
+					this.size 1
+						+ (this.size 1) (((car cur) 'size) 1)
+					if (> (((car cur) 'size) 0) (this.size 0))
+						this.size 0 (((car cur) 'size) 0)
+					adder (cdr cur)
+
+		display this.size
+		display "\n"
+		this 'children objs
+		^ this
+
+function gui-text (text)
+	let ((obj (text-obj clone:)))
+		obj 'text text
+		obj 'size (vector (* (string-length text) 25) 25)
+		^ obj
+
+function label (text . args)
+	let ((obj (text-obj clone:)))
+		obj 'text text
+		obj 'size #[((string-length text) * 25) 25]
+
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					f (cdr cur)
+		^ obj
+
+function dialog (label pos body . args)
+	let ((title (title-obj clone:)))
+		body 'origin pos
+
+		title 'origin (vector (pos 0) (- (pos 1) 25))
+		title 'size (vector (body.size 0) 25)
+		title 'text label
+		title 'body body
+
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					f (cdr cur)
+
+		^ title
+
+define textentry-obj
+	newobject render-obj
+		text ""
+		origin #[0 0]
+		size #[(16 * 25) 25]
+		height 25
+
+		(render:)
+			render-square self.origin self.size #(192 192 192 255)
+			render-text self.text self.origin self.height #(0 0 0 255)
+		(keydown: x)
+			if(x = #\backspace)
+				self.text := (substring self.text 0 ((string-length self.text) - 1))
+				self.text := (string-append self.text (string x))
+
+//render-show textentry-obj
+function textentry (width . args)
+	let ((obj (textentry-obj clone:)))
+		obj.size := #[(width * 25) 25]
+
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+//					display "arg\n"
+					if (closure? (car cur))
+						(car cur) obj
+					f (cdr cur)
+
+		^ obj
+
+
+define button-obj
+	newobject render-obj
+		text "(NONE)"
+		height 25
+		color #(0 255 0 255)
+//		usefunc
+//			lambda ()
+//				display "button-def-use\n"
+
+//		(use:)
+//			self.usefunc
+//			^ #t
+
+		(render:)
+			begin
+				render-square self.origin self.size self.color
+				render-text self.text self.origin self.height #(0 0 0 255)
+
+function button (label . args)
+	let ((obj (button-obj clone:)))
+		obj 'origin #[0 0]
+		obj 'size #[(* (string-length label) 25) 25]
+		obj 'text label
+//		obj 'usefunc func
+
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+//					display "arg\n"
+					if (closure? (car cur))
+						(car cur) obj
+					f (cdr cur)
+
+		^ obj
+
+defmacro handler (pattern . body)
+	adqq (lambda (obj;) (obj; (plambda ,pattern ,@body)))
+
+defmacro property (name value)
+	adqq (lambda (obj;) (obj; ',name ,value))
+
+function keywordify (x)
+	string->symbol (string-append (symbol->string x) ":")
+
+defmacro constraint (name body)
+	adqq (lambda (x;) (x; (plambda (,(keywordify name)) ,body)))
+
+function widget? (x)
+	and
+		object? x
+		member? x 'class-major
+		x.class-major = 'widget
+
+win-tst2 add:
+//	gui-text "text 0"
+	stack-vertical
+		gui-text "text 0"
+		gui-text "text 1"
+		gui-text "text 2"
+
+define stk-tst
+	dialog "test-dialog" #(-1000 -1000)
+		stack-horizontal
+			stack-vertical
+				label "text A0 "
+				label "text A1 "
+				label "text A2 "
+			stack-vertical
+				label "text B0 "
+				label "text B1 "
+				label "text B2 "
+			button "btn0"
+				handler (use:)
+					display "btn0\n"
+			textentry 16
+
+//define btn-tst
+
+//render-show heap-obj
+
+//render-show cont-tst
+//render-show win-tst
+
+//render-show stk-tst
+//render-show btn-tst

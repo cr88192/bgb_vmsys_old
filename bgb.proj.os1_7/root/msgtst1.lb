@@ -1,0 +1,19 @@
+define th1
+	begin-thread
+		begin-loop
+			recieve-case
+				(from)
+					print from "ping\n"
+					from
+
+
+define th2
+	begin-thread
+		th1
+		begin-loop
+			recieve-case
+				(from)
+					print from "pong\n"
+//					from
+
+//th1

@@ -1,0 +1,116 @@
+FAT as a Storage Layer.
+
+each directory will be an array of entries owned specifically by the SL, these entries will contain "objects". each will have a name with the syntax '#NNNNNFS.CCT', with all slots being base 32:
+	N is the slot number, this is stored to make dirs more recoverable 
+		(eg, in the case where it is copied), by allowing the system
+		to detect if the wrong object is in a given slot;
+	F is the fork number, starting at 0;
+	S is the total number of forks, forks are in adjacent slots and have
+		the same base (same as fork 0);
+	C identifies the object class;
+	T identifies the layer type.
+
+
+
+certain files begining with '@' will have special meanings.
+
+'@info' will define the contents of the directory, it will consist of lines of text:
+	'T <Num> <Name>', defines a semantic type:
+		Num is the decimal type number;
+		Name is the type name, and may not contain spaces.
+	'E <Slot>' defines the entry point, Slot is a base32 number.
+	'G <Slot> <Base>', defines part of the global directory:
+		Slot is a base32 number identifying the directory contents;
+		Base is the index base for this portion of the global directory, hex.
+
+CRM ("Cyclic Relational Mesh")
+
+goals:
+	store keys associated with objects;
+	allow reference to arbitrary directories/objects.
+
+all multibyte values are little endian.
+
+will be in a subdir 'CRMVOL' from the root. the '@info' defined entry point refers to the volume root (point of entry, 'POE').
+The layer type will be named 'CRM'.
+
+there will also be a "global" directory, this will hold shared info about various files/directories. the global directory will not be directly visible, but the contents may be externally referenced. the order of the spans table for global will matter, the spans table for global will be used for external references (so that things may still move around in global).
+The content size of global may be clamped for file size or performance reasons (eg: to about 2GB), this is because too large and the spans table might become too large, or the contents might be pushing the limits of the storage layer.
+
+each dir will have 2 forks:
+	The contents, fork 0;
+	The Spans, fork 1.
+dirs will have the class type 1.
+
+data forks (file contents) will have the class type 2.
+
+the contents fork will have objects of the form:
+{
+short tag;
+short len;
+byte data[len];	//length of the data
+byte pad[(len&3)?(4-(len&3)):0]; //pad to 4 byte bounds
+}
+
+the tag value 0 will be used for an empty block, 0xFFFF will be used as an EndOfDirectory marker.
+as can be noted, objects will allways be padded to 4 byte boundaries.
+
+Spans will have the form:
+{
+int64 offset;	//offset, points to the start of the header for that object
+short tag;		//tag value for the object (redundant)
+short len;		//length for the object (redundant)
+int32 _resv;	//reserved
+}
+Tag 0 will signal free space.
+Tag 0xFFFE will signal a free spans entry.
+Tag 0xFFFF will signal the end of the spans list,
+	the EndOfDirectory marker is not included in spans,
+	this only comes at the end of the spans list.
+
+the purpose of spans is for optimization, eg: not having to scan over the whole directory to know the rough contents. there is no particular order enforced for spans, though it will not be acceptable in general to reorder the contents of the spans list.
+the spans list is to be empty if it is not supported (thus a conformant implementation would need to trauncate the spans list if it may have been effected by an operation in order to keep them in sync...).
+
+Contents:
+at present, only tags 1-255 will be defined usable for normal types.
+
+Contents Tags:
+	0=free;
+	1=header, this is required to be the first object in the contents, it has the form:
+		{
+		short sig; //0x4321
+		short ver; //major.minor.sub.rev, presently 0x0010
+		int64 info; //offset of dirinfo block
+		}
+	2=dirinfo block, a glob of utf-8 text, organized as lines:
+		each line will have the form:
+		'<Key> ...'
+		for now:
+		'Col <Num> <Name>' declare a column, num is the key in records
+		used to identify the names.
+	3-7: reserved;
+	8=record, this is a glob of columns, each has the form:
+		{
+		byte key; //nonzero if a column, 0 otherwise.
+		byte type; //this is the same for the toplevel.
+		short len;
+		byte data[len];	//length of the data
+		byte pad[(len&3)?(4-(len&3)):0]; //pad to 4 byte bounds
+		}
+		all objects in a record start on 4 byte boundaries.
+		undefined columns will be assumed NULL.
+		a reference into global will indicate that this is a
+		modification of an object defined there.
+	9=integer, contains a signed integer (LE), the size depends on the 
+		length (4 or 8).
+	10=string, utf-8 string.
+	11=data object (global directory):
+		{
+		int32 index;	//index for storage layer (single forked refs only)
+		int32 _resv;
+		int64 end;		//offset of file end, packed in the directory contents, 0 if no endpacking is done
+		}
+	12=data end (global directory),
+		contains a glob of data stuck in the dir contents representing the end of a data object;
+	13=directory object (global directory), a 32 bit storage index;
+	14=reference into global directory, a 64 bit integer index into the global directory's spans table.
