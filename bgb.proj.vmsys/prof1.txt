@@ -1,0 +1,897 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 30.56      0.22     0.22                             gfxdev_write
+ 22.22      0.38     0.16  1838116     0.00     0.00  gfxdev_opcode
+ 12.50      0.47     0.09  1763350     0.00     0.00  GfxFont_DrawChar
+  6.94      0.52     0.05  2095854     0.00     0.00  GfxApi_WriteFloat
+  5.56      0.56     0.04  1763350     0.00     0.00  GfxFont_FetchFrag
+  4.17      0.59     0.03    98568     0.00     0.00  GfxApi_WriteString
+  2.78      0.61     0.02   393720     0.00     0.00  GfxApi_TexCoord2
+  2.78      0.63     0.02    13912     0.00     0.00  Prim_Opts
+  2.78      0.65     0.02      579     0.03     0.15  Prim_RenderSphere
+  1.39      0.66     0.01   300218     0.00     0.00  GfxApi_WriteSByte
+  1.39      0.67     0.01    98430     0.00     0.00  GfxApi_UnbindTex
+  1.39      0.68     0.01     4924     0.00     0.00  GfxApi_Rotate3
+  1.39      0.69     0.01     4285     0.00     0.00  GfxApi_SetFont
+  1.39      0.70     0.01     3021     0.00     0.00  Render_PushState
+  1.39      0.71     0.01     2462     0.00     0.05  Render3D_Frame
+  1.39      0.72     0.01                             Prim_ApplyPrim
+  0.00      0.72     0.00  1838116     0.00     0.00  GfxApi_WriteOpcode
+  0.00      0.72     0.00   492150     0.00     0.00  ELEM_OBJTYPEPi
+  0.00      0.72     0.00   393720     0.00     0.00  GfxApi_Point
+  0.00      0.72     0.00   393720     0.00     0.00  GfxApi_Vec3
+  0.00      0.72     0.00   393720     0.00     0.00  Obj3D_MapST
+  0.00      0.72     0.00   300218     0.00     0.00  GfxApi_WriteSInt
+  0.00      0.72     0.00   252084     0.00     0.00  GfxApi_WriteSLong
+  0.00      0.72     0.00    98430     0.00     0.00  GfxApi_Begin
+  0.00      0.72     0.00    98430     0.00     0.00  GfxApi_BindTex
+  0.00      0.72     0.00    98430     0.00     0.00  GfxApi_End
+  0.00      0.72     0.00    98430     0.00     0.00  Obj3D_BindTexture
+  0.00      0.72     0.00    98430     0.00     0.00  Obj3D_SelectTexture
+  0.00      0.72     0.00    97272     0.00     0.00  Obj3D_Point
+  0.00      0.72     0.00    94283     0.00     0.00  GfxApi_MoveTo
+  0.00      0.72     0.00    94283     0.00     0.00  GfxApi_Show
+  0.00      0.72     0.00    30308     0.00     0.00  Render_PollKey
+  0.00      0.72     0.00    18786     0.00     0.00  UICon_WChar
+  0.00      0.72     0.00    12084     0.00     0.00  GfxApi_WriteUByte
+  0.00      0.72     0.00    10115     0.00     0.00  GfxApi_PopMatrix
+  0.00      0.72     0.00    10115     0.00     0.00  GfxApi_PushMatrix
+  0.00      0.72     0.00     7379     0.00     0.00  GfxFont_FindFont
+  0.00      0.72     0.00     7379     0.00     0.00  GfxFont_SetFont
+  0.00      0.72     0.00     6747     0.00     0.00  GfxApi_SetRange
+  0.00      0.72     0.00     6515     0.00     0.00  GfxApi_Color
+  0.00      0.72     0.00     4632     0.00     0.00  GfxApi_TransformMatrixd
+  0.00      0.72     0.00     4632     0.00     0.00  ObjSK_Send
+  0.00      0.72     0.00     4632     0.00     0.02  Prim_RenderPrimative
+  0.00      0.72     0.00     4416     0.00     0.00  GfxFont_GetCellBit
+  0.00      0.72     0.00     4053     0.00     0.01  Prim_RenderCube
+  0.00      0.72     0.00     3653     0.00     0.00  GfxApi_FontSize2
+  0.00      0.72     0.00     3653     0.00     0.00  GfxApi_TextColor
+  0.00      0.72     0.00     3094     0.00     0.00  Draw_SetSolid2_2D
+  0.00      0.72     0.00     3094     0.00     0.00  GfxApi_BeginDrawing
+  0.00      0.72     0.00     3094     0.00     0.00  GfxApi_EndDrawing
+  0.00      0.72     0.00     3094     0.00     0.00  GfxDev_Translate
+  0.00      0.72     0.00     3094     0.00     0.00  GfxDrv_BeginDrawing
+  0.00      0.72     0.00     3094     0.00     0.00  GfxDrv_EndDrawing
+  0.00      0.72     0.00     3094     0.00     0.06  Render_Frame
+  0.00      0.72     0.00     3094     0.00     0.02  UICon_Draw
+  0.00      0.72     0.00     3094     0.00     0.00  UICon_Think
+  0.00      0.72     0.00     3021     0.00     0.00  GfxApi_FillSquare
+  0.00      0.72     0.00     3021     0.00     0.00  GfxDrv_FillSquare
+  0.00      0.72     0.00     3021     0.00     0.00  Render_PopClip
+  0.00      0.72     0.00     3021     0.00     0.00  Render_PopState
+  0.00      0.72     0.00     3021     0.00     0.00  Render_PushClip
+  0.00      0.72     0.00     2462     0.00     0.00  GfxApi_Perspective
+  0.00      0.72     0.00     2462     0.00     0.00  GfxApi_Translate3
+  0.00      0.72     0.00     2462     0.00     0.00  GfxDev_SetPerspective_3D
+  0.00      0.72     0.00     2462     0.00     0.04  Obj3D_RenderFrame
+  0.00      0.72     0.00     2462     0.00     0.04  Obj3D_RenderObj
+  0.00      0.72     0.00     2462     0.00     0.00  Obj3D_RunPhys
+  0.00      0.72     0.00     2462     0.00     0.00  Sky_DrawSkyBox
+  0.00      0.72     0.00      819     0.00     0.00  UICon_ScrollUp
+  0.00      0.72     0.00      634     0.00     0.00  SYMGi
+  0.00      0.72     0.00      632     0.00     0.00  GfxApi_FontSize
+  0.00      0.72     0.00      632     0.00     0.00  GfxApi_Translate
+  0.00      0.72     0.00      632     0.00     0.00  ObjSK_Frame
+  0.00      0.72     0.00      632     0.00     0.00  ObjSK_RenderObject
+  0.00      0.72     0.00      168     0.00     0.00  GfxDev_Key_Event
+  0.00      0.72     0.00      168     0.00     0.00  GfxDrv_MapKey
+  0.00      0.72     0.00      168     0.00     0.00  chkmap
+  0.00      0.72     0.00      168     0.00     0.00  keyb_handler
+  0.00      0.72     0.00       73     0.00     0.00  UICon_IChar
+  0.00      0.72     0.00       66     0.00     0.00  GfxFont_FetchChar
+  0.00      0.72     0.00       66     0.00     0.00  GfxFont_RenderCell
+  0.00      0.72     0.00       16     0.00     0.00  Prim_Show
+  0.00      0.72     0.00        8     0.00     0.00  Obj3D_NotifyLinks
+  0.00      0.72     0.00        8     0.00     0.00  Prim_NewPrimative
+  0.00      0.72     0.00        5     0.00     0.00  GfxDrv_AppActivate
+  0.00      0.72     0.00        4     0.00     0.00  GfxFont_Register
+  0.00      0.72     0.00        4     0.00     0.00  Tex_AllocTexnum
+  0.00      0.72     0.00        4     0.00     0.00  Tex_HalfSample
+  0.00      0.72     0.00        2     0.00     0.00  GfxFont_LoadFont
+  0.00      0.72     0.00        2     0.00     0.00  checkarg
+  0.00      0.72     0.00        1     0.00     0.00  DevicesUI_Init
+  0.00      0.72     0.00        1     0.00     0.00  GfxApi_ReadSLong
+  0.00      0.72     0.00        1     0.00     0.00  GfxApi_Texture
+  0.00      0.72     0.00        1     0.00     0.00  GfxApi_WriteData
+  0.00      0.72     0.00        1     0.00     0.00  GfxDev_WriteSLong
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_CenterWindow
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_GL_Init
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_Init
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_Start
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_VID_InitDIB
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_VID_SetWindowedMode
+  0.00      0.72     0.00        1     0.00     0.00  GfxDrv_bSetupPixelFormat
+  0.00      0.72     0.00        1     0.00     0.00  GfxFont_Init
+  0.00      0.72     0.00        1     0.00     0.00  Gfxdev_Init
+  0.00      0.72     0.00        1     0.00     0.00  IfDev_Init
+  0.00      0.72     0.00        1     0.00     0.00  Mouse_Init
+  0.00      0.72     0.00        1     0.00     0.00  Obj3D_Init
+  0.00      0.72     0.00        1     0.00     0.00  Obj3D_PhysInit
+  0.00      0.72     0.00        1     0.00     0.00  Obj3D_SkyInit
+  0.00      0.72     0.00        1     0.00     0.00  Obj3D_SpriteInit
+  0.00      0.72     0.00        1     0.00     0.00  Obj3D_TexInit
+  0.00      0.72     0.00        1     0.00     0.00  ObjSK_Init
+  0.00      0.72     0.00        1     0.00     0.00  Prim_Init
+  0.00      0.72     0.00        1     0.00     0.00  Render3D_Init
+  0.00      0.72     0.00        1     0.00     0.00  Render_Init
+  0.00      0.72     0.00        1     0.00     0.00  Tex_GetModeinfo
+  0.00      0.72     0.00        1     0.00     0.00  Tex_Init2
+  0.00      0.72     0.00        1     0.00     0.00  Tex_LoadTexture2
+  0.00      0.72     0.00        1     0.00     0.00  UICon_Print
+  0.00      0.72     0.00        1     0.00   180.00  WinMain@16
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 1.39% of 0.72 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     70.8    0.22    0.29                 gfxdev_write [1]
+                0.16    0.13 1838116/1838116     gfxdev_opcode [2]
+-----------------------------------------------
+                0.16    0.13 1838116/1838116     gfxdev_write [1]
+[2]     40.3    0.16    0.13 1838116         gfxdev_opcode [2]
+                0.09    0.04 1763350/1763350     GfxFont_DrawChar [6]
+                0.00    0.00    7379/7379        GfxFont_SetFont [57]
+                0.00    0.00    3094/3094        GfxDrv_BeginDrawing [67]
+                0.00    0.00    3094/3094        GfxDrv_EndDrawing [68]
+                0.00    0.00    3094/3094        GfxDev_Translate [66]
+                0.00    0.00    3021/3021        GfxDrv_FillSquare [71]
+                0.00    0.00    2462/2462        GfxDev_SetPerspective_3D [75]
+                0.00    0.00       1/1           GfxDev_WriteSLong [102]
+                0.00    0.00       1/1           Tex_LoadTexture2 [124]
+-----------------------------------------------
+                0.00    0.18       1/1           main [4]
+[3]     25.0    0.00    0.18       1         WinMain@16 [3]
+                0.00    0.18    3094/3094        Render_Frame [5]
+                0.00    0.00       1/1           Render_Init [40]
+                0.00    0.00       2/2           checkarg [98]
+                0.00    0.00       1/1           DevicesUI_Init [99]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]     25.0    0.00    0.18                 main [4]
+                0.00    0.18       1/1           WinMain@16 [3]
+-----------------------------------------------
+                0.00    0.18    3094/3094        WinMain@16 [3]
+[5]     25.0    0.00    0.18    3094         Render_Frame [5]
+                0.01    0.12    2462/2462        Render3D_Frame [7]
+                0.00    0.05    3094/3094        UICon_Draw [13]
+                0.00    0.00    1264/4285        GfxApi_SetFont [23]
+                0.00    0.00     632/94283       GfxApi_Show [18]
+                0.00    0.00   10612/30308       Render_PollKey [51]
+                0.00    0.00    3726/6747        GfxApi_SetRange [58]
+                0.00    0.00    3094/3094        UICon_Think [69]
+                0.00    0.00    3094/3094        GfxApi_BeginDrawing [64]
+                0.00    0.00    3094/3094        GfxApi_EndDrawing [65]
+                0.00    0.00     632/632         GfxApi_Translate [81]
+                0.00    0.00     632/632         GfxApi_FontSize [80]
+                0.00    0.00     632/632         ObjSK_Frame [82]
+                0.00    0.00     632/94283       GfxApi_MoveTo [50]
+                0.00    0.00     632/3653        GfxApi_FontSize2 [61]
+                0.00    0.00     632/3653        GfxApi_TextColor [62]
+-----------------------------------------------
+                0.09    0.04 1763350/1763350     gfxdev_opcode [2]
+[6]     18.1    0.09    0.04 1763350         GfxFont_DrawChar [6]
+                0.04    0.00 1763350/1763350     GfxFont_FetchFrag [14]
+-----------------------------------------------
+                0.01    0.12    2462/2462        Render_Frame [5]
+[7]     18.1    0.01    0.12    2462         Render3D_Frame [7]
+                0.00    0.11    2462/2462        Obj3D_RenderFrame [9]
+                0.01    0.00    4924/4924        GfxApi_Rotate3 [24]
+                0.00    0.00    2462/6515        GfxApi_Color [34]
+                0.00    0.00    2462/2462        GfxApi_Translate3 [35]
+                0.00    0.00    2462/2462        GfxApi_Perspective [36]
+                0.00    0.00   19696/30308       Render_PollKey [51]
+                0.00    0.00    2462/10115       GfxApi_PushMatrix [55]
+                0.00    0.00    2462/10115       GfxApi_PopMatrix [54]
+-----------------------------------------------
+                0.00    0.11    4632/4632        Obj3D_RenderObj [10]
+[8]     15.1    0.00    0.11    4632         Prim_RenderPrimative [8]
+                0.02    0.07     579/579         Prim_RenderSphere [11]
+                0.00    0.02    4053/4053        Prim_RenderCube [20]
+                0.00    0.00    4632/4632        GfxApi_TransformMatrixd [33]
+                0.00    0.00    4632/10115       GfxApi_PushMatrix [55]
+                0.00    0.00    4632/10115       GfxApi_PopMatrix [54]
+-----------------------------------------------
+                0.00    0.11    2462/2462        Render3D_Frame [7]
+[9]     15.1    0.00    0.11    2462         Obj3D_RenderFrame [9]
+                0.00    0.11    2462/2462        Obj3D_RenderObj [10]
+                0.00    0.00    2462/2462        Sky_DrawSkyBox [77]
+                0.00    0.00    2462/2462        Obj3D_RunPhys [76]
+-----------------------------------------------
+                                9264             Obj3D_RenderObj [10]
+                0.00    0.11    2462/2462        Obj3D_RenderFrame [9]
+[10]    15.1    0.00    0.11    2462+9264    Obj3D_RenderObj [10]
+                0.00    0.11    4632/4632        Prim_RenderPrimative [8]
+                0.00    0.00    4632/4632        ObjSK_Send [59]
+                                9264             Obj3D_RenderObj [10]
+-----------------------------------------------
+                0.02    0.07     579/579         Prim_RenderPrimative [8]
+[11]    11.9    0.02    0.07     579         Prim_RenderSphere [11]
+                0.02    0.01  296448/393720      GfxApi_TexCoord2 [15]
+                0.00    0.02  296448/393720      GfxApi_Vec3 [19]
+                0.01    0.00   74112/98430       GfxApi_UnbindTex [25]
+                0.00    0.00   74112/98430       Obj3D_BindTexture [32]
+                0.00    0.00   74112/98430       GfxApi_Begin [29]
+                0.00    0.00   74112/98430       GfxApi_End [31]
+                0.00    0.00  296448/393720      Obj3D_MapST [47]
+                0.00    0.00  296448/393720      GfxApi_Point [46]
+                0.00    0.00   74112/98430       Obj3D_SelectTexture [49]
+-----------------------------------------------
+                0.00    0.00    7386/2095854     GfxApi_Translate3 [35]
+                0.00    0.00   19696/2095854     GfxApi_Rotate3 [24]
+                0.00    0.00   26060/2095854     GfxApi_Color [34]
+                0.00    0.00   74112/2095854     GfxApi_TransformMatrixd [33]
+                0.02    0.00  787440/2095854     GfxApi_TexCoord2 [15]
+                0.03    0.00 1181160/2095854     GfxApi_Vec3 [19]
+[12]     6.9    0.05    0.00 2095854         GfxApi_WriteFloat [12]
+-----------------------------------------------
+                0.00    0.05    3094/3094        Render_Frame [5]
+[13]     6.5    0.00    0.05    3094         UICon_Draw [13]
+                0.00    0.03   93651/94283       GfxApi_Show [18]
+                0.01    0.00    3021/3021        Render_PushState [26]
+                0.01    0.00    3021/4285        GfxApi_SetFont [23]
+                0.00    0.00   93651/94283       GfxApi_MoveTo [50]
+                0.00    0.00    3021/6747        GfxApi_SetRange [58]
+                0.00    0.00    3021/3021        GfxApi_FillSquare [70]
+                0.00    0.00    3021/3653        GfxApi_FontSize2 [61]
+                0.00    0.00    3021/3653        GfxApi_TextColor [62]
+                0.00    0.00    3021/3021        Render_PopState [73]
+-----------------------------------------------
+                0.04    0.00 1763350/1763350     GfxFont_DrawChar [6]
+[14]     5.6    0.04    0.00 1763350         GfxFont_FetchFrag [14]
+                0.00    0.00      66/66          GfxFont_RenderCell [90]
+                0.00    0.00       3/4           Tex_AllocTexnum [95]
+-----------------------------------------------
+                0.00    0.00   97272/393720      Obj3D_Point [22]
+                0.02    0.01  296448/393720      Prim_RenderSphere [11]
+[15]     5.4    0.02    0.02  393720         GfxApi_TexCoord2 [15]
+                0.02    0.00  787440/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00  393720/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    4285/98568       GfxApi_SetFont [23]
+                0.03    0.00   94283/98568       GfxApi_Show [18]
+[16]     4.2    0.03    0.00   98568         GfxApi_WriteString [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     4.2    0.01    0.02                 Prim_ApplyPrim [17]
+                0.02    0.00   13904/13912       Prim_Opts [21]
+-----------------------------------------------
+                0.00    0.00     632/94283       Render_Frame [5]
+                0.00    0.03   93651/94283       UICon_Draw [13]
+[18]     4.0    0.00    0.03   94283         GfxApi_Show [18]
+                0.03    0.00   94283/98568       GfxApi_WriteString [16]
+                0.00    0.00   94283/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.01   97272/393720      Obj3D_Point [22]
+                0.00    0.02  296448/393720      Prim_RenderSphere [11]
+[19]     3.9    0.00    0.03  393720         GfxApi_Vec3 [19]
+                0.03    0.00 1181160/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00  393720/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.02    4053/4053        Prim_RenderPrimative [8]
+[20]     3.0    0.00    0.02    4053         Prim_RenderCube [20]
+                0.00    0.02   97272/97272       Obj3D_Point [22]
+                0.00    0.00   24318/98430       GfxApi_UnbindTex [25]
+                0.00    0.00   24318/98430       Obj3D_BindTexture [32]
+                0.00    0.00   24318/98430       GfxApi_Begin [29]
+                0.00    0.00   24318/98430       GfxApi_End [31]
+                0.00    0.00    4053/6515        GfxApi_Color [34]
+                0.00    0.00   24318/98430       Obj3D_SelectTexture [49]
+-----------------------------------------------
+                0.00    0.00       8/13912       Prim_NewPrimative [37]
+                0.02    0.00   13904/13912       Prim_ApplyPrim [17]
+[21]     2.8    0.02    0.00   13912         Prim_Opts [21]
+-----------------------------------------------
+                0.00    0.02   97272/97272       Prim_RenderCube [20]
+[22]     2.3    0.00    0.02   97272         Obj3D_Point [22]
+                0.00    0.00   97272/393720      GfxApi_TexCoord2 [15]
+                0.00    0.01   97272/393720      GfxApi_Vec3 [19]
+                0.00    0.00   97272/393720      Obj3D_MapST [47]
+                0.00    0.00   97272/393720      GfxApi_Point [46]
+-----------------------------------------------
+                0.00    0.00    1264/4285        Render_Frame [5]
+                0.01    0.00    3021/4285        UICon_Draw [13]
+[23]     1.6    0.01    0.00    4285         GfxApi_SetFont [23]
+                0.00    0.00    4285/98568       GfxApi_WriteString [16]
+                0.00    0.00    4285/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.01    0.00    4924/4924        Render3D_Frame [7]
+[24]     1.5    0.01    0.00    4924         GfxApi_Rotate3 [24]
+                0.00    0.00   19696/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00    4924/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   24318/98430       Prim_RenderCube [20]
+                0.01    0.00   74112/98430       Prim_RenderSphere [11]
+[25]     1.4    0.01    0.00   98430         GfxApi_UnbindTex [25]
+                0.00    0.00   98430/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.01    0.00    3021/3021        UICon_Draw [13]
+[26]     1.4    0.01    0.00    3021         Render_PushState [26]
+                0.00    0.00    3021/10115       GfxApi_PushMatrix [55]
+                0.00    0.00    3021/3021        Render_PushClip [74]
+-----------------------------------------------
+                0.01    0.00  300218/300218      GfxApi_WriteSInt [28]
+[27]     1.4    0.01    0.00  300218         GfxApi_WriteSByte [27]
+-----------------------------------------------
+                0.00    0.00       4/300218      GfxApi_Texture [39]
+                0.00    0.00    4924/300218      GfxApi_Perspective [36]
+                0.00    0.00   98430/300218      GfxApi_Begin [29]
+                0.00    0.00   98430/300218      GfxApi_End [31]
+                0.00    0.00   98430/300218      GfxApi_BindTex [30]
+[28]     1.4    0.00    0.01  300218         GfxApi_WriteSInt [28]
+                0.01    0.00  300218/300218      GfxApi_WriteSByte [27]
+-----------------------------------------------
+                0.00    0.00   24318/98430       Prim_RenderCube [20]
+                0.00    0.00   74112/98430       Prim_RenderSphere [11]
+[29]     0.5    0.00    0.00   98430         GfxApi_Begin [29]
+                0.00    0.00   98430/300218      GfxApi_WriteSInt [28]
+                0.00    0.00   98430/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   98430/98430       Obj3D_BindTexture [32]
+[30]     0.5    0.00    0.00   98430         GfxApi_BindTex [30]
+                0.00    0.00   98430/300218      GfxApi_WriteSInt [28]
+                0.00    0.00   98430/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   24318/98430       Prim_RenderCube [20]
+                0.00    0.00   74112/98430       Prim_RenderSphere [11]
+[31]     0.5    0.00    0.00   98430         GfxApi_End [31]
+                0.00    0.00   98430/300218      GfxApi_WriteSInt [28]
+                0.00    0.00   98430/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   24318/98430       Prim_RenderCube [20]
+                0.00    0.00   74112/98430       Prim_RenderSphere [11]
+[32]     0.5    0.00    0.00   98430         Obj3D_BindTexture [32]
+                0.00    0.00   98430/98430       GfxApi_BindTex [30]
+                0.00    0.00   98430/492150      ELEM_OBJTYPEPi [45]
+-----------------------------------------------
+                0.00    0.00    4632/4632        Prim_RenderPrimative [8]
+[33]     0.2    0.00    0.00    4632         GfxApi_TransformMatrixd [33]
+                0.00    0.00   74112/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00    9264/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    2462/6515        Render3D_Frame [7]
+                0.00    0.00    4053/6515        Prim_RenderCube [20]
+[34]     0.1    0.00    0.00    6515         GfxApi_Color [34]
+                0.00    0.00   26060/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00    6515/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    2462/2462        Render3D_Frame [7]
+[35]     0.0    0.00    0.00    2462         GfxApi_Translate3 [35]
+                0.00    0.00    7386/2095854     GfxApi_WriteFloat [12]
+                0.00    0.00    2462/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    2462/2462        Render3D_Frame [7]
+[36]     0.0    0.00    0.00    2462         GfxApi_Perspective [36]
+                0.00    0.00    4924/300218      GfxApi_WriteSInt [28]
+                0.00    0.00    2462/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00       8/8           Prim_StubPrim [38]
+[37]     0.0    0.00    0.00       8         Prim_NewPrimative [37]
+                0.00    0.00       8/13912       Prim_Opts [21]
+-----------------------------------------------
+                                                 <spontaneous>
+[38]     0.0    0.00    0.00                 Prim_StubPrim [38]
+                0.00    0.00       8/8           Prim_NewPrimative [37]
+                0.00    0.00       8/8           Obj3D_NotifyLinks [92]
+-----------------------------------------------
+                0.00    0.00       1/1           Render_Init [40]
+[39]     0.0    0.00    0.00       1         GfxApi_Texture [39]
+                0.00    0.00       4/300218      GfxApi_WriteSInt [28]
+                0.00    0.00       2/1838116     GfxApi_WriteOpcode [44]
+                0.00    0.00       1/1           GfxApi_WriteData [101]
+                0.00    0.00       1/1           GfxApi_ReadSLong [100]
+-----------------------------------------------
+                0.00    0.00       1/1           WinMain@16 [3]
+[40]     0.0    0.00    0.00       1         Render_Init [40]
+                0.00    0.00       1/1           GfxApi_Texture [39]
+                0.00    0.00       1/1           ObjSK_Init [119]
+                0.00    0.00       1/1           Render3D_Init [121]
+                0.00    0.00       1/1           Obj3D_Init [114]
+                0.00    0.00       1/1           UICon_Print [125]
+-----------------------------------------------
+                0.00    0.00       2/1838116     GfxApi_Texture [39]
+                0.00    0.00     632/1838116     GfxApi_FontSize [80]
+                0.00    0.00     632/1838116     GfxApi_Translate [81]
+                0.00    0.00    2462/1838116     GfxApi_Translate3 [35]
+                0.00    0.00    2462/1838116     GfxApi_Perspective [36]
+                0.00    0.00    3021/1838116     GfxApi_FillSquare [70]
+                0.00    0.00    3094/1838116     GfxApi_BeginDrawing [64]
+                0.00    0.00    3094/1838116     GfxApi_EndDrawing [65]
+                0.00    0.00    3653/1838116     GfxApi_FontSize2 [61]
+                0.00    0.00    3653/1838116     GfxApi_TextColor [62]
+                0.00    0.00    4285/1838116     GfxApi_SetFont [23]
+                0.00    0.00    4924/1838116     GfxApi_Rotate3 [24]
+                0.00    0.00    6515/1838116     GfxApi_Color [34]
+                0.00    0.00    6747/1838116     GfxApi_SetRange [58]
+                0.00    0.00    9264/1838116     GfxApi_TransformMatrixd [33]
+                0.00    0.00   10115/1838116     GfxApi_PushMatrix [55]
+                0.00    0.00   10115/1838116     GfxApi_PopMatrix [54]
+                0.00    0.00   94283/1838116     GfxApi_MoveTo [50]
+                0.00    0.00   94283/1838116     GfxApi_Show [18]
+                0.00    0.00   98430/1838116     GfxApi_Begin [29]
+                0.00    0.00   98430/1838116     GfxApi_End [31]
+                0.00    0.00   98430/1838116     GfxApi_BindTex [30]
+                0.00    0.00   98430/1838116     GfxApi_UnbindTex [25]
+                0.00    0.00  393720/1838116     GfxApi_Vec3 [19]
+                0.00    0.00  393720/1838116     GfxApi_TexCoord2 [15]
+                0.00    0.00  393720/1838116     GfxApi_Point [46]
+[44]     0.0    0.00    0.00 1838116         GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   98430/492150      Obj3D_BindTexture [32]
+                0.00    0.00  393720/492150      Obj3D_MapST [47]
+[45]     0.0    0.00    0.00  492150         ELEM_OBJTYPEPi [45]
+-----------------------------------------------
+                0.00    0.00   97272/393720      Obj3D_Point [22]
+                0.00    0.00  296448/393720      Prim_RenderSphere [11]
+[46]     0.0    0.00    0.00  393720         GfxApi_Point [46]
+                0.00    0.00  393720/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   97272/393720      Obj3D_Point [22]
+                0.00    0.00  296448/393720      Prim_RenderSphere [11]
+[47]     0.0    0.00    0.00  393720         Obj3D_MapST [47]
+                0.00    0.00  393720/492150      ELEM_OBJTYPEPi [45]
+-----------------------------------------------
+                0.00    0.00    1264/252084      GfxApi_FontSize [80]
+                0.00    0.00    1264/252084      GfxApi_Translate [81]
+                0.00    0.00    7306/252084      GfxApi_FontSize2 [61]
+                0.00    0.00   12084/252084      GfxApi_FillSquare [70]
+                0.00    0.00   14612/252084      GfxApi_TextColor [62]
+                0.00    0.00   26988/252084      GfxApi_SetRange [58]
+                0.00    0.00  188566/252084      GfxApi_MoveTo [50]
+[48]     0.0    0.00    0.00  252084         GfxApi_WriteSLong [48]
+-----------------------------------------------
+                0.00    0.00   24318/98430       Prim_RenderCube [20]
+                0.00    0.00   74112/98430       Prim_RenderSphere [11]
+[49]     0.0    0.00    0.00   98430         Obj3D_SelectTexture [49]
+-----------------------------------------------
+                0.00    0.00     632/94283       Render_Frame [5]
+                0.00    0.00   93651/94283       UICon_Draw [13]
+[50]     0.0    0.00    0.00   94283         GfxApi_MoveTo [50]
+                0.00    0.00  188566/252084      GfxApi_WriteSLong [48]
+                0.00    0.00   94283/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00   10612/30308       Render_Frame [5]
+                0.00    0.00   19696/30308       Render3D_Frame [7]
+[51]     0.0    0.00    0.00   30308         Render_PollKey [51]
+-----------------------------------------------
+                0.00    0.00   18786/18786       UICon_Print [125]
+[52]     0.0    0.00    0.00   18786         UICon_WChar [52]
+                0.00    0.00     819/819         UICon_ScrollUp [78]
+-----------------------------------------------
+                0.00    0.00   12084/12084       GfxApi_FillSquare [70]
+[53]     0.0    0.00    0.00   12084         GfxApi_WriteUByte [53]
+-----------------------------------------------
+                0.00    0.00    2462/10115       Render3D_Frame [7]
+                0.00    0.00    3021/10115       Render_PopState [73]
+                0.00    0.00    4632/10115       Prim_RenderPrimative [8]
+[54]     0.0    0.00    0.00   10115         GfxApi_PopMatrix [54]
+                0.00    0.00   10115/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    2462/10115       Render3D_Frame [7]
+                0.00    0.00    3021/10115       Render_PushState [26]
+                0.00    0.00    4632/10115       Prim_RenderPrimative [8]
+[55]     0.0    0.00    0.00   10115         GfxApi_PushMatrix [55]
+                0.00    0.00   10115/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    7379/7379        GfxFont_SetFont [57]
+[56]     0.0    0.00    0.00    7379         GfxFont_FindFont [56]
+-----------------------------------------------
+                0.00    0.00    7379/7379        gfxdev_opcode [2]
+[57]     0.0    0.00    0.00    7379         GfxFont_SetFont [57]
+                0.00    0.00    7379/7379        GfxFont_FindFont [56]
+-----------------------------------------------
+                0.00    0.00    3021/6747        UICon_Draw [13]
+                0.00    0.00    3726/6747        Render_Frame [5]
+[58]     0.0    0.00    0.00    6747         GfxApi_SetRange [58]
+                0.00    0.00   26988/252084      GfxApi_WriteSLong [48]
+                0.00    0.00    6747/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    4632/4632        Obj3D_RenderObj [10]
+[59]     0.0    0.00    0.00    4632         ObjSK_Send [59]
+-----------------------------------------------
+                0.00    0.00    4416/4416        GfxFont_RenderCell [90]
+[60]     0.0    0.00    0.00    4416         GfxFont_GetCellBit [60]
+-----------------------------------------------
+                0.00    0.00     632/3653        Render_Frame [5]
+                0.00    0.00    3021/3653        UICon_Draw [13]
+[61]     0.0    0.00    0.00    3653         GfxApi_FontSize2 [61]
+                0.00    0.00    7306/252084      GfxApi_WriteSLong [48]
+                0.00    0.00    3653/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00     632/3653        Render_Frame [5]
+                0.00    0.00    3021/3653        UICon_Draw [13]
+[62]     0.0    0.00    0.00    3653         GfxApi_TextColor [62]
+                0.00    0.00   14612/252084      GfxApi_WriteSLong [48]
+                0.00    0.00    3653/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    3094/3094        GfxDrv_BeginDrawing [67]
+[63]     0.0    0.00    0.00    3094         Draw_SetSolid2_2D [63]
+-----------------------------------------------
+                0.00    0.00    3094/3094        Render_Frame [5]
+[64]     0.0    0.00    0.00    3094         GfxApi_BeginDrawing [64]
+                0.00    0.00    3094/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    3094/3094        Render_Frame [5]
+[65]     0.0    0.00    0.00    3094         GfxApi_EndDrawing [65]
+                0.00    0.00    3094/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    3094/3094        gfxdev_opcode [2]
+[66]     0.0    0.00    0.00    3094         GfxDev_Translate [66]
+-----------------------------------------------
+                0.00    0.00    3094/3094        gfxdev_opcode [2]
+[67]     0.0    0.00    0.00    3094         GfxDrv_BeginDrawing [67]
+                0.00    0.00    3094/3094        Draw_SetSolid2_2D [63]
+-----------------------------------------------
+                0.00    0.00    3094/3094        gfxdev_opcode [2]
+[68]     0.0    0.00    0.00    3094         GfxDrv_EndDrawing [68]
+-----------------------------------------------
+                0.00    0.00    3094/3094        Render_Frame [5]
+[69]     0.0    0.00    0.00    3094         UICon_Think [69]
+                0.00    0.00      73/73          UICon_IChar [88]
+-----------------------------------------------
+                0.00    0.00    3021/3021        UICon_Draw [13]
+[70]     0.0    0.00    0.00    3021         GfxApi_FillSquare [70]
+                0.00    0.00   12084/252084      GfxApi_WriteSLong [48]
+                0.00    0.00   12084/12084       GfxApi_WriteUByte [53]
+                0.00    0.00    3021/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00    3021/3021        gfxdev_opcode [2]
+[71]     0.0    0.00    0.00    3021         GfxDrv_FillSquare [71]
+-----------------------------------------------
+                0.00    0.00    3021/3021        Render_PopState [73]
+[72]     0.0    0.00    0.00    3021         Render_PopClip [72]
+-----------------------------------------------
+                0.00    0.00    3021/3021        UICon_Draw [13]
+[73]     0.0    0.00    0.00    3021         Render_PopState [73]
+                0.00    0.00    3021/3021        Render_PopClip [72]
+                0.00    0.00    3021/10115       GfxApi_PopMatrix [54]
+-----------------------------------------------
+                0.00    0.00    3021/3021        Render_PushState [26]
+[74]     0.0    0.00    0.00    3021         Render_PushClip [74]
+-----------------------------------------------
+                0.00    0.00    2462/2462        gfxdev_opcode [2]
+[75]     0.0    0.00    0.00    2462         GfxDev_SetPerspective_3D [75]
+-----------------------------------------------
+                0.00    0.00    2462/2462        Obj3D_RenderFrame [9]
+[76]     0.0    0.00    0.00    2462         Obj3D_RunPhys [76]
+-----------------------------------------------
+                0.00    0.00    2462/2462        Obj3D_RenderFrame [9]
+[77]     0.0    0.00    0.00    2462         Sky_DrawSkyBox [77]
+-----------------------------------------------
+                0.00    0.00     819/819         UICon_WChar [52]
+[78]     0.0    0.00    0.00     819         UICon_ScrollUp [78]
+-----------------------------------------------
+                0.00    0.00       2/634         ObjSK_Init [119]
+                0.00    0.00     632/634         ObjSK_RenderObject [83]
+[79]     0.0    0.00    0.00     634         SYMGi [79]
+-----------------------------------------------
+                0.00    0.00     632/632         Render_Frame [5]
+[80]     0.0    0.00    0.00     632         GfxApi_FontSize [80]
+                0.00    0.00    1264/252084      GfxApi_WriteSLong [48]
+                0.00    0.00     632/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00     632/632         Render_Frame [5]
+[81]     0.0    0.00    0.00     632         GfxApi_Translate [81]
+                0.00    0.00    1264/252084      GfxApi_WriteSLong [48]
+                0.00    0.00     632/1838116     GfxApi_WriteOpcode [44]
+-----------------------------------------------
+                0.00    0.00     632/632         Render_Frame [5]
+[82]     0.0    0.00    0.00     632         ObjSK_Frame [82]
+                0.00    0.00     632/632         ObjSK_RenderObject [83]
+-----------------------------------------------
+                0.00    0.00     632/632         ObjSK_Frame [82]
+[83]     0.0    0.00    0.00     632         ObjSK_RenderObject [83]
+                0.00    0.00     632/634         SYMGi [79]
+-----------------------------------------------
+                0.00    0.00     168/168         GfxDrv_MainWndProc@16 [198]
+[84]     0.0    0.00    0.00     168         GfxDev_Key_Event [84]
+                0.00    0.00     168/168         keyb_handler [87]
+-----------------------------------------------
+                0.00    0.00     168/168         GfxDrv_MainWndProc@16 [198]
+[85]     0.0    0.00    0.00     168         GfxDrv_MapKey [85]
+-----------------------------------------------
+                0.00    0.00     168/168         keyb_handler [87]
+[86]     0.0    0.00    0.00     168         chkmap [86]
+-----------------------------------------------
+                0.00    0.00     168/168         GfxDev_Key_Event [84]
+[87]     0.0    0.00    0.00     168         keyb_handler [87]
+                0.00    0.00     168/168         chkmap [86]
+-----------------------------------------------
+                0.00    0.00      73/73          UICon_Think [69]
+[88]     0.0    0.00    0.00      73         UICon_IChar [88]
+-----------------------------------------------
+                0.00    0.00      66/66          GfxFont_RenderCell [90]
+[89]     0.0    0.00    0.00      66         GfxFont_FetchChar [89]
+-----------------------------------------------
+                0.00    0.00      66/66          GfxFont_FetchFrag [14]
+[90]     0.0    0.00    0.00      66         GfxFont_RenderCell [90]
+                0.00    0.00    4416/4416        GfxFont_GetCellBit [60]
+                0.00    0.00      66/66          GfxFont_FetchChar [89]
+-----------------------------------------------
+                0.00    0.00      16/16          Render3D_RenderObj [284]
+[91]     0.0    0.00    0.00      16         Prim_Show [91]
+-----------------------------------------------
+                0.00    0.00       8/8           Prim_StubPrim [38]
+[92]     0.0    0.00    0.00       8         Obj3D_NotifyLinks [92]
+-----------------------------------------------
+                0.00    0.00       5/5           GfxDrv_MainWndProc@16 [198]
+[93]     0.0    0.00    0.00       5         GfxDrv_AppActivate [93]
+-----------------------------------------------
+                0.00    0.00       4/4           GfxFont_Init [110]
+[94]     0.0    0.00    0.00       4         GfxFont_Register [94]
+-----------------------------------------------
+                0.00    0.00       1/4           Tex_LoadTexture2 [124]
+                0.00    0.00       3/4           GfxFont_FetchFrag [14]
+[95]     0.0    0.00    0.00       4         Tex_AllocTexnum [95]
+-----------------------------------------------
+                0.00    0.00       4/4           Tex_LoadTexture2 [124]
+[96]     0.0    0.00    0.00       4         Tex_HalfSample [96]
+-----------------------------------------------
+                0.00    0.00       2/2           GfxFont_Init [110]
+[97]     0.0    0.00    0.00       2         GfxFont_LoadFont [97]
+-----------------------------------------------
+                0.00    0.00       2/2           WinMain@16 [3]
+[98]     0.0    0.00    0.00       2         checkarg [98]
+-----------------------------------------------
+                0.00    0.00       1/1           WinMain@16 [3]
+[99]     0.0    0.00    0.00       1         DevicesUI_Init [99]
+                0.00    0.00       1/1           Gfxdev_Init [111]
+                0.00    0.00       1/1           IfDev_Init [112]
+                0.00    0.00       1/1           Mouse_Init [113]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxApi_Texture [39]
+[100]    0.0    0.00    0.00       1         GfxApi_ReadSLong [100]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxApi_Texture [39]
+[101]    0.0    0.00    0.00       1         GfxApi_WriteData [101]
+-----------------------------------------------
+                0.00    0.00       1/1           gfxdev_opcode [2]
+[102]    0.0    0.00    0.00       1         GfxDev_WriteSLong [102]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxDrv_VID_SetWindowedMode [108]
+[103]    0.0    0.00    0.00       1         GfxDrv_CenterWindow [103]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxDrv_Start [106]
+[104]    0.0    0.00    0.00       1         GfxDrv_GL_Init [104]
+-----------------------------------------------
+                0.00    0.00       1/1           Gfxdev_Init [111]
+[105]    0.0    0.00    0.00       1         GfxDrv_Init [105]
+-----------------------------------------------
+                0.00    0.00       1/1           gfxdev_open [400]
+[106]    0.0    0.00    0.00       1         GfxDrv_Start [106]
+                0.00    0.00       1/1           GfxDrv_VID_InitDIB [107]
+                0.00    0.00       1/1           GfxDrv_VID_SetWindowedMode [108]
+                0.00    0.00       1/1           GfxDrv_bSetupPixelFormat [109]
+                0.00    0.00       1/1           GfxDrv_GL_Init [104]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxDrv_Start [106]
+[107]    0.0    0.00    0.00       1         GfxDrv_VID_InitDIB [107]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxDrv_Start [106]
+[108]    0.0    0.00    0.00       1         GfxDrv_VID_SetWindowedMode [108]
+                0.00    0.00       1/1           GfxDrv_CenterWindow [103]
+-----------------------------------------------
+                0.00    0.00       1/1           GfxDrv_Start [106]
+[109]    0.0    0.00    0.00       1         GfxDrv_bSetupPixelFormat [109]
+-----------------------------------------------
+                0.00    0.00       1/1           gfxdev_open [400]
+[110]    0.0    0.00    0.00       1         GfxFont_Init [110]
+                0.00    0.00       4/4           GfxFont_Register [94]
+                0.00    0.00       2/2           GfxFont_LoadFont [97]
+-----------------------------------------------
+                0.00    0.00       1/1           DevicesUI_Init [99]
+[111]    0.0    0.00    0.00       1         Gfxdev_Init [111]
+                0.00    0.00       1/1           GfxDrv_Init [105]
+                0.00    0.00       1/1           Tex_Init2 [123]
+-----------------------------------------------
+                0.00    0.00       1/1           DevicesUI_Init [99]
+[112]    0.0    0.00    0.00       1         IfDev_Init [112]
+-----------------------------------------------
+                0.00    0.00       1/1           DevicesUI_Init [99]
+[113]    0.0    0.00    0.00       1         Mouse_Init [113]
+-----------------------------------------------
+                0.00    0.00       1/1           Render_Init [40]
+[114]    0.0    0.00    0.00       1         Obj3D_Init [114]
+                0.00    0.00       1/1           Obj3D_TexInit [118]
+                0.00    0.00       1/1           Prim_Init [120]
+                0.00    0.00       1/1           Obj3D_SpriteInit [117]
+                0.00    0.00       1/1           Obj3D_SkyInit [116]
+                0.00    0.00       1/1           Obj3D_PhysInit [115]
+-----------------------------------------------
+                0.00    0.00       1/1           Obj3D_Init [114]
+[115]    0.0    0.00    0.00       1         Obj3D_PhysInit [115]
+-----------------------------------------------
+                0.00    0.00       1/1           Obj3D_Init [114]
+[116]    0.0    0.00    0.00       1         Obj3D_SkyInit [116]
+-----------------------------------------------
+                0.00    0.00       1/1           Obj3D_Init [114]
+[117]    0.0    0.00    0.00       1         Obj3D_SpriteInit [117]
+-----------------------------------------------
+                0.00    0.00       1/1           Obj3D_Init [114]
+[118]    0.0    0.00    0.00       1         Obj3D_TexInit [118]
+-----------------------------------------------
+                0.00    0.00       1/1           Render_Init [40]
+[119]    0.0    0.00    0.00       1         ObjSK_Init [119]
+                0.00    0.00       2/634         SYMGi [79]
+-----------------------------------------------
+                0.00    0.00       1/1           Obj3D_Init [114]
+[120]    0.0    0.00    0.00       1         Prim_Init [120]
+-----------------------------------------------
+                0.00    0.00       1/1           Render_Init [40]
+[121]    0.0    0.00    0.00       1         Render3D_Init [121]
+-----------------------------------------------
+                0.00    0.00       1/1           Tex_LoadTexture2 [124]
+[122]    0.0    0.00    0.00       1         Tex_GetModeinfo [122]
+-----------------------------------------------
+                0.00    0.00       1/1           Gfxdev_Init [111]
+[123]    0.0    0.00    0.00       1         Tex_Init2 [123]
+-----------------------------------------------
+                0.00    0.00       1/1           gfxdev_opcode [2]
+[124]    0.0    0.00    0.00       1         Tex_LoadTexture2 [124]
+                0.00    0.00       4/4           Tex_HalfSample [96]
+                0.00    0.00       1/4           Tex_AllocTexnum [95]
+                0.00    0.00       1/1           Tex_GetModeinfo [122]
+-----------------------------------------------
+                0.00    0.00       1/1           Render_Init [40]
+[125]    0.0    0.00    0.00       1         UICon_Print [125]
+                0.00    0.00   18786/18786       UICon_WChar [52]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [99] DevicesUI_Init         [66] GfxDev_Translate       [82] ObjSK_Frame
+  [63] Draw_SetSolid2_2D     [102] GfxDev_WriteSLong     [119] ObjSK_Init
+  [45] ELEM_OBJTYPEPi (scmcc.h) [93] GfxDrv_AppActivate   [83] ObjSK_RenderObject
+  [29] GfxApi_Begin           [67] GfxDrv_BeginDrawing    [59] ObjSK_Send
+  [64] GfxApi_BeginDrawing   [103] GfxDrv_CenterWindow    [17] Prim_ApplyPrim
+  [30] GfxApi_BindTex         [68] GfxDrv_EndDrawing     [120] Prim_Init
+  [34] GfxApi_Color           [71] GfxDrv_FillSquare      [37] Prim_NewPrimative
+  [31] GfxApi_End            [104] GfxDrv_GL_Init         [21] Prim_Opts
+  [65] GfxApi_EndDrawing     [105] GfxDrv_Init            [20] Prim_RenderCube
+  [70] GfxApi_FillSquare      [85] GfxDrv_MapKey           [8] Prim_RenderPrimative
+  [80] GfxApi_FontSize       [106] GfxDrv_Start           [11] Prim_RenderSphere
+  [61] GfxApi_FontSize2      [107] GfxDrv_VID_InitDIB     [91] Prim_Show
+  [50] GfxApi_MoveTo         [108] GfxDrv_VID_SetWindowedMode [7] Render3D_Frame
+  [36] GfxApi_Perspective    [109] GfxDrv_bSetupPixelFormat [121] Render3D_Init
+  [46] GfxApi_Point            [6] GfxFont_DrawChar        [5] Render_Frame
+  [54] GfxApi_PopMatrix       [89] GfxFont_FetchChar      [40] Render_Init
+  [55] GfxApi_PushMatrix      [14] GfxFont_FetchFrag      [51] Render_PollKey
+ [100] GfxApi_ReadSLong       [56] GfxFont_FindFont       [72] Render_PopClip
+  [24] GfxApi_Rotate3         [60] GfxFont_GetCellBit     [73] Render_PopState
+  [23] GfxApi_SetFont        [110] GfxFont_Init           [74] Render_PushClip
+  [58] GfxApi_SetRange        [97] GfxFont_LoadFont       [26] Render_PushState
+  [18] GfxApi_Show            [94] GfxFont_Register       [79] SYMGi (scmcc.h)
+  [15] GfxApi_TexCoord2       [90] GfxFont_RenderCell     [77] Sky_DrawSkyBox
+  [62] GfxApi_TextColor       [57] GfxFont_SetFont        [95] Tex_AllocTexnum
+  [39] GfxApi_Texture        [111] Gfxdev_Init           [122] Tex_GetModeinfo
+  [33] GfxApi_TransformMatrixd [112] IfDev_Init           [96] Tex_HalfSample
+  [81] GfxApi_Translate      [113] Mouse_Init            [123] Tex_Init2
+  [35] GfxApi_Translate3      [32] Obj3D_BindTexture     [124] Tex_LoadTexture2
+  [25] GfxApi_UnbindTex      [114] Obj3D_Init             [13] UICon_Draw
+  [19] GfxApi_Vec3            [47] Obj3D_MapST            [88] UICon_IChar
+ [101] GfxApi_WriteData       [92] Obj3D_NotifyLinks     [125] UICon_Print
+  [12] GfxApi_WriteFloat     [115] Obj3D_PhysInit         [78] UICon_ScrollUp
+  [44] GfxApi_WriteOpcode     [22] Obj3D_Point            [69] UICon_Think
+  [27] GfxApi_WriteSByte       [9] Obj3D_RenderFrame      [52] UICon_WChar
+  [28] GfxApi_WriteSInt       [10] Obj3D_RenderObj         [3] WinMain@16
+  [48] GfxApi_WriteSLong      [76] Obj3D_RunPhys          [98] checkarg
+  [16] GfxApi_WriteString     [49] Obj3D_SelectTexture    [86] chkmap (keyb.c)
+  [53] GfxApi_WriteUByte     [116] Obj3D_SkyInit           [2] gfxdev_opcode
+  [84] GfxDev_Key_Event      [117] Obj3D_SpriteInit        [1] gfxdev_write
+  [75] GfxDev_SetPerspective_3D [118] Obj3D_TexInit       [87] keyb_handler

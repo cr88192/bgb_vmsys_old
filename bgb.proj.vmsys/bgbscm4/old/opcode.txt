@@ -1,0 +1,10 @@
+internally the opcodes will be built from lists, with each element in the list being a list with the opcode and any parms.
+there will be 2 structures: the lambda list and the display, in which vars may be pulled.
+
+I will define:
+refer-local n		will refer to element n in lambda list, puts value in accumulator
+refer-free n		will refer to element n in display, puts value in accumulator
+indirect			will unbox accumulator
+constant x			will put x in accumulator
+argument			will push accumulator on stack
+apply				will call function in accumulator

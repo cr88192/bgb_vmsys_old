@@ -1,0 +1,49 @@
+define func_door
+	newobject entity-obj
+		(spawn:)
+			set-movedir
+
+			self.solid := SOLID_BSP
+			self.movetype := MOVETYPE_PUSH
+			self model: self.model
+
+			self origin: self.origin
+
+			if (self.speed = 0)
+				self.speed := 100
+
+			self.pos1 := self.origin
+			self.pos2 :=
+				vec+ self.pos1
+					vec* self.movedir
+						abs ((vecdot self.movedir self.size) - self.lip)
+
+//			print "door " self.movedir self.size self.pos1 self.pos2 self.speed "\n"
+
+		(think:)
+			print "door stop\n"
+			if (self.target != "")
+				use-targets self.target
+			self origin: self.pos2
+			self.velocity := #(0 0 0)
+			self.pos2 := self.pos1
+			self.pos1 := self.origin
+
+		(touch: other)
+			if (and
+				self.velocity = #(0 0 0)
+				self.targetname = "")
+
+				begin
+					print "door start\n"
+					calc-move self.pos2 self.speed
+//					self origin: self.pos2
+
+		(use:)
+			if (self.velocity = #(0 0 0))
+				begin
+					print "door start\n"
+					calc-move self.pos2 self.speed
+//					self origin: self.pos2
+
+define func_door_secret	func_door

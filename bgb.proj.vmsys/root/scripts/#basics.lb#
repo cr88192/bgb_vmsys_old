@@ -1,0 +1,26 @@
+load "scripts/damage.lb"
+
+function use-targets (targ)
+	rlet f ((e (edict-find world 'targetname targ)))
+		if(e != #z)
+			begin
+				e use:
+				f (edict-find e 'targetname targ)
+
+function set-movedir ()
+	if (self.angles = #(0 -1 0))
+		self.movedir := #(0 0 1)
+		if (self.angles = #(0 -2 0))
+			self.movedir := #(0 0 -1)
+			self.movedir := self.forward
+	self.angles := #(0 0 0)
+
+function calc-move (tdest tspeed)
+	let ( (vdestdelta (vec- tdest self.origin))
+		traveltime
+			(veclen (vec- tdest self.origin)) / tspeed)
+
+		self.nextthink :=
+			self.ltime + traveltime
+		self.velocity :=
+			vec* vdestdelta (1 / traveltime)

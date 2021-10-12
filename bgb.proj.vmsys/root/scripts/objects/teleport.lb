@@ -1,0 +1,19 @@
+define trigger_teleport
+	newobject entity-obj
+		(spawn:)
+			self.solid := SOLID_TRIGGER
+			self.movetype := MOVETYPE_NONE
+			self model: self.model
+			self.modelindex := 0
+			self.model := ""
+
+		(touch: other)
+			print "tele touch " other.classname "\n"
+			if(other.classname = "player")
+				let ((targ (edict-find world 'targetname self.target)))
+					other origin: (vec+ targ.origin #(0 0 16))
+					other.anlges := targ.mangle
+					other.v_anlge := targ.mangle
+					other.fixangle := 1
+					if (bit-and? other.flags FL_ONGROUND)
+						other.flags := (other.flags - FL_ONGROUND)

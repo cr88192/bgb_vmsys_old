@@ -1,0 +1,185 @@
+BGF 0.2
+
+from 0.1:
+I am changing to use s-expressions instead of a line syntax. s-expressions,
+though more complicated than lines, offer greater flexibility.
+
+BEGIN/END will be dropped as they are unneeded with s-expressions.
+
+quote and quasiquote will be dropped, along with all associated ',' ',@'
+...
+the reason is that since there will at present be no evaluation these will
+not be useful (such symbols will still be "reserved" though).
+
+s-expressions:
+I will define the basic form which will be allowed for models.
+the syntax will be based on "lists". a list is enclosed in parenthesis and
+includes objects (symbols, numbers, strings, other lists, ...).
+
+a symbol is a sequence of letters, numbers, or the characters
+"!$%&*+-/:<=>?@_", and is required not to start with a number.
+symbols will not be case sensitive.
+
+numbers will start with a number, I will define decimal integer, hex
+integer ('0x' notation), and float (digits + '.' or 'e').
+
+strings are enclosed in double quotes '"'. some escape sequences are
+allowed: \" doublequote, \n newline, \\ backslash, ...
+
+# will be used to escape special types or values:
+#f #t #z, false, true, null.
+
+vector notation is under consideration:
+#(...) arity=1
+#n(...) arity>1, where n is the arity:
+	#2((1 0 0 0) (0 1 0 0) (0 0 1 0) (0 0 0 1))
+
+; will indicate the start of a line comment.
+#! and !# will be used for block comments.
+
+data:
+in general where names are indicated one may supply #z (n/a), in which case
+the object will exist but may not be referred to by name. empty list of #f
+could also be possibilities (this would allow more straightforward reading
+by scheme or cl systems, but it is doubtful that this will be read much
+by many of either type...).
+
+at present all definitions may be at top level (requiring that all names
+be unique), this may be changed and is under consideration.
+
+unsuported objects are to be ignored.
+
+convention will now be to allow key extensions to basic defs:
+(keyword . args)
+	generic definition.
+(TAG tag)
+	will define a tag, a tag is present but has no value.
+(KEY key value)
+	will define a key, these associate some data with a value.
+
+(VERTICES . body)
+	vertex group, this is viewed as an object.
+
+(VERTEX x y z . rest)
+	defines a vertex, rest will be options:
+	(ST s t)
+		a position in texture space of this vertex.
+	(RGBA r g b a)
+		a color for this vertex.
+	(SEAM s)
+		seam value: 0=undefined, 1=front, 2=seam, 3=back.
+
+(FRAME name . rest)
+	defines a frame, rest containes vertices or bones.
+(FRAMEANIM name . rest)
+	group of frames that go in a loop.
+(FRAMESET name . rest)
+	group of frames that may be used for a model, contains anims or 	frames.
+
+(POLYIDX verts . rest)
+	indexed poly, verts is a list of vertex indices.
+	this will use the closest vertex group in scope.
+	(TEXTURE name)
+		name of texture to use, string for an external name, symbol
+		reserved.
+	(TRANSLATE s t)
+		translate texture by s and t along normal plane.
+	(SCALE s t)
+		scale s and t along normal plane.
+	(ROTATE r)
+		rotate by r degrees around normal.
+	(NORMAL n)
+		define texture normal for plane.
+
+(POLYVEC verts . rest)
+	like POLYIDX except that vecs is a list of vertices, for each the
+	"VERTEX" will be implicit.
+
+(BRUSH . rest)
+	convex group of polygons to behave as a simple object.
+
+(GROUP . rest)
+	free form collection of objects.
+	vertices or frames will work as a stack, 0 will allways be the top
+	of the stack.
+
+
+(BONE name . rest)
+	will define part of a skeletal model.
+	(ORG x y z)
+		origin relative to parent.
+	(LENGTH l)
+		length of bone.
+	(NORMAL x y z)
+		direction of bone within piece.
+	(PIECE name . rest)
+		name of the piece or a definition of it.
+		if rest is present it defines the piece, otherwise name
+		refers to it.
+	(ANGLE p q r)
+		angles for the bone.
+
+(PIECE name . rest)
+	defines the geometry for a part of the model (ie: to be used in
+	bones or such).
+
+(SKIN name [file] . rest)
+	refers to a skin, if file is present then that indicates the image
+	to be used as the skin texture.
+
+(SPHERE name . rest)
+(CYLINDER name . rest)
+(CUBE name . rest)
+(DISK name . rest)
+(UNION name . rest)
+	creates a primative.
+	(ORG x y z)
+		origin of primative.
+	(DIR x y z)
+		direction of cylinder, plane normal of disk.
+	(RADIUS l)
+		cylinder/shpere/disk: radius.
+
+	(RADIUS-BOTTOM l)
+	(RADIUS-TOP l)
+		allows tweening of cylinders.
+	(HEIGHT h)
+		height of cylinders.
+
+	(MIN x y z)
+	(MAX x y z)
+		extents of cubes, relative to origin.
+
+	(SKIN name . rest)
+		skin texture to use for the primative.
+		(FACE num)
+			indicates what face is being skinned for cubes,
+			otherwise all faces will be skined.
+			0: X, 1: -X, 2: Y, 3: -Y, 4: Z, 5: -Z
+	(TRANSLATE x y z)
+	(SCALE x y z)
+	(ROTATE p q r)
+		perform transformations on the objects.
+		I will define that the order matter, these will work in the order
+		defined.
+
+(CLONE name other . rest)
+	allows cloning a template object. modifications to clones will not
+	effect parents though modifications to parents will effect clones.
+
+others are under consideration.
+
+union/piece:
+(SKIN-PLANE skin . rest)
+	skin is a skin object.
+	(TEXTURE name)
+		name of texture to use, string for an external name, symbol
+		reserved.
+	(TRANSLATE s t)
+		translate texture by s and t along normal plane.
+	(SCALE s t)
+		scale s and t along normal plane.
+	(ROTATE r)
+		rotate by r degrees around normal.
+	(NORMAL n)
+		define texture normal for plane.

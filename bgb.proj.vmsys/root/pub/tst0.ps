@@ -1,0 +1,1547 @@
+%!PS-Adobe-3.0
+%%Title: MRP
+%%Creator: PScript5.dll Version 5.2
+%%CreationDate: 7/10/2003 16:1:15
+%%For: cr88192
+%%BoundingBox: (atend)
+%%Pages: (atend)
+%%Orientation: Portrait
+%%PageOrder: Special
+%%DocumentNeededResources: (atend)
+%%DocumentSuppliedResources: (atend)
+%%DocumentData: Clean7Bit
+%%TargetDevice: (Generic PostScript Printer) (2010.0) 2
+%%LanguageLevel: 2
+%%EndComments
+
+%%BeginDefaults
+%%PageBoundingBox: 18 8 593 784
+%%ViewingOrientation: 1 0 0 1
+%%EndDefaults
+
+
+%%BeginProlog
+%%BeginResource: file Pscript_WinNT_ErrorHandler 5.0 0
+/currentpacking where{pop/oldpack currentpacking def/setpacking where{pop false
+setpacking}if}if/$brkpage 64 dict def $brkpage begin/prnt{dup type/stringtype
+ne{=string cvs}if dup length 6 mul/tx exch def/ty 10 def currentpoint/toy exch
+def/tox exch def 1 setgray newpath tox toy 2 sub moveto 0 ty rlineto tx 0
+rlineto 0 ty neg rlineto closepath fill tox toy moveto 0 setgray show}bind def
+/nl{currentpoint exch pop lmargin exch moveto 0 -10 rmoveto}def/=={/cp 0 def
+typeprint nl}def/typeprint{dup type exec}readonly def/lmargin 72 def/rmargin 72
+def/tprint{dup length cp add rmargin gt{nl/cp 0 def}if dup length cp add/cp
+exch def prnt}readonly def/cvsprint{=string cvs tprint( )tprint}readonly def
+/integertype{cvsprint}readonly def/realtype{cvsprint}readonly def/booleantype
+{cvsprint}readonly def/operatortype{(--)tprint =string cvs tprint(-- )tprint}
+readonly def/marktype{pop(-mark- )tprint}readonly def/dicttype{pop
+(-dictionary- )tprint}readonly def/nulltype{pop(-null- )tprint}readonly def
+/filetype{pop(-filestream- )tprint}readonly def/savetype{pop(-savelevel- )
+tprint}readonly def/fonttype{pop(-fontid- )tprint}readonly def/nametype{dup
+xcheck not{(/)tprint}if cvsprint}readonly def/stringtype{dup rcheck{(\()tprint
+tprint(\))tprint}{pop(-string- )tprint}ifelse}readonly def/arraytype{dup rcheck
+{dup xcheck{({)tprint{typeprint}forall(})tprint}{([)tprint{typeprint}forall(])
+tprint}ifelse}{pop(-array- )tprint}ifelse}readonly def/packedarraytype{dup
+rcheck{dup xcheck{({)tprint{typeprint}forall(})tprint}{([)tprint{typeprint}
+forall(])tprint}ifelse}{pop(-packedarray- )tprint}ifelse}readonly def/courier
+/Courier findfont 10 scalefont def end errordict/handleerror{systemdict begin
+$error begin $brkpage begin newerror{/newerror false store vmstatus pop pop 0
+ne{grestoreall}if errorname(VMerror)ne{showpage}if initgraphics courier setfont
+lmargin 720 moveto errorname(VMerror)eq{userdict/ehsave known{clear userdict
+/ehsave get restore 2 vmreclaim}if vmstatus exch pop exch pop PrtVMMsg}{
+(ERROR: )prnt errorname prnt nl(OFFENDING COMMAND: )prnt/command load prnt
+$error/ostack known{nl nl(STACK:)prnt nl nl $error/ostack get aload length{==}
+repeat}if}ifelse systemdict/showpage get exec(%%[ Error: )print errorname
+=print(; OffendingCommand: )print/command load =print( ]%%)= flush}if end end
+end}dup 0 systemdict put dup 4 $brkpage put bind readonly put/currentpacking
+where{pop/setpacking where{pop oldpack setpacking}if}if
+%%EndResource
+userdict /Pscript_WinNT_Incr 230 dict dup begin put
+%%BeginResource: file Pscript_FatalError 5.0 0
+userdict begin/FatalErrorIf{{initgraphics findfont 1 index 0 eq{exch pop}{dup
+length dict begin{1 index/FID ne{def}{pop pop}ifelse}forall/Encoding
+{ISOLatin1Encoding}stopped{StandardEncoding}if def currentdict end
+/ErrFont-Latin1 exch definefont}ifelse exch scalefont setfont counttomark 3 div
+cvi{moveto show}repeat showpage quit}{cleartomark}ifelse}bind def end
+%%EndResource
+userdict begin/PrtVMMsg{vmstatus exch sub exch pop gt{[
+(This job requires more memory than is available in this printer.)100 500
+(Try one or more of the following, and then print again:)100 485
+(For the output format, choose Optimize For Portability.)115 470
+(In the Device Settings page, make sure the Available PostScript Memory is accurate.)
+115 455(Reduce the number of fonts in the document.)115 440
+(Print the document in parts.)115 425 12/Times-Roman showpage
+(%%[ PrinterError: Low Printer VM ]%%)= true FatalErrorIf}if}bind def end
+version cvi 2016 ge{/VM?{pop}bind def}{/VM? userdict/PrtVMMsg get def}ifelse
+105000 VM?
+%%BeginResource: file Pscript_Win_Basic 5.0 0
+/d/def load def/,/load load d/~/exch , d/?/ifelse , d/!/pop , d/`/begin , d/^
+/index , d/@/dup , d/+/translate , d/$/roll , d/U/userdict , d/M/moveto , d/-
+/rlineto , d/&/currentdict , d/:/gsave , d/;/grestore , d/F/false , d/T/true ,
+d/N/newpath , d/E/end , d/Ac/arc , d/An/arcn , d/A/ashow , d/D/awidthshow , d/C
+/closepath , d/V/div , d/O/eofill , d/L/fill , d/I/lineto , d/-c/curveto , d/-M
+/rmoveto , d/+S/scale , d/Ji/setfont , d/Lc/setlinecap , d/Lj/setlinejoin , d
+/Lw/setlinewidth , d/Lm/setmiterlimit , d/sd/setdash , d/S/show , d/LH/showpage
+, d/K/stroke , d/W/widthshow , d/R/rotate , d/L2? false/languagelevel where{pop
+languagelevel 2 ge{pop true}if}if d L2?{/xS/xshow , d/yS/yshow , d/zS/xyshow ,
+d}if/b{bind d}bind d/bd{bind d}bind d/xd{~ d}bd/ld{, d}bd/bn/bind ld/lw/Lw ld
+/lc/Lc ld/lj/Lj ld/sg/setgray ld/ADO_mxRot null d/self & d/OrgMx matrix
+currentmatrix d/reinitialize{: OrgMx setmatrix[/TextInit/GraphInit/UtilsInit
+counttomark{@ where{self eq}{F}?{cvx exec}{!}?}repeat cleartomark ;}b
+/initialize{`{/Pscript_Win_Data where{!}{U/Pscript_Win_Data & put}?/ADO_mxRot ~
+d/TextInitialised? F d reinitialize E}{U/Pscript_Win_Data 230 dict @ ` put
+/ADO_mxRot ~ d/TextInitialised? F d reinitialize}?}b/terminate{!{& self eq
+{exit}{E}?}loop E}b/suspend/terminate , d/resume{` Pscript_Win_Data `}b U `
+/lucas 21690 d/featurebegin{countdictstack lucas[}b/featurecleanup{stopped
+{cleartomark @ lucas eq{! exit}if}loop countdictstack ~ sub @ 0 gt{{E}repeat}
+{!}?}b E/snap{transform 0.25 sub round 0.25 add ~ 0.25 sub round 0.25 add ~
+itransform}b/dsnap{dtransform round ~ round ~ idtransform}b/nonzero_round{@ 0.5
+ge{round}{@ -0.5 lt{round}{0 ge{1}{-1}?}?}?}b/nonzero_dsnap{dtransform
+nonzero_round ~ nonzero_round ~ idtransform}b U<04>cvn{}put/rr{1 ^ 0 - 0 ~ -
+neg 0 - C}b/irp{4 -2 $ + +S fx 4 2 $ M 1 ^ 0 - 0 ~ - neg 0 -}b/rp{4 2 $ M 1 ^ 0
+- 0 ~ - neg 0 -}b/solid{[]0 sd}b/g{@ not{U/DefIf_save save put}if U/DefIf_bool
+2 ^ put}b/DefIf_El{if U/DefIf_bool get not @{U/DefIf_save get restore}if}b/e
+{DefIf_El !}b/UDF{L2?{undefinefont}{!}?}b/UDR{L2?{undefineresource}{! !}?}b
+/freeVM{/Courier findfont[40 0 0 -40 0 0]makefont Ji 2 vmreclaim}b/hfRedefFont
+{findfont @ length dict `{1 ^/FID ne{d}{! !}?}forall & E @ ` ~{/CharStrings 1
+dict `/.notdef 0 d & E d}if/Encoding 256 array 0 1 255{1 ^ ~/.notdef put}for d
+E definefont !}bind d/hfMkCIDFont{/CIDFont findresource @ length 2 add dict `{1
+^ @/FID eq ~ @/XUID eq ~/UIDBase eq or or{! !}{d}?}forall/CDevProc ~ d/Metrics2
+16 dict d/CIDFontName 1 ^ d & E 1 ^ ~/CIDFont defineresource ![~]composefont !}
+bind d
+%%EndResource
+%%BeginResource: file Pscript_Win_Utils_L2 5.0 0
+/rf/rectfill , d/fx{1 1 dtransform @ 0 ge{1 sub 0.5}{1 add -0.5}? 3 -1 $ @ 0 ge
+{1 sub 0.5}{1 add -0.5}? 3 1 $ 4 1 $ idtransform 4 -2 $ idtransform}b/BZ{4 -2 $
+snap + +S fx rf}b/rs/rectstroke , d/rc/rectclip , d/UtilsInit{currentglobal{F
+setglobal}if}b/scol{! setcolor}b/colspA/DeviceGray d/colspABC/DeviceRGB d
+/colspRefresh{colspABC setcolorspace}b/SetColSpace{colspABC setcolorspace}b
+/resourcestatus where{!/ColorRendering/ProcSet resourcestatus{! ! T}{F}?}{F}?
+not{/ColorRendering<</GetHalftoneName{currenthalftone @/HalftoneName known{
+/HalftoneName get}{!/none}?}bn/GetPageDeviceName{currentpagedevice @
+/PageDeviceName known{/PageDeviceName get @ null eq{!/none}if}{!/none}?}bn
+/GetSubstituteCRD{!/DefaultColorRendering/ColorRendering resourcestatus{! !
+/DefaultColorRendering}{(DefaultColorRendering*){cvn exit}127 string
+/ColorRendering resourceforall}?}bn>>/defineresource where{!/ProcSet
+defineresource !}{! !}?}if/buildcrdname{/ColorRendering/ProcSet findresource `
+mark GetHalftoneName @ type @/nametype ne ~/stringtype ne and{!/none}if(.)
+GetPageDeviceName @ type @/nametype ne ~/stringtype ne and{!/none}if(.)5 ^ 0 5
+-1 1{^ length add}for string 6 1 $ 5 ^ 5{~ 1 ^ cvs length 1 ^ length 1 ^ sub
+getinterval}repeat ! cvn 3 1 $ ! ! E}b/definecolorrendering{~ buildcrdname ~
+/ColorRendering defineresource !}b/findcolorrendering where{!}{
+/findcolorrendering{buildcrdname @/ColorRendering resourcestatus{! ! T}{
+/ColorRendering/ProcSet findresource ` GetSubstituteCRD E F}?}b}?
+/selectcolorrendering{findcolorrendering !/ColorRendering findresource
+setcolorrendering}b/G2UBegin{findresource/FontInfo get/GlyphNames2Unicode get
+`}bind d/G2CCBegin{findresource/FontInfo get/GlyphNames2HostCode get `}bind d
+/G2UEnd{E}bind d/AddFontInfoBegin{/FontInfo 8 dict @ `}bind d/AddFontInfo{
+/GlyphNames2Unicode 16 dict d/GlyphNames2HostCode 16 dict d}bind d
+/AddFontInfoEnd{E d}bind d/T0AddCFFMtx2{/CIDFont findresource/Metrics2 get ` d
+E}bind d
+%%EndResource
+end
+%%EndProlog
+
+%%BeginSetup
+statusdict begin (%%[ ProductName: ) print product print ( ]%%)= flush end
+[ 1 0 0 1 0 0 ] false Pscript_WinNT_Incr dup /initialize get exec
+featurebegin{
+%%BeginNonPPDFeature: JobTimeout 0
+0 /languagelevel where{pop languagelevel}{1}ifelse 2 ge{1 dict dup/JobTimeout  4 -1 roll put setuserparams}{statusdict/setjobtimeout get exec}ifelse
+%%EndNonPPDFeature
+}featurecleanup
+
+featurebegin{
+%%BeginNonPPDFeature: WaitTimeout 300
+300 /languagelevel where{pop languagelevel}{1}ifelse 2 ge{1 dict dup/WaitTimeout 4 -1 roll put setuserparams}{statusdict/waittimeout 3 -1 roll put}ifelse
+%%EndNonPPDFeature
+}featurecleanup
+
+featurebegin{
+%%BeginFeature: *PageSize Letter
+
+    <</DeferredMediaSelection true /PageSize [612 792] /ImagingBBox null>> setpagedevice
+%%EndFeature
+}featurecleanup
+featurebegin{
+%%BeginFeature: *Resolution 300dpi
+
+%%EndFeature
+}featurecleanup
+1 setlinecap 1 setlinejoin
+/mysetup [ 72 300 V 0 0 -72 300 V 18 784.00067 ] def 
+%%EndSetup
+
+userdict begin /ehsave save def end
+%%Page: 1 1
+%%PageBoundingBox: 18 8 593 784
+%%EndPageComments
+%%BeginPageSetup
+/DeviceRGB dup setcolorspace /colspABC exch def
+mysetup concat colspRefresh
+%%EndPageSetup
+
+/DeviceGray dup setcolorspace /colspABC exch def
+0 0 scol Pscript_WinNT_Incr begin
+%%BeginResource: file Pscript_Text 5.0 0
+/TextInit{TextInitialised? not{/Pscript_Windows_Font & d/TextInitialised? T d
+/fM[1 0 0 1 0 0]d/mFM matrix d/iMat[1 0 0.212557 1 0 0]d}if}b/copyfont{1 ^
+length add dict `{1 ^/FID ne{d}{! !}?}forall & E}b/EncodeDict 11 dict d/bullets
+{{/bullet}repeat}b/rF{3 copyfont @ ` ~ EncodeDict ~ get/Encoding ~ 3 ^/0 eq{&
+/CharStrings known{CharStrings/Eth known not{! EncodeDict/ANSIEncodingOld get}
+if}if}if d E}b/mF{@ 7 1 $ findfont ~{@/Encoding get @ StandardEncoding eq{! T}{
+{ISOLatin1Encoding}stopped{! F}{eq}?{T}{@ ` T 32 1 127{Encoding 1 ^ get
+StandardEncoding 3 -1 $ get eq and}for E}?}?}{F}?{1 ^ ~ rF}{0 copyfont}? 6 -2 $
+! ! ~ !/pd_charset @ where{~ get 128 eq{@ FDV 2 copy get @ length array copy
+put pd_CoverFCRange}if}{!}? 2 ^ ~ definefont fM 5 4 -1 $ put fM 4 0 put fM
+makefont Pscript_Windows_Font 3 1 $ put}b/sLT{: Lw -M currentpoint snap M 0 - 0
+Lc K ;}b/xUP null d/yUP null d/uW null d/xSP null d/ySP null d/sW null d/sSU{N
+/uW ~ d/yUP ~ d/xUP ~ d}b/sU{xUP yUP uW sLT}b/sST{N/sW ~ d/ySP ~ d/xSP ~ d}b/sT
+{xSP ySP sW sLT}b/sR{: + R 0 0 M}b/sRxy{: matrix astore concat 0 0 M}b/eR/; , d
+/AddOrigFP{{&/FontInfo known{&/FontInfo get length 6 add}{6}? dict `
+/WinPitchAndFamily ~ d/WinCharSet ~ d/OrigFontType ~ d/OrigFontStyle ~ d
+/OrigFontName ~ d & E/FontInfo ~ d}{! ! ! ! !}?}b/mFS{makefont
+Pscript_Windows_Font 3 1 $ put}b/mF42D{0 copyfont `/FontName ~ d 2 copy ~ sub 1
+add dict `/.notdef 0 d 2 copy 1 ~{@ 3 ^ sub Encoding ~ get ~ d}for & E
+/CharStrings ~ d ! ! & @ E/FontName get ~ definefont}b/mF42{15 dict ` @ 4 1 $
+FontName ~ d/FontType 0 d/FMapType 2 d/FontMatrix[1 0 0 1 0 0]d 1 ^ 254 add 255
+idiv @ array/Encoding ~ d 0 1 3 -1 $ 1 sub{@ Encoding 3 1 $ put}for/FDepVector
+Encoding length array d/CharStrings 2 dict `/.notdef 0 d & E d 0 1 Encoding
+length 1 sub{@ @ 10 lt{! FontName length 1 add string}{100 lt{FontName length 2
+add string}{FontName length 3 add string}?}? @ 0 FontName @ length string cvs
+putinterval @ 3 -1 $ @ 4 1 $ 3 string cvs FontName length ~ putinterval cvn 1 ^
+256 mul @ 255 add 3 -1 $ 4 ^ findfont mF42D FDepVector 3 1 $ put}for & @ E
+/FontName get ~ definefont ! ! ! mF}b/mF_OTF_V{~ ! ~ ! 4 -1 $ ! findfont 2 ^ ~
+definefont fM @ @ 4 6 -1 $ neg put 5 0 put 90 matrix R matrix concatmatrix
+makefont Pscript_Windows_Font 3 1 $ put}b/mF_TTF_V{3{~ !}repeat 3 -1 $ !
+findfont 1 ^ ~ definefont Pscript_Windows_Font 3 1 $ put}b/UmF{L2?
+{Pscript_Windows_Font ~ undef}{!}?}b/UmF42{@ findfont/FDepVector get{/FontName
+get undefinefont}forall undefinefont}b
+%%EndResource
+end reinitialize
+Pscript_WinNT_Incr begin
+%%BeginResource: file Pscript_Encoding256 5.0 0
+/CharCol256Encoding[/.notdef/breve/caron/dotaccent/dotlessi/fi/fl/fraction
+/hungarumlaut/Lslash/lslash/minus/ogonek/ring/Zcaron/zcaron/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/space/exclam/quotedbl/numbersign
+/dollar/percent/ampersand/quotesingle/parenleft/parenright/asterisk/plus/comma
+/hyphen/period/slash/zero/one/two/three/four/five/six/seven/eight/nine/colon
+/semicolon/less/equal/greater/question/at/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S
+/T/U/V/W/X/Y/Z/bracketleft/backslash/bracketright/asciicircum/underscore/grave
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/braceleft/bar/braceright
+/asciitilde/.notdef/Euro/.notdef/quotesinglbase/florin/quotedblbase/ellipsis
+/dagger/daggerdbl/circumflex/perthousand/Scaron/guilsinglleft/OE/.notdef
+/.notdef/.notdef/.notdef/quoteleft/quoteright/quotedblleft/quotedblright/bullet
+/endash/emdash/tilde/trademark/scaron/guilsinglright/oe/.notdef/.notdef
+/Ydieresis/.notdef/exclamdown/cent/sterling/currency/yen/brokenbar/section
+/dieresis/copyright/ordfeminine/guillemotleft/logicalnot/.notdef/registered
+/macron/degree/plusminus/twosuperior/threesuperior/acute/mu/paragraph
+/periodcentered/cedilla/onesuperior/ordmasculine/guillemotright/onequarter
+/onehalf/threequarters/questiondown/Agrave/Aacute/Acircumflex/Atilde/Adieresis
+/Aring/AE/Ccedilla/Egrave/Eacute/Ecircumflex/Edieresis/Igrave/Iacute
+/Icircumflex/Idieresis/Eth/Ntilde/Ograve/Oacute/Ocircumflex/Otilde/Odieresis
+/multiply/Oslash/Ugrave/Uacute/Ucircumflex/Udieresis/Yacute/Thorn/germandbls
+/agrave/aacute/acircumflex/atilde/adieresis/aring/ae/ccedilla/egrave/eacute
+/ecircumflex/edieresis/igrave/iacute/icircumflex/idieresis/eth/ntilde/ograve
+/oacute/ocircumflex/otilde/odieresis/divide/oslash/ugrave/uacute/ucircumflex
+/udieresis/yacute/thorn/ydieresis]def EncodeDict/256 CharCol256Encoding put
+%%EndResource
+end reinitialize
+
+%%IncludeResource: font Times-Roman
+F /F0 0 /256 T /Times-Roman mF 
+/F0S2A F0 [42 0 0 -42 0 0 ] mFS
+F0S2A Ji 
+0 38 M (MRP)[37 27  0]xS 
+1701 38 M (file:///F:/bgb.pub2/bgb-sys/MRP_01.html)[13 12 12 18 12 12 12 12 23 12 12 20 21 20 11 21 21 20 21 12 20 21 20 14 16 19 16 12 37 27 23 21
+21 21 11 22 12 33  0]xS 
+0 3223 M (1)S 
+21 3223 M ( )S  32 3223 M (o)S  52 3223 M (f)S  65 3223 M ( )S  76 3223 M (5)S  
+2068 3223 M (7)S 
+2089 3223 M (/)S  2101 3223 M (1)S  2122 3223 M (0)S  2143 3223 M (/)S  2155 3223 M (2)S  2176 3223 M (0)S  2197 3223 M (0)S  2218 3223 M (3)S  2239 3223 M ( )S  2250 3223 M (4)S  2271 3223 M (:)S  2283 3223 M (0)S  2304 3223 M (1)S  2325 3223 M ( )S  2336 3223 M (P)S  2359 3223 M (M)S 
+
+
+%%IncludeResource: font Times-Bold
+F /F1 0 /256 T /Times-Bold mF 
+/F1S64 F1 [100 0 0 -100 0 0 ] mFS
+F1S64 Ji 
+175 269 M (MRP 0.1)[94 72 60 25 50 25  0]xS 
+/F0S32 F0 [50 0 0 -50 0 0 ] mFS
+F0S32 Ji 
+175 406 M (Created: 2003-07-09)[33 17 22 22 15 22 25 14 13 25 25 25 25 17 25 25 17 25  0]xS 
+175 465 M (Modified: 2003-07-10)[44 26 25 12 15 12 22 25 14 13 25 25 25 25 17 25 25 17 25  0]xS 
+175 584 M (each node will be viewed as a unique entity;)[22 22 22 24 13 24 26 25 22 13 36 12 12 12 13 24 22 13 24 12 22 36 22 25 13 22 19 13 22 13 25 24
+12 25 25 22 13 22 24 15 12 15 23  0]xS 
+175 643 M (a node is identified partly by a guid and partly by it's current net address;)
+[22 13 24 26 25 22 13 12 19 13 12 25 22 24 15 12 15 12 22 25 13 25 22 17 15 12 23 13 24 23 13 22
+13 25 25 12 25 13 22 24 25 13 25 22 17 15 12 23 13 24 23 13 12 15 8 19 13 22 25 17 17 22 24 15
+13 24 22 15 13 22 25 25 17 22 19 19  0]xS 
+175 702 M (any node made be connected to a number of other nodes;)[22 24 23 13 24 26 25 22 13 37 22 25 22 13 24 22 13 22 26 24 24 22 22 15 22 25 13 15 26 13 22 13
+24 25 37 24 22 17 13 26 15 13 26 15 24 22 17 13 24 26 25 22 19  0]xS 
+175 761 M (the protocol will be a simplistic stack machine and make use of dynamic typing;)
+[15 24 22 13 25 17 26 15 26 22 26 12 13 36 12 12 12 13 24 22 13 22 13 19 12 37 25 12 12 19 15 12
+22 13 19 15 22 22 25 13 37 22 22 24 12 24 22 13 22 24 25 13 37 22 25 22 13 25 19 22 13 26 15 13
+25 23 24 22 37 12 22 13 15 23 25 12 24 25  0]xS 
+175 820 M (there will be \(for now\) a reference counting shared gc.)[15 24 22 17 22 13 36 12 12 12 13 24 22 13 17 15 26 17 13 24 26 36 17 13 22 13 17 22 15 22 17 22
+24 22 22 13 22 26 25 24 15 12 24 25 13 19 24 22 17 22 25 13 25 22  0]xS 
+175 939 M (this is at present not very general and would likely need a fair amount of work to generalize.)
+[15 24 12 19 13 12 19 13 22 15 13 25 17 22 19 22 24 15 13 24 26 15 13 24 22 17 23 13 25 22 24 22
+17 22 12 13 22 24 25 13 36 26 25 12 25 13 12 12 25 22 12 23 13 24 22 22 25 13 22 13 15 22 12 17
+13 22 37 26 25 24 15 13 26 15 13 36 26 17 25 13 15 26 13 25 22 24 22 17 22 12 12 22 22  0]xS 
+175 1057 M (each fragment of a message will begin with a header byte indicating the type and encoding of the rest )
+[22 22 22 24 13 15 17 22 25 37 22 24 15 13 26 15 13 22 13 37 22 19 19 22 25 22 13 36 12 12 12 13
+24 22 25 12 24 13 36 12 15 24 13 22 13 24 22 22 25 22 17 13 24 23 15 22 13 12 24 25 12 22 22 15
+12 24 25 13 15 24 22 13 15 23 25 22 13 22 24 25 13 22 24 22 26 25 12 24 25 13 26 15 13 15 24 22
+13 17 22 19 15  0]xS 
+175 1116 M (of the associated data. these will not define specific protocol operations, but will mostly flag types.)
+[26 15 13 15 24 22 13 22 19 19 26 22 12 22 15 22 25 13 25 22 15 22 13 13 15 24 22 19 22 13 36 12
+12 12 13 24 26 15 13 25 22 15 12 24 22 13 19 25 22 22 12 15 12 22 13 25 17 26 15 26 22 26 12 13
+26 25 22 17 22 15 12 26 24 19 13 13 24 25 15 13 36 12 12 12 13 37 26 19 15 12 23 13 15 12 22 25
+13 15 23 25 22 19  0]xS 
+175 1234 M (the lower 3 bits will define the base type:)[15 24 22 13 12 26 36 22 17 13 25 13 24 12 15 19 13 36 12 12 12 13 25 22 15 12 24 22 13 15 24 22
+13 24 22 19 22 13 15 23 25 22  0]xS 
+175 1294 M (    0: Numbers;)[13 13 13 13 25 14 13 36 25 37 24 22 17 19  0]xS 
+175 1353 M (    1: Opcode;)[13 13 13 13 25 14 13 36 25 22 26 25 22  0]xS 
+175 1412 M (    2: Object.)[13 13 13 13 25 14 13 36 24 12 22 22 15  0]xS 
+/F1S4B F1 [75 0 0 -75 0 0 ] mFS
+F1S4B Ji 
+175 1558 M (Numbers)[54 41 60 41 33 33  0]xS 
+F0S32 Ji 
+175 1684 M (the next 3 bits will define an additional type, qualifying the numeric type.)
+[15 24 22 13 24 22 24 15 13 25 13 24 12 15 19 13 36 12 12 12 13 25 22 15 12 24 22 13 22 24 13 22
+25 25 12 15 12 26 24 22 12 13 15 23 25 22 13 13 25 25 22 12 12 15 23 12 24 25 13 15 24 22 13 24
+25 37 22 17 12 22 13 15 23 25 22  0]xS 
+175 1743 M (    0: unsigned ineger;)[13 13 13 13 25 14 13 25 24 19 12 25 24 22 25 13 12 24 22 25 22 17  0]xS 
+175 1802 M (    1: signed integer;)[13 13 13 13 25 14 13 19 12 25 24 22 25 13 12 24 15 22 25 22 17  0]xS 
+175 1861 M (    2: ieee float;)[13 13 13 13 25 14 13 12 22 22 22 13 15 12 26 22 15  0]xS 
+175 1920 M (    3: misc/constant types.)[13 13 13 13 25 14 13 37 12 19 22 14 22 26 24 19 15 22 24 15 13 15 23 25 22 19  0]xS 
+175 2039 M (2 bits after \(the 2 high order bits\) this will give the numeric length,)
+[25 13 24 12 15 19 13 22 15 15 22 17 13 17 15 24 22 13 25 13 24 12 25 24 13 26 17 25 22 17 13 24
+12 15 19 17 13 15 24 12 19 13 36 12 12 12 13 25 12 24 22 13 15 24 22 13 24 25 37 22 17 12 22 13
+12 22 24 25 15 24  0]xS 
+175 2098 M (which \(with the exception of widenum\) has the following values:)
+[36 24 12 22 24 13 17 36 12 15 24 13 15 24 22 13 22 24 22 22 25 15 12 26 24 13 26 15 13 36 12 25
+22 24 25 37 17 13 24 22 19 13 15 24 22 13 15 26 12 12 26 36 12 24 25 13 24 22 12 25 22 19  0]xS 
+175 2157 M (    0: single byte;)[13 13 13 13 25 14 13 19 12 24 25 12 22 13 24 23 15 22  0]xS 
+175 2216 M (    1: 16 bit word;)[13 13 13 13 25 14 13 25 25 13 24 12 15 13 36 26 17 25  0]xS 
+175 2275 M (    2: 32 bit word;)[13 13 13 13 25 14 13 25 25 13 24 12 15 13 36 26 17 25  0]xS 
+175 2334 M (    3: 64 bit word.)[13 13 13 13 25 14 13 25 25 13 24 12 15 13 36 26 17 25  0]xS 
+175 2453 M (after the header will be the bytes defining the value.)[22 15 15 22 17 13 15 24 22 13 24 22 22 25 22 17 13 36 12 12 12 13 24 22 13 15 24 22 13 24 23 15
+22 19 13 25 22 15 12 24 12 24 25 13 15 24 22 13 24 22 12 25 22  0]xS 
+175 2512 M (these values are in big-endian order.)[15 24 22 19 22 13 24 22 12 25 22 19 13 22 17 22 13 12 24 13 24 12 25 17 22 24 25 12 22 24 13 26
+17 25 22 17  0]xS 
+175 2630 M (misc: will have an extra type field at the low end of the value, this will)
+[37 12 19 22 14 13 36 12 12 12 13 24 22 24 22 13 22 24 13 22 24 15 17 22 13 15 23 25 22 13 15 12
+22 12 25 13 22 15 13 15 24 22 13 12 26 36 13 22 24 25 13 26 15 13 15 24 22 13 24 22 12 25 22 13
+13 15 24 12 19 13 36 12 12  0]xS 
+175 2689 M (be 4 bits:)[24 22 13 25 13 24 12 15 19  0]xS 
+175 2749 M (    0: misc constants;)[13 13 13 13 25 14 13 37 12 19 22 13 22 26 24 19 15 22 24 15 19  0]xS 
+175 2808 M (    1: characters.)[13 13 13 13 25 14 13 22 24 22 17 22 22 15 22 17 19  0]xS 
+175 2867 M (    2-11: reserved for mrp.)[13 13 13 13 25 17 25 25 14 13 17 22 19 22 17 24 22 25 13 15 26 17 13 37 17 25  0]xS 
+175 2926 M (    12-15: are allowed for extensions.)[13 13 13 13 25 25 17 25 25 14 13 22 17 22 13 22 12 12 26 36 22 25 13 15 26 17 13 22 24 15 22 24
+19 12 26 24 19  0]xS 
+175 3044 M (the behavior of unknown extension value types is undefined.)[15 24 22 13 24 22 24 22 24 12 26 17 13 26 15 13 25 24 25 24 26 36 24 13 22 24 15 22 24 19 12 26
+24 13 24 22 12 25 22 13 15 23 25 22 19 13 12 19 13 25 24 25 22 15 12 24 22 25  0]xS 
+LH
+(%%[Page: 1]%%) = 
+%%PageTrailer
+
+%%Page: 2 2
+%%PageBoundingBox: 18 8 593 784
+%%EndPageComments
+%%BeginPageSetup
+/DeviceRGB dup setcolorspace /colspABC exch def
+mysetup concat colspRefresh
+%%EndPageSetup
+
+/DeviceGray dup setcolorspace /colspABC exch def
+0 0 scol F0S2A Ji 
+0 38 M (MRP)[37 27  0]xS 
+1701 38 M (file:///F:/bgb.pub2/bgb-sys/MRP_01.html)[13 12 12 18 12 12 12 12 23 12 12 20 21 20 11 21 21 20 21 12 20 21 20 14 16 19 16 12 37 27 23 21
+21 21 11 22 12 33  0]xS 
+0 3223 M (2)S 
+21 3223 M ( )S  32 3223 M (o)S  52 3223 M (f)S  65 3223 M ( )S  76 3223 M (5)S  
+2068 3223 M (7)S 
+2089 3223 M (/)S  2101 3223 M (1)S  2122 3223 M (0)S  2143 3223 M (/)S  2155 3223 M (2)S  2176 3223 M (0)S  2197 3223 M (0)S  2218 3223 M (3)S  2239 3223 M ( )S  2250 3223 M (4)S  2271 3223 M (:)S  2283 3223 M (0)S  2304 3223 M (1)S  2325 3223 M ( )S  2336 3223 M (P)S  2359 3223 M (M)S 
+
+F0S32 Ji 
+175 255 M (misc constants have a set of values \(the rest of the value field\):)
+[37 12 19 22 13 22 26 24 19 15 22 24 15 19 13 24 22 24 22 13 22 13 19 22 15 13 26 15 13 24 22 12
+25 22 19 13 17 15 24 22 13 17 22 19 15 13 26 15 13 15 24 22 13 24 22 12 25 22 13 15 12 22 12 25
+17  0]xS 
+175 314 M (    1: FALSE;)[13 13 13 13 25 14 13 27 35 30 28 31  0]xS 
+175 374 M (    2: TRUE;)[13 13 13 13 25 14 13 31 33 36 31  0]xS 
+175 433 M (    3: NULL;)[13 13 13 13 25 14 13 36 36 30 30  0]xS 
+175 492 M (    4: EOL;)[13 13 13 13 25 14 13 31 36 30  0]xS 
+175 551 M (    5-7: reserved for mrp;)[13 13 13 13 25 17 25 14 13 17 22 19 22 17 24 22 25 13 15 26 17 13 37 17 25  0]xS 
+175 610 M (    7-15: extensions;)[13 13 13 13 25 17 25 25 14 13 22 24 15 22 24 19 12 26 24 19  0]xS 
+175 669 M (    16+: reserved.)[13 13 13 13 25 25 28 14 13 17 22 19 22 17 24 22 25  0]xS 
+175 788 M (extension values may be shifted to NULL or some other implementation dependant value if they are )
+[22 24 15 22 24 19 12 26 24 13 24 22 12 25 22 19 13 37 22 23 13 24 22 13 19 24 12 15 15 22 25 13
+15 26 13 36 36 30 30 13 26 17 13 19 26 37 22 13 26 15 24 22 17 13 12 37 25 12 22 37 22 24 15 22
+15 12 26 24 13 25 22 25 22 24 25 22 24 15 13 24 22 12 25 22 13 12 15 13 15 24 22 23 13 22 17 22
+ 0]xS 
+175 847 M (unknown.)[25 24 25 24 26 36 24  0]xS 
+F1S4B Ji 
+175 993 M (Objects)[58 41 25 33 33 25  0]xS 
+F0S32 Ji 
+175 1119 M (this will use the upper 5 bits of the header byte as a type.)[15 24 12 19 13 36 12 12 12 13 25 19 22 13 15 24 22 13 25 25 25 22 17 13 25 13 24 12 15 19 13 26
+15 13 15 24 22 13 24 22 22 25 22 17 13 24 23 15 22 13 22 19 13 22 13 15 23 25 22  0]xS 
+175 1178 M (    0: reserved;)[13 13 13 13 25 14 13 17 22 19 22 17 24 22 25  0]xS 
+175 1237 M (    1: data object;)[13 13 13 13 25 14 13 25 22 15 22 13 26 24 12 22 22 15  0]xS 
+175 1296 M (    2: symbol;)[13 13 13 13 25 14 13 19 23 37 24 26 12  0]xS 
+175 1355 M (    3: string;)[13 13 13 13 25 14 13 19 15 17 12 24 25  0]xS 
+175 1414 M (    4: widenum;)[13 13 13 13 25 14 13 36 12 25 22 24 25 37  0]xS 
+175 1474 M (    5-15: reserved for mrp base types;)[13 13 13 13 25 17 25 25 14 13 17 22 19 22 17 24 22 25 13 15 26 17 13 37 17 25 13 24 22 19 22 13
+15 23 25 22 19  0]xS 
+175 1533 M (    16-23: implementation;)[13 13 13 13 25 25 17 25 25 14 13 12 37 25 12 22 37 22 24 15 22 15 12 26 24  0]xS 
+175 1592 M (    24-31: reserved.)[13 13 13 13 25 25 17 25 25 14 13 17 22 19 22 17 24 22 25  0]xS 
+175 1710 M (after the header byte will be a length field. bit 7 will be used to chain the bytes, and a byte with bit 7 set )
+[22 15 15 22 17 13 15 24 22 13 24 22 22 25 22 17 13 24 23 15 22 13 36 12 12 12 13 24 22 13 22 13
+12 22 24 25 15 24 13 15 12 22 12 25 13 13 24 12 15 13 25 13 36 12 12 12 13 24 22 13 25 19 22 25
+13 15 26 13 22 24 22 12 24 13 15 24 22 13 24 23 15 22 19 13 13 22 24 25 13 22 13 24 23 15 22 13
+36 12 15 24 13 24 12 15 13 25 13 19 22 15  0]xS 
+175 1769 M (to 0 will be a terminator. the bytes will be in a high-low ordering.)
+[15 26 13 25 13 36 12 12 12 13 24 22 13 22 13 15 22 17 37 12 24 22 15 26 17 13 13 15 24 22 13 24
+23 15 22 19 13 36 12 12 12 13 24 22 13 12 24 13 22 13 24 12 25 24 17 12 26 36 13 26 17 25 22 17
+12 24 25  0]xS 
+/F1S3B F1 [59 0 0 -59 0 0 ] mFS
+F1S3B Ji 
+175 1896 M (Data Object)[43 30 20 30 15 46 32 20 26 26  0]xS 
+F0S32 Ji 
+175 2015 M (includes a byte defining the encoding.)[12 24 22 12 25 25 22 19 13 22 13 24 23 15 22 13 25 22 15 12 24 12 24 25 13 15 24 22 13 22 24 22
+26 25 12 24 25  0]xS 
+175 2134 M (lower 3 compression, next 3 type, upper 2 reserved.)[12 26 36 22 17 13 25 13 22 26 37 25 17 22 19 19 12 26 24 13 13 24 22 24 15 13 25 13 15 23 25 22
+13 13 25 25 25 22 17 13 25 13 17 22 19 22 17 24 22 25  0]xS 
+175 2193 M (compression:)[22 26 37 25 17 22 19 19 12 26 24  0]xS 
+175 2252 M (    0: raw;)[13 13 13 13 25 14 13 17 22 36  0]xS 
+175 2311 M (    1: deflate \(optional\).)[13 13 13 13 25 14 13 25 22 15 12 22 15 22 13 17 26 25 15 12 26 24 22 12 17  0]xS 
+175 2430 M (type:)[15 23 25 22  0]xS 
+175 2489 M (    0: raw data;)[13 13 13 13 25 14 13 17 22 36 13 25 22 15 22  0]xS 
+175 2548 M (    1: bytevector;)[13 13 13 13 25 14 13 24 23 15 22 24 22 22 15 26 17  0]xS 
+175 2607 M (    2: block \(this will contain a block of mrp data/opcodes, optional\).)
+[13 13 13 13 25 14 13 24 12 26 22 25 13 17 15 24 12 19 13 36 12 12 12 13 22 26 24 15 22 12 24 13
+22 13 24 12 26 22 25 13 26 15 13 37 17 25 13 25 22 15 22 14 26 25 22 26 25 22 19 13 13 26 25 15
+12 26 24 22 12 17  0]xS 
+F1S3B Ji 
+175 2793 M (Symbol/String)[33 29 48 32 29 16 16 33 20 26 16 33  0]xS 
+F0S32 Ji 
+175 2912 M (both will have the form of arrays of 16 bit words.)[24 26 15 24 13 36 12 12 12 13 24 22 24 22 13 15 24 22 13 15 26 17 37 13 26 15 13 22 17 17 22 23
+19 13 26 15 13 25 25 13 24 12 15 13 36 26 17 25 19  0]xS 
+175 2971 M (null terminators will not be included, all character values will map to unicode values.)
+[24 25 12 12 13 15 22 17 37 12 24 22 15 26 17 19 13 36 12 12 12 13 24 26 15 13 24 22 13 12 24 22
+12 25 25 22 25 13 13 22 12 12 13 22 24 22 17 22 22 15 22 17 13 24 22 12 25 22 19 13 36 12 12 12
+13 37 22 25 13 15 26 13 25 24 12 22 26 25 22 13 24 22 12 25 22 19  0]xS 
+LH
+(%%[Page: 2]%%) = 
+%%PageTrailer
+
+%%Page: 3 3
+%%PageBoundingBox: 18 8 593 784
+%%EndPageComments
+%%BeginPageSetup
+/DeviceRGB dup setcolorspace /colspABC exch def
+mysetup concat colspRefresh
+%%EndPageSetup
+
+/DeviceGray dup setcolorspace /colspABC exch def
+0 0 scol F0S2A Ji 
+0 38 M (MRP)[37 27  0]xS 
+1701 38 M (file:///F:/bgb.pub2/bgb-sys/MRP_01.html)[13 12 12 18 12 12 12 12 23 12 12 20 21 20 11 21 21 20 21 12 20 21 20 14 16 19 16 12 37 27 23 21
+21 21 11 22 12 33  0]xS 
+0 3223 M (3)S 
+21 3223 M ( )S  32 3223 M (o)S  52 3223 M (f)S  65 3223 M ( )S  76 3223 M (5)S  
+2068 3223 M (7)S 
+2089 3223 M (/)S  2101 3223 M (1)S  2122 3223 M (0)S  2143 3223 M (/)S  2155 3223 M (2)S  2176 3223 M (0)S  2197 3223 M (0)S  2218 3223 M (3)S  2239 3223 M ( )S  2250 3223 M (4)S  2271 3223 M (:)S  2283 3223 M (0)S  2304 3223 M (1)S  2325 3223 M ( )S  2336 3223 M (P)S  2359 3223 M (M)S 
+
+Pscript_WinNT_Incr begin
+%%BeginResource: file Pscript_Win_GdiObject 5.0 0
+/SavedCTM null d/CTMsave{/SavedCTM SavedCTM currentmatrix d}b/CTMrestore
+{SavedCTM setmatrix}b/mp null d/ADO_mxRot null d/GDIHMatrix null d
+/GDIHPatternDict 22 dict d GDIHPatternDict `/PatternType 1 d/PaintType 2 d/Reps
+L2?{1}{5}? d/XStep 8 Reps mul d/YStep XStep d/BBox[0 0 XStep YStep]d/TilingType
+1 d/PaintProc{` 1 Lw[]0 sd PaintData , exec E}b/FGnd null d/BGnd null d
+/HS_Horizontal{horiz}b/HS_Vertical{vert}b/HS_FDiagonal{fdiag}b/HS_BDiagonal
+{biag}b/HS_Cross{horiz vert}b/HS_DiagCross{fdiag biag}b/MaxXYStep XStep YStep
+gt{XStep}{YStep}? d/horiz{Reps{0 4 M XStep 0 - 0 8 +}repeat 0 -8 Reps mul + K}b
+/vert{Reps{4 0 M 0 YStep - 8 0 +}repeat 0 -8 Reps mul + K}b/biag{Reps{0 0 M
+MaxXYStep @ - 0 YStep neg M MaxXYStep @ - 0 8 +}repeat 0 -8 Reps mul + 0 YStep
+M 8 8 - K}b/fdiag{Reps{0 0 M MaxXYStep @ neg - 0 YStep M MaxXYStep @ neg - 0 8
++}repeat 0 -8 Reps mul + MaxXYStep @ M 8 -8 - K}b E/makehatch{4 -2 $/yOrg ~ d
+/xOrg ~ d GDIHPatternDict/PaintData 3 -1 $ put CTMsave GDIHMatrix setmatrix
+GDIHPatternDict matrix xOrg yOrg + mp CTMrestore ~ U ~ 2 ^ put}b/h0{/h0
+/HS_Horizontal makehatch}b/h1{/h1/HS_Vertical makehatch}b/h2{/h2/HS_FDiagonal
+makehatch}b/h3{/h3/HS_BDiagonal makehatch}b/h4{/h4/HS_Cross makehatch}b/h5{/h5
+/HS_DiagCross makehatch}b/GDIBWPatternMx null d/pfprep{save 8 1 $
+/PatternOfTheDay 8 1 $ GDIBWPatternDict `/yOrg ~ d/xOrg ~ d/PaintData ~ d/yExt
+~ d/Width ~ d/BGnd ~ d/FGnd ~ d/Height yExt RepsV mul d/mx[Width 0 0 Height 0
+0]d E build_pattern ~ !}b/pfbf{/fEOFill ~ d pfprep hbf fEOFill{O}{L}? restore}b
+/GraphInit{GDIHMatrix null eq{/SavedCTM matrix d : ADO_mxRot concat 0 0 snap +
+: 0.48 @ GDIHPatternDict ` YStep mul ~ XStep mul ~ nonzero_dsnap YStep V ~
+XStep V ~ E +S/GDIHMatrix matrix currentmatrix readonly d ; : 0.24 -0.24 +S
+GDIBWPatternDict ` Width Height E nonzero_dsnap +S/GDIBWPatternMx matrix
+currentmatrix readonly d ; ;}if}b
+%%EndResource
+%%BeginResource: file Pscript_Win_GdiObject_L2 5.0 0
+/GDIBWPatternDict 25 dict @ `/PatternType 1 d/PaintType 1 d/RepsV 1 d/RepsH 1 d
+/BBox[0 0 RepsH 1]d/TilingType 1 d/XStep 1 d/YStep 1 d/Height 8 RepsV mul d
+/Width 8 d/mx[Width 0 0 Height neg 0 Height]d/FGnd null d/BGnd null d
+/SetBGndFGnd{BGnd null ne{BGnd aload ! scol BBox aload ! 2 ^ sub ~ 3 ^ sub ~
+rf}if FGnd null ne{FGnd aload ! scol}if}b/PaintProc{` SetBGndFGnd RepsH{Width
+Height F mx PaintData imagemask Width 0 +}repeat E}b E d/mp/makepattern , d
+/build_pattern{CTMsave GDIBWPatternMx setmatrix/nupangle where{! nupangle -90
+eq{nupangle R}if}if GDIBWPatternDict @ ` Width Height ne{Width Height gt{Width
+Height V 1}{1 Height Width V}? +S}if xOrg yOrg E matrix + mp CTMrestore}b/hbf
+{setpattern}b/hf{:/fEOFill ~ d ~ ! setpattern fEOFill{O}{L}? ;}b/pbf{: !
+/fEOFill ~ d GDIBWPatternDict `/yOrg ~ d/xOrg ~ d/PaintData ~ d/OutputBPP ~ d
+/Height ~ d/Width ~ d/PaintType 1 d/PatternType 1 d/TilingType 1 d/BBox[0 0
+Width Height]d/XStep Width d/YStep Height d/mx xOrg yOrg matrix + d 20 dict @ `
+/ImageType 1 d/Width Width d/Height Height d/ImageMatrix[1 0 0 1 0 0]d
+/BitsPerComponent 8 d OutputBPP 24 eq{/Decode[0 1 0 1 0 1]d}{OutputBPP 8 eq{
+/Decode[0 1]d}{/Decode[0 1 0 1 0 1 0 1]d}?}?/DataSource{PaintData}d E/ImageDict
+~ d/PaintProc{` ImageDict image E}b & mx makepattern setpattern E fEOFill{O}{L}
+? ;}b/mask_pbf{:/fEOFill ~ d 20 dict `/yOrg ~ d/xOrg ~ d/PaintData ~ d/Height ~
+d/Width ~ d/PatternType 1 d/PaintType 2 d/TilingType 1 d/BBox[0 0 Width Height]
+d/XStep Width d/YStep Height d/mx xOrg yOrg matrix + d/PaintProc{` Width Height
+T 1 1 dtransform abs ~ abs ~ 0 0 3 -1 $ 0 0 6 array astore{PaintData}imagemask
+E}b & mx makepattern setpattern E fEOFill{O}{L}? ;}b
+%%EndResource
+end reinitialize
+0.77 0 scol N 175 1315 M 175 2968 I K 
+N 175 1315 M 2222 1315 I K 
+0.289 0 scol N 2219 1315 M 2219 2968 I K 
+0.77 0 scol N 184 1400 M 365 1400 I K 
+0.289 0 scol N 184 1325 M 184 1403 I K 
+N 184 1325 M 365 1325 I K 
+0.77 0 scol N 362 1325 M 362 1403 I K 
+N 372 1400 M 725 1400 I K 
+0.289 0 scol N 372 1325 M 372 1403 I K 
+N 372 1325 M 725 1325 I K 
+0.77 0 scol N 722 1325 M 722 1403 I K 
+N 731 1400 M 1153 1400 I K 
+0.289 0 scol N 731 1325 M 731 1403 I K 
+N 731 1325 M 1153 1325 I K 
+0.77 0 scol N 1150 1325 M 1150 1403 I K 
+N 1159 1400 M 2212 1400 I K 
+0.289 0 scol N 1159 1325 M 1159 1403 I K 
+N 1159 1325 M 2212 1325 I K 
+0.77 0 scol N 2209 1325 M 2209 1403 I K 
+N 184 1484 M 365 1484 I K 
+0.289 0 scol N 184 1409 M 184 1487 I K 
+N 184 1409 M 365 1409 I K 
+0.77 0 scol N 362 1409 M 362 1487 I K 
+N 372 1484 M 725 1484 I K 
+0.289 0 scol N 372 1409 M 372 1487 I K 
+N 372 1409 M 725 1409 I K 
+0.77 0 scol N 722 1409 M 722 1487 I K 
+N 731 1484 M 1153 1484 I K 
+0.289 0 scol N 731 1409 M 731 1487 I K 
+N 731 1409 M 1153 1409 I K 
+0.77 0 scol N 1150 1409 M 1150 1487 I K 
+N 1159 1484 M 2212 1484 I K 
+0.289 0 scol N 1159 1409 M 1159 1487 I K 
+N 1159 1409 M 2212 1409 I K 
+0.77 0 scol N 2209 1409 M 2209 1487 I K 
+N 184 1569 M 365 1569 I K 
+0.289 0 scol N 184 1494 M 184 1572 I K 
+N 184 1494 M 365 1494 I K 
+0.77 0 scol N 362 1494 M 362 1572 I K 
+N 372 1569 M 725 1569 I K 
+0.289 0 scol N 372 1494 M 372 1572 I K 
+N 372 1494 M 725 1494 I K 
+0.77 0 scol N 722 1494 M 722 1572 I K 
+N 731 1569 M 1153 1569 I K 
+0.289 0 scol N 731 1494 M 731 1572 I K 
+N 731 1494 M 1153 1494 I K 
+0.77 0 scol N 1150 1494 M 1150 1572 I K 
+N 1159 1569 M 2212 1569 I K 
+0.289 0 scol N 1159 1494 M 1159 1572 I K 
+N 1159 1494 M 2212 1494 I K 
+0.77 0 scol N 2209 1494 M 2209 1572 I K 
+N 184 1653 M 365 1653 I K 
+0.289 0 scol N 184 1578 M 184 1656 I K 
+N 184 1578 M 365 1578 I K 
+0.77 0 scol N 362 1578 M 362 1656 I K 
+N 372 1653 M 725 1653 I K 
+0.289 0 scol N 372 1578 M 372 1656 I K 
+N 372 1578 M 725 1578 I K 
+0.77 0 scol N 722 1578 M 722 1656 I K 
+N 731 1653 M 1153 1653 I K 
+0.289 0 scol N 731 1578 M 731 1656 I K 
+N 731 1578 M 1153 1578 I K 
+0.77 0 scol N 1150 1578 M 1150 1656 I K 
+N 1159 1653 M 2212 1653 I K 
+0.289 0 scol N 1159 1578 M 1159 1656 I K 
+N 1159 1578 M 2212 1578 I K 
+0.77 0 scol N 2209 1578 M 2209 1656 I K 
+N 184 1737 M 365 1737 I K 
+0.289 0 scol N 184 1662 M 184 1740 I K 
+N 184 1662 M 365 1662 I K 
+0.77 0 scol N 362 1662 M 362 1740 I K 
+N 372 1737 M 725 1737 I K 
+0.289 0 scol N 372 1662 M 372 1740 I K 
+N 372 1662 M 725 1662 I K 
+0.77 0 scol N 722 1662 M 722 1740 I K 
+N 731 1737 M 1153 1737 I K 
+0.289 0 scol N 731 1662 M 731 1740 I K 
+N 731 1662 M 1153 1662 I K 
+0.77 0 scol N 1150 1662 M 1150 1740 I K 
+N 1159 1737 M 2212 1737 I K 
+0.289 0 scol N 1159 1662 M 1159 1740 I K 
+N 1159 1662 M 2212 1662 I K 
+0.77 0 scol N 2209 1662 M 2209 1740 I K 
+N 184 1822 M 365 1822 I K 
+0.289 0 scol N 184 1747 M 184 1825 I K 
+N 184 1747 M 365 1747 I K 
+0.77 0 scol N 362 1747 M 362 1825 I K 
+N 372 1822 M 725 1822 I K 
+0.289 0 scol N 372 1747 M 372 1825 I K 
+N 372 1747 M 725 1747 I K 
+0.77 0 scol N 722 1747 M 722 1825 I K 
+N 731 1822 M 1153 1822 I K 
+0.289 0 scol N 731 1747 M 731 1825 I K 
+N 731 1747 M 1153 1747 I K 
+0.77 0 scol N 1150 1747 M 1150 1825 I K 
+N 1159 1822 M 2212 1822 I K 
+0.289 0 scol N 1159 1747 M 1159 1825 I K 
+N 1159 1747 M 2212 1747 I K 
+0.77 0 scol N 2209 1747 M 2209 1825 I K 
+N 184 1965 M 365 1965 I K 
+0.289 0 scol N 184 1831 M 184 1969 I K 
+N 184 1831 M 365 1831 I K 
+0.77 0 scol N 362 1831 M 362 1969 I K 
+N 372 1965 M 725 1965 I K 
+0.289 0 scol N 372 1831 M 372 1969 I K 
+N 372 1831 M 725 1831 I K 
+0.77 0 scol N 722 1831 M 722 1969 I K 
+N 731 1965 M 1153 1965 I K 
+0.289 0 scol N 731 1831 M 731 1969 I K 
+N 731 1831 M 1153 1831 I K 
+0.77 0 scol N 1150 1831 M 1150 1969 I K 
+N 1159 1965 M 2212 1965 I K 
+0.289 0 scol N 1159 1831 M 1159 1969 I K 
+N 1159 1831 M 2212 1831 I K 
+0.77 0 scol N 2209 1831 M 2209 1969 I K 
+N 184 2109 M 365 2109 I K 
+0.289 0 scol N 184 1975 M 184 2113 I K 
+N 184 1975 M 365 1975 I K 
+0.77 0 scol N 362 1975 M 362 2113 I K 
+N 372 2109 M 725 2109 I K 
+0.289 0 scol N 372 1975 M 372 2113 I K 
+N 372 1975 M 725 1975 I K 
+0.77 0 scol N 722 1975 M 722 2113 I K 
+N 731 2109 M 1153 2109 I K 
+0.289 0 scol N 731 1975 M 731 2113 I K 
+N 731 1975 M 1153 1975 I K 
+0.77 0 scol N 1150 1975 M 1150 2113 I K 
+N 1159 2109 M 2212 2109 I K 
+0.289 0 scol N 1159 1975 M 1159 2113 I K 
+N 1159 1975 M 2212 1975 I K 
+0.77 0 scol N 2209 1975 M 2209 2113 I K 
+N 184 2372 M 365 2372 I K 
+0.289 0 scol N 184 2119 M 184 2375 I K 
+N 184 2119 M 365 2119 I K 
+0.77 0 scol N 362 2119 M 362 2375 I K 
+N 372 2372 M 725 2372 I K 
+0.289 0 scol N 372 2119 M 372 2375 I K 
+N 372 2119 M 725 2119 I K 
+0.77 0 scol N 722 2119 M 722 2375 I K 
+N 731 2372 M 1153 2372 I K 
+0.289 0 scol N 731 2119 M 731 2375 I K 
+N 731 2119 M 1153 2119 I K 
+0.77 0 scol N 1150 2119 M 1150 2375 I K 
+N 1159 2372 M 2212 2372 I K 
+0.289 0 scol N 1159 2119 M 1159 2375 I K 
+N 1159 2119 M 2212 2119 I K 
+0.77 0 scol N 2209 2119 M 2209 2375 I K 
+N 184 2872 M 365 2872 I K 
+0.289 0 scol N 184 2381 M 184 2875 I K 
+N 184 2381 M 365 2381 I K 
+0.77 0 scol N 362 2381 M 362 2875 I K 
+N 372 2872 M 725 2872 I K 
+0.289 0 scol N 372 2381 M 372 2875 I K 
+N 372 2381 M 725 2381 I K 
+0.77 0 scol N 722 2381 M 722 2875 I K 
+N 731 2872 M 1153 2872 I K 
+0.289 0 scol N 731 2381 M 731 2875 I K 
+N 731 2381 M 1153 2381 I K 
+0.77 0 scol N 1150 2381 M 1150 2875 I K 
+N 1159 2872 M 2212 2872 I K 
+0.289 0 scol N 1159 2381 M 1159 2875 I K 
+N 1159 2381 M 2212 2381 I K 
+0.77 0 scol N 2209 2381 M 2209 2875 I K 
+N 184 2956 M 365 2956 I K 
+0.289 0 scol N 184 2881 M 184 2959 I K 
+N 184 2881 M 365 2881 I K 
+0.77 0 scol N 362 2881 M 362 2959 I K 
+N 372 2956 M 725 2956 I K 
+0.289 0 scol N 372 2881 M 372 2959 I K 
+N 372 2881 M 725 2881 I K 
+0.77 0 scol N 722 2881 M 722 2959 I K 
+N 731 2956 M 1153 2956 I K 
+0.289 0 scol N 731 2881 M 731 2959 I K 
+N 731 2881 M 1153 2881 I K 
+0.77 0 scol N 1150 2881 M 1150 2959 I K 
+N 1159 2956 M 2212 2956 I K 
+0.289 0 scol N 1159 2881 M 1159 2959 I K 
+N 1159 2881 M 2212 2881 I K 
+0.77 0 scol N 2209 2881 M 2209 2959 I K 
+0 0 scol F1S4B Ji 
+175 220 M (Opcodes)[58 41 33 37 41 33  0]xS 
+F0S32 Ji 
+175 346 M (will have the upper 4 bits of the header form the upper 4 for the opcode, and the next byte as the lower)
+[36 12 12 12 13 24 22 24 22 13 15 24 22 13 25 25 25 22 17 13 25 13 24 12 15 19 13 26 15 13 15 24
+22 13 24 22 22 25 22 17 13 15 26 17 37 13 15 24 22 13 25 25 25 22 17 13 25 13 15 26 17 13 15 24
+22 13 26 25 22 26 25 22 13 13 22 24 25 13 15 24 22 13 24 22 24 15 13 24 23 15 22 13 22 19 13 15
+24 22 13 12 26 36 22  0]xS 
+175 405 M (8. this gives a total of 12 bits for an opcode.)[25 13 13 15 24 12 19 13 25 12 24 22 19 13 22 13 15 26 15 22 12 13 26 15 13 25 25 13 24 12 15 19
+13 15 26 17 13 22 24 13 26 25 22 26 25 22  0]xS 
+175 524 M (the next bit after the type will be used as a width indicator, this will expand the opcode to 24 bits \(the )
+[15 24 22 13 24 22 24 15 13 24 12 15 13 22 15 15 22 17 13 15 24 22 13 15 23 25 22 13 36 12 12 12
+13 24 22 13 25 19 22 25 13 22 19 13 22 13 36 12 25 15 24 13 12 24 25 12 22 22 15 26 17 13 13 15
+24 12 19 13 36 12 12 12 13 22 24 25 22 24 25 13 15 24 22 13 26 25 22 26 25 22 13 15 26 13 25 25
+13 24 12 15 19 13 17 15 24 22  0]xS 
+175 583 M (next 3 bytes after header, high-low ordering\).)[24 22 24 15 13 25 13 24 23 15 22 19 13 22 15 15 22 17 13 24 22 22 25 22 17 13 13 24 12 25 24 17
+12 26 36 13 26 17 25 22 17 12 24 25 17  0]xS 
+175 642 M (the upper 4 bits of the header byte will be reserved. this is intended for future extension.)
+[15 24 22 13 25 25 25 22 17 13 25 13 24 12 15 19 13 26 15 13 15 24 22 13 24 22 22 25 22 17 13 24
+23 15 22 13 36 12 12 12 13 24 22 13 17 22 19 22 17 24 22 25 13 13 15 24 12 19 13 12 19 13 12 24
+15 22 24 25 22 25 13 15 26 17 13 15 25 15 25 17 22 13 22 24 15 22 24 19 12 26 24  0]xS 
+175 760 M (the basic space will be divided into blocks of 256 opcodes:)[15 24 22 13 24 22 19 12 22 13 19 25 22 22 22 13 36 12 12 12 13 24 22 13 25 12 24 12 25 22 25 13
+12 24 15 26 13 24 12 26 22 25 19 13 26 15 13 25 25 25 13 26 25 22 26 25 22 19  0]xS 
+175 820 M (0/1 are reserved for mrp;)[25 14 25 13 22 17 22 13 17 22 19 22 17 24 22 25 13 15 26 17 13 37 17 25  0]xS 
+175 879 M (2: is reserved for implementation extensions;)[25 14 13 12 19 13 17 22 19 22 17 24 22 25 13 15 26 17 13 12 37 25 12 22 37 22 24 15 22 15 12 26
+24 13 22 24 15 22 24 19 12 26 24 19  0]xS 
+175 938 M (3: optional extensions \(all have the form MARK ... <opcode>, and are ignored if unknown\);)
+[25 14 13 26 25 15 12 26 24 22 12 13 22 24 15 22 24 19 12 26 24 19 13 17 22 12 12 13 24 22 24 22
+13 15 24 22 13 15 26 17 37 13 44 35 33 35 13 13 13 13 13 28 26 25 22 26 25 22 28 13 13 22 24 25
+13 22 17 22 13 12 25 24 26 17 22 25 13 12 15 13 25 24 25 24 26 36 24 17  0]xS 
+175 997 M (4/5: are for extensions that may be configured;)[25 14 25 14 13 22 17 22 13 15 26 17 13 22 24 15 22 24 19 12 26 24 19 13 15 24 22 15 13 37 22 23
+13 24 22 13 22 26 24 15 12 25 25 17 22 25  0]xS 
+175 1056 M (6-15: are reserved.)[25 17 25 25 14 13 22 17 22 13 17 22 19 22 17 24 22 25  0]xS 
+F1S3B Ji 
+175 1242 M (Basic Opcodes)[40 30 23 16 26 15 46 32 26 29 32 26  0]xS 
+F0S32 Ji 
+194 1380 M (Number)[36 25 37 24 22  0]xS 
+381 1380 M (Name)[36 22 37  0]xS 
+741 1380 M (Behavior)[33 22 24 22 24 12 26  0]xS 
+1169 1380 M (Description)[36 22 19 22 17 12 25 15 12 26  0]xS 
+194 1465 M (0)S 
+381 1465 M (nop)[24 26  0]xS 
+1169 1465 M (does nothing.)[25 26 22 19 13 24 26 15 24 12 24 25  0]xS 
+194 1549 M (1)S 
+381 1549 M (pop)[25 26  0]xS 
+741 1549 M (<a> ->)[28 22 28 13 17  0]xS 
+1169 1549 M (pop the value from existance.)[25 26 25 13 15 24 22 13 24 22 12 25 22 13 15 17 26 37 13 22 24 12 19 15 22 24 22 22  0]xS 
+194 1633 M (2)S 
+381 1633 M (mark)[37 22 17  0]xS 
+741 1633 M (-> MARK)[17 28 13 44 35 33  0]xS 
+1169 1633 M (pushes a mark onto the stack.)[25 25 19 24 22 19 13 22 13 37 22 17 25 13 26 24 15 26 13 15 24 22 13 19 15 22 22 25  0]xS 
+194 1718 M (3)S 
+381 1718 M (cons)[22 26 24  0]xS 
+741 1718 M (<a> <b> -> \(a . b\))[28 22 28 13 28 24 28 13 17 28 13 17 22 13 13 13 24  0]xS 
+1169 1718 M (conses arguments.)[22 26 24 19 22 19 13 22 17 25 25 37 22 24 15 19  0]xS 
+194 1802 M (4)S 
+381 1802 M (list)[12 12 19  0]xS 
+741 1802 M (MARK ... -> \(...\))[44 35 33 35 13 13 13 13 13 17 28 13 17 13 13 13  0]xS 
+1169 1802 M (form a proper list from the arguments.)[15 26 17 37 13 22 13 25 17 26 25 22 17 13 12 12 19 15 13 15 17 26 37 13 15 24 22 13 22 17 25 25
+37 22 24 15 19  0]xS 
+194 1886 M (5)S 
+381 1886 M (listi)[12 12 19 15  0]xS 
+741 1886 M (MARK ... <b> -> )[44 35 33 35 13 13 13 13 13 28 24 28 13 17 28  0]xS 
+741 1946 M (\(... . b\))[17 13 13 13 13 13 13 24  0]xS 
+1169 1886 M (form an improper list from arguments \(non-eol )[15 26 17 37 13 22 24 13 12 37 25 17 26 25 22 17 13 12 12 19 15 13 15 17 26 37 13 22 17 25 25 37
+22 24 15 19 13 17 24 26 24 17 22 26 12  0]xS 
+1169 1946 M (terminal\).)[15 22 17 37 12 24 22 12 17  0]xS 
+194 2030 M (6)S 
+381 2030 M (vector)[24 22 22 15 26  0]xS 
+741 2030 M (MARK ... -> #\(...\))[44 35 33 35 13 13 13 13 13 17 28 13 25 17 13 13 13  0]xS 
+1169 2030 M (forms a vector \(1d hetrogeneous array\) from the )[15 26 17 37 19 13 22 13 24 22 22 15 26 17 13 17 25 25 13 24 22 15 17 26 25 22 24 22 26 25 19 13
+22 17 17 22 23 17 13 15 17 26 37 13 15 24 22  0]xS 
+1169 2089 M (arguments.)[22 17 25 25 37 22 24 15 19  0]xS 
+194 2174 M (7)S 
+381 2174 M (invalid-opcode)[12 24 24 22 12 12 25 17 26 25 22 26 25  0]xS 
+741 2174 M (<opcode-num> ->)[28 26 25 22 26 25 22 17 24 25 37 28 13 17  0]xS 
+1169 2174 M (signals that an invalid opcode was recieved )[19 12 25 24 22 12 19 13 15 24 22 15 13 22 24 13 12 24 24 22 12 12 25 13 26 25 22 26 25 22 13 36
+22 19 13 17 22 22 12 22 24 22 25  0]xS 
+1169 2233 M (\(unsupported extension\).)[17 25 24 19 25 25 25 26 17 15 22 25 13 22 24 15 22 24 19 12 26 24 17  0]xS 
+1169 2292 M (upon recieving an unknown opcode all subsequent )[25 25 26 24 13 17 22 22 12 22 24 12 24 25 13 22 24 13 25 24 25 24 26 36 24 13 26 25 22 26 25 22
+13 22 12 12 13 19 25 24 19 22 25 25 22 24 15  0]xS 
+1169 2351 M (opcodes/data may be flushed on the sender.)[26 25 22 26 25 22 19 14 25 22 15 22 13 37 22 23 13 24 22 13 15 12 25 19 24 22 25 13 26 24 13 15
+24 22 13 19 22 24 25 22 17  0]xS 
+194 2436 M (8)S 
+381 2436 M (invalid-basetype)[12 24 24 22 12 12 25 17 24 22 19 22 15 23 25  0]xS 
+741 2436 M (<basetype>)[28 24 22 19 22 15 23 25 22  0]xS 
+969 2436 M ( ->)[13 17  0]xS 
+1169 2436 M (signals that an unknown basetype was recieved )[19 12 25 24 22 12 19 13 15 24 22 15 13 22 24 13 25 24 25 24 26 36 24 13 24 22 19 22 15 23 25 22
+13 36 22 19 13 17 22 22 12 22 24 22 25  0]xS 
+1169 2496 M (\(also unsupported extension\).)[17 22 12 19 26 13 25 24 19 25 25 25 26 17 15 22 25 13 22 24 15 22 24 19 12 26 24 17  0]xS 
+1169 2555 M (the basetype includes values from the header byte )[15 24 22 13 24 22 19 22 15 23 25 22 13 12 24 22 12 25 25 22 19 13 24 22 12 25 22 19 13 15 17 26
+37 13 15 24 22 13 24 22 22 25 22 17 13 24 23 15 22  0]xS 
+1169 2614 M (and possibly following bytes, it is to only include)[22 24 25 13 25 26 19 19 12 24 12 23 13 15 26 12 12 26 36 12 24 25 13 24 23 15 22 19 13 13 12 15
+13 12 19 13 15 26 13 26 24 12 23 13 12 24 22 12 25 25  0]xS 
+1169 2673 M (up to the value in question \(everything past is )[25 25 13 15 26 13 15 24 22 13 24 22 12 25 22 13 12 24 13 25 25 22 19 15 12 26 24 13 17 22 24 22
+17 23 15 24 12 24 25 13 25 22 19 15 13 12 19  0]xS 
+1169 2732 M (zeroed\).)[22 22 17 26 22 25 17  0]xS 
+1169 2791 M (all subsequent data/opcodes are to be flushed on the)[22 12 12 13 19 25 24 19 22 25 25 22 24 15 13 25 22 15 22 14 26 25 22 26 25 22 19 13 22 17 22 13
+15 26 13 24 22 13 15 12 25 19 24 22 25 13 26 24 13 15 24  0]xS 
+1169 2851 M (sender.)[19 22 24 25 22 17  0]xS 
+194 2936 M (9)S 
+381 2936 M (request-property)[17 22 25 25 22 19 15 17 25 17 26 25 22 17 15  0]xS 
+741 2936 M (<name SYM> ->)[28 24 22 37 22 13 28 36 44 28 13 17  0]xS 
+1169 2936 M (request the va)[17 22 25 25 22 19 15 13 15 24 22 13 24  0]xS 
+1447 2936 M (lue of a property.)[12 25 22 13 26 15 13 22 13 25 17 26 25 22 17 15 23  0]xS 
+LH
+(%%[Page: 3]%%) = 
+%%PageTrailer
+
+%%Page: 4 4
+%%PageBoundingBox: 18 8 593 784
+%%EndPageComments
+%%BeginPageSetup
+/DeviceRGB dup setcolorspace /colspABC exch def
+mysetup concat colspRefresh
+%%EndPageSetup
+
+/DeviceGray dup setcolorspace /colspABC exch def
+0 0 scol F0S2A Ji 
+0 38 M (MRP)[37 27  0]xS 
+1701 38 M (file:///F:/bgb.pub2/bgb-sys/MRP_01.html)[13 12 12 18 12 12 12 12 23 12 12 20 21 20 11 21 21 20 21 12 20 21 20 14 16 19 16 12 37 27 23 21
+21 21 11 22 12 33  0]xS 
+0 3223 M (4)S 
+21 3223 M ( )S  32 3223 M (o)S  52 3223 M (f)S  65 3223 M ( )S  76 3223 M (5)S  
+2068 3223 M (7)S 
+2089 3223 M (/)S  2101 3223 M (1)S  2122 3223 M (0)S  2143 3223 M (/)S  2155 3223 M (2)S  2176 3223 M (0)S  2197 3223 M (0)S  2218 3223 M (3)S  2239 3223 M ( )S  2250 3223 M (4)S  2271 3223 M (:)S  2283 3223 M (0)S  2304 3223 M (1)S  2325 3223 M ( )S  2336 3223 M (P)S  2359 3223 M (M)S 
+
+0.289 0 scol N 175 709 M 2222 709 I K 
+0.77 0 scol N 175 150 M 175 713 I K 
+0.289 0 scol N 2219 150 M 2219 713 I K 
+0.77 0 scol N 184 293 M 365 293 I K 
+0.289 0 scol N 184 159 M 184 297 I K 
+N 184 159 M 365 159 I K 
+0.77 0 scol N 362 159 M 362 297 I K 
+N 372 293 M 725 293 I K 
+0.289 0 scol N 372 159 M 372 297 I K 
+N 372 159 M 725 159 I K 
+0.77 0 scol N 722 159 M 722 297 I K 
+N 731 293 M 1153 293 I K 
+0.289 0 scol N 731 159 M 731 297 I K 
+N 731 159 M 1153 159 I K 
+0.77 0 scol N 1150 159 M 1150 297 I K 
+N 1159 293 M 2212 293 I K 
+0.289 0 scol N 1159 159 M 1159 297 I K 
+N 1159 159 M 2212 159 I K 
+0.77 0 scol N 2209 159 M 2209 297 I K 
+N 184 556 M 365 556 I K 
+0.289 0 scol N 184 303 M 184 559 I K 
+N 184 303 M 365 303 I K 
+0.77 0 scol N 362 303 M 362 559 I K 
+N 372 556 M 725 556 I K 
+0.289 0 scol N 372 303 M 372 559 I K 
+N 372 303 M 725 303 I K 
+0.77 0 scol N 722 303 M 722 559 I K 
+N 731 556 M 1153 556 I K 
+0.289 0 scol N 731 303 M 731 559 I K 
+N 731 303 M 1153 303 I K 
+0.77 0 scol N 1150 303 M 1150 559 I K 
+N 1159 556 M 2212 556 I K 
+0.289 0 scol N 1159 303 M 1159 559 I K 
+N 1159 303 M 2212 303 I K 
+0.77 0 scol N 2209 303 M 2209 559 I K 
+N 184 700 M 365 700 I K 
+0.289 0 scol N 184 566 M 184 704 I K 
+N 184 566 M 365 566 I K 
+0.77 0 scol N 362 566 M 362 704 I K 
+N 372 700 M 725 700 I K 
+0.289 0 scol N 372 566 M 372 704 I K 
+N 372 566 M 725 566 I K 
+0.77 0 scol N 722 566 M 722 704 I K 
+N 731 700 M 1153 700 I K 
+0.289 0 scol N 731 566 M 731 704 I K 
+N 731 566 M 1153 566 I K 
+0.77 0 scol N 1150 566 M 1150 704 I K 
+N 1159 700 M 2212 700 I K 
+0.289 0 scol N 1159 566 M 1159 704 I K 
+N 1159 566 M 2212 566 I K 
+0.77 0 scol N 2209 566 M 2209 704 I K 
+0.289 0 scol N 175 2956 M 2222 2956 I K 
+0.77 0 scol N 175 959 M 175 2959 I K 
+N 175 959 M 2222 959 I K 
+0.289 0 scol N 2219 959 M 2219 2959 I K 
+0.77 0 scol N 184 1043 M 365 1043 I K 
+0.289 0 scol N 184 968 M 184 1046 I K 
+N 184 968 M 365 968 I K 
+0.77 0 scol N 362 968 M 362 1046 I K 
+N 372 1043 M 756 1043 I K 
+0.289 0 scol N 372 968 M 372 1046 I K 
+N 372 968 M 756 968 I K 
+0.77 0 scol N 753 968 M 753 1046 I K 
+N 763 1043 M 1413 1043 I K 
+0.289 0 scol N 763 968 M 763 1046 I K 
+N 763 968 M 1413 968 I K 
+0.77 0 scol N 1410 968 M 1410 1046 I K 
+N 1419 1043 M 2213 1043 I K 
+0.289 0 scol N 1419 968 M 1419 1046 I K 
+N 1419 968 M 2213 968 I K 
+0.77 0 scol N 2210 968 M 2210 1046 I K 
+N 184 1246 M 365 1246 I K 
+0.289 0 scol N 184 1052 M 184 1249 I K 
+N 184 1052 M 365 1052 I K 
+0.77 0 scol N 362 1052 M 362 1249 I K 
+N 372 1246 M 756 1246 I K 
+0.289 0 scol N 372 1052 M 372 1249 I K 
+N 372 1052 M 756 1052 I K 
+0.77 0 scol N 753 1052 M 753 1249 I K 
+N 763 1246 M 1413 1246 I K 
+0.289 0 scol N 763 1052 M 763 1249 I K 
+N 763 1052 M 1413 1052 I K 
+0.77 0 scol N 1410 1052 M 1410 1249 I K 
+N 1419 1246 M 2213 1246 I K 
+0.289 0 scol N 1419 1052 M 1419 1249 I K 
+N 1419 1052 M 2213 1052 I K 
+0.77 0 scol N 2210 1052 M 2210 1249 I K 
+N 184 1449 M 365 1449 I K 
+0.289 0 scol N 184 1255 M 184 1452 I K 
+N 184 1255 M 365 1255 I K 
+0.77 0 scol N 362 1255 M 362 1452 I K 
+N 372 1449 M 756 1449 I K 
+0.289 0 scol N 372 1255 M 372 1452 I K 
+N 372 1255 M 756 1255 I K 
+0.77 0 scol N 753 1255 M 753 1452 I K 
+N 763 1449 M 1413 1449 I K 
+0.289 0 scol N 763 1255 M 763 1452 I K 
+N 763 1255 M 1413 1255 I K 
+0.77 0 scol N 1410 1255 M 1410 1452 I K 
+N 1419 1449 M 2213 1449 I K 
+0.289 0 scol N 1419 1255 M 1419 1452 I K 
+N 1419 1255 M 2213 1255 I K 
+0.77 0 scol N 2210 1255 M 2210 1452 I K 
+N 184 1534 M 365 1534 I K 
+0.289 0 scol N 184 1459 M 184 1537 I K 
+N 184 1459 M 365 1459 I K 
+0.77 0 scol N 362 1459 M 362 1537 I K 
+N 372 1534 M 756 1534 I K 
+0.289 0 scol N 372 1459 M 372 1537 I K 
+N 372 1459 M 756 1459 I K 
+0.77 0 scol N 753 1459 M 753 1537 I K 
+N 763 1534 M 1413 1534 I K 
+0.289 0 scol N 763 1459 M 763 1537 I K 
+N 763 1459 M 1413 1459 I K 
+0.77 0 scol N 1410 1459 M 1410 1537 I K 
+N 1419 1534 M 2213 1534 I K 
+0.289 0 scol N 1419 1459 M 1419 1537 I K 
+N 1419 1459 M 2213 1459 I K 
+0.77 0 scol N 2210 1459 M 2210 1537 I K 
+N 184 1618 M 365 1618 I K 
+0.289 0 scol N 184 1543 M 184 1621 I K 
+N 184 1543 M 365 1543 I K 
+0.77 0 scol N 362 1543 M 362 1621 I K 
+N 372 1618 M 756 1618 I K 
+0.289 0 scol N 372 1543 M 372 1621 I K 
+N 372 1543 M 756 1543 I K 
+0.77 0 scol N 753 1543 M 753 1621 I K 
+N 763 1618 M 1413 1618 I K 
+0.289 0 scol N 763 1543 M 763 1621 I K 
+N 763 1543 M 1413 1543 I K 
+0.77 0 scol N 1410 1543 M 1410 1621 I K 
+N 1419 1618 M 2213 1618 I K 
+0.289 0 scol N 1419 1543 M 1419 1621 I K 
+N 1419 1543 M 2213 1543 I K 
+0.77 0 scol N 2210 1543 M 2210 1621 I K 
+N 184 1761 M 365 1761 I K 
+0.289 0 scol N 184 1627 M 184 1765 I K 
+N 184 1627 M 365 1627 I K 
+0.77 0 scol N 362 1627 M 362 1765 I K 
+N 372 1761 M 756 1761 I K 
+0.289 0 scol N 372 1627 M 372 1765 I K 
+N 372 1627 M 756 1627 I K 
+0.77 0 scol N 753 1627 M 753 1765 I K 
+N 763 1761 M 1413 1761 I K 
+0.289 0 scol N 763 1627 M 763 1765 I K 
+N 763 1627 M 1413 1627 I K 
+0.77 0 scol N 1410 1627 M 1410 1765 I K 
+N 1419 1761 M 2213 1761 I K 
+0.289 0 scol N 1419 1627 M 1419 1765 I K 
+N 1419 1627 M 2213 1627 I K 
+0.77 0 scol N 2210 1627 M 2210 1765 I K 
+N 184 2143 M 365 2143 I K 
+0.289 0 scol N 184 1771 M 184 2146 I K 
+N 184 1771 M 365 1771 I K 
+0.77 0 scol N 362 1771 M 362 2146 I K 
+N 372 2143 M 756 2143 I K 
+0.289 0 scol N 372 1771 M 372 2146 I K 
+N 372 1771 M 756 1771 I K 
+0.77 0 scol N 753 1771 M 753 2146 I K 
+N 763 2143 M 1413 2143 I K 
+0.289 0 scol N 763 1771 M 763 2146 I K 
+N 763 1771 M 1413 1771 I K 
+0.77 0 scol N 1410 1771 M 1410 2146 I K 
+N 1419 2143 M 2213 2143 I K 
+0.289 0 scol N 1419 1771 M 1419 2146 I K 
+N 1419 1771 M 2213 1771 I K 
+0.77 0 scol N 2210 1771 M 2210 2146 I K 
+N 184 2286 M 365 2286 I K 
+0.289 0 scol N 184 2152 M 184 2290 I K 
+N 184 2152 M 365 2152 I K 
+0.77 0 scol N 362 2152 M 362 2290 I K 
+N 372 2286 M 756 2286 I K 
+0.289 0 scol N 372 2152 M 372 2290 I K 
+N 372 2152 M 756 2152 I K 
+0.77 0 scol N 753 2152 M 753 2290 I K 
+N 763 2286 M 1413 2286 I K 
+0.289 0 scol N 763 2152 M 763 2290 I K 
+N 763 2152 M 1413 2152 I K 
+0.77 0 scol N 1410 2152 M 1410 2290 I K 
+N 1419 2286 M 2213 2286 I K 
+0.289 0 scol N 1419 2152 M 1419 2290 I K 
+N 1419 2152 M 2213 2152 I K 
+0.77 0 scol N 2210 2152 M 2210 2290 I K 
+N 184 2371 M 365 2371 I K 
+0.289 0 scol N 184 2296 M 184 2374 I K 
+N 184 2296 M 365 2296 I K 
+0.77 0 scol N 362 2296 M 362 2374 I K 
+N 372 2371 M 756 2371 I K 
+0.289 0 scol N 372 2296 M 372 2374 I K 
+N 372 2296 M 756 2296 I K 
+0.77 0 scol N 753 2296 M 753 2374 I K 
+N 763 2371 M 1413 2371 I K 
+0.289 0 scol N 763 2296 M 763 2374 I K 
+N 763 2296 M 1413 2296 I K 
+0.77 0 scol N 1410 2296 M 1410 2374 I K 
+N 1419 2371 M 2213 2371 I K 
+0.289 0 scol N 1419 2296 M 1419 2374 I K 
+N 1419 2296 M 2213 2296 I K 
+0.77 0 scol N 2210 2296 M 2210 2374 I K 
+N 184 2514 M 365 2514 I K 
+0.289 0 scol N 184 2380 M 184 2518 I K 
+N 184 2380 M 365 2380 I K 
+0.77 0 scol N 362 2380 M 362 2518 I K 
+N 372 2514 M 756 2514 I K 
+0.289 0 scol N 372 2380 M 372 2518 I K 
+N 372 2380 M 756 2380 I K 
+0.77 0 scol N 753 2380 M 753 2518 I K 
+N 763 2514 M 1413 2514 I K 
+0.289 0 scol N 763 2380 M 763 2518 I K 
+N 763 2380 M 1413 2380 I K 
+0.77 0 scol N 1410 2380 M 1410 2518 I K 
+N 1419 2514 M 2213 2514 I K 
+0.289 0 scol N 1419 2380 M 1419 2518 I K 
+N 1419 2380 M 2213 2380 I K 
+0.77 0 scol N 2210 2380 M 2210 2518 I K 
+N 184 2658 M 365 2658 I K 
+0.289 0 scol N 184 2524 M 184 2662 I K 
+N 184 2524 M 365 2524 I K 
+0.77 0 scol N 362 2524 M 362 2662 I K 
+N 372 2658 M 756 2658 I K 
+0.289 0 scol N 372 2524 M 372 2662 I K 
+N 372 2524 M 756 2524 I K 
+0.77 0 scol N 753 2524 M 753 2662 I K 
+N 763 2658 M 1413 2658 I K 
+0.289 0 scol N 763 2524 M 763 2662 I K 
+N 763 2524 M 1413 2524 I K 
+0.77 0 scol N 1410 2524 M 1410 2662 I K 
+N 1419 2658 M 2213 2658 I K 
+0.289 0 scol N 1419 2524 M 1419 2662 I K 
+N 1419 2524 M 2213 2524 I K 
+0.77 0 scol N 2210 2524 M 2210 2662 I K 
+N 184 2802 M 365 2802 I K 
+0.289 0 scol N 184 2668 M 184 2806 I K 
+N 184 2668 M 365 2668 I K 
+0.77 0 scol N 362 2668 M 362 2806 I K 
+N 372 2802 M 756 2802 I K 
+0.289 0 scol N 372 2668 M 372 2806 I K 
+N 372 2668 M 756 2668 I K 
+0.77 0 scol N 753 2668 M 753 2806 I K 
+N 763 2802 M 1413 2802 I K 
+0.289 0 scol N 763 2668 M 763 2806 I K 
+N 763 2668 M 1413 2668 I K 
+0.77 0 scol N 1410 2668 M 1410 2806 I K 
+N 1419 2802 M 2213 2802 I K 
+0.289 0 scol N 1419 2668 M 1419 2806 I K 
+N 1419 2668 M 2213 2668 I K 
+0.77 0 scol N 2210 2668 M 2210 2806 I K 
+N 184 2946 M 365 2946 I K 
+0.289 0 scol N 184 2812 M 184 2950 I K 
+N 184 2812 M 365 2812 I K 
+0.77 0 scol N 362 2812 M 362 2950 I K 
+N 372 2946 M 756 2946 I K 
+0.289 0 scol N 372 2812 M 372 2950 I K 
+N 372 2812 M 756 2812 I K 
+0.77 0 scol N 753 2812 M 753 2950 I K 
+N 763 2946 M 1413 2946 I K 
+0.289 0 scol N 763 2812 M 763 2950 I K 
+N 763 2812 M 1413 2812 I K 
+0.77 0 scol N 1410 2812 M 1410 2950 I K 
+N 1419 2946 M 2213 2946 I K 
+0.289 0 scol N 1419 2812 M 1419 2950 I K 
+N 1419 2812 M 2213 2812 I K 
+0.77 0 scol N 2210 2812 M 2210 2950 I K 
+0 0 scol F0S32 Ji 
+194 215 M (10)[25  0]xS 
+381 215 M (reply-property)[17 22 25 12 23 17 25 17 26 25 22 17 15  0]xS 
+741 215 M (<name SYM>)[28 24 22 37 22 13 28 36 44  0]xS 
+741 274 M (<value>)[28 24 22 12 25 22  0]xS 
+902 274 M ( ->)[13 17  0]xS 
+1169 215 M (declares the value of a property on the source node.)[25 22 22 12 22 17 22 19 13 15 24 22 13 24 22 12 25 22 13 26 15 13 22 13 25 17 26 25 22 17 15 23
+13 26 24 13 15 24 22 13 19 26 25 17 22 22 13 24 26 25 22  0]xS 
+194 359 M (11)[25  0]xS 
+381 359 M (lookup)[12 26 26 25 25  0]xS 
+741 359 M (<name SYM>)[28 24 22 37 22 13 28 36 44  0]xS 
+1023 359 M ( -> )[13 17 28  0]xS 
+741 418 M (<value>)[28 24 22 12 25 22  0]xS 
+1169 359 M (lookup value in dictionary. NULL will be the result )[12 26 26 25 25 25 13 24 22 12 25 22 13 12 24 13 25 12 22 15 12 26 24 22 17 23 13 13 36 36 30 30
+13 36 12 12 12 13 24 22 13 15 24 22 13 17 22 19 25 12 15  0]xS 
+1169 418 M (if value not found.)[12 15 13 24 22 12 25 22 13 24 26 15 13 15 26 25 24 25  0]xS 
+1169 477 M (for the time being this will be viewed as a facility )[15 26 17 13 15 24 22 13 15 12 37 22 13 24 22 12 24 25 13 15 24 12 19 13 36 12 12 12 13 24 22 13
+24 12 22 36 22 25 13 22 19 13 22 13 15 22 22 12 12 12 15 23  0]xS 
+1169 536 M (for looking up extension info.)[15 26 17 13 12 26 26 25 12 24 25 13 25 25 13 22 24 15 22 24 19 12 26 24 13 12 24 15 26  0]xS 
+194 621 M (12)[25  0]xS 
+381 621 M (bind)[24 12 24  0]xS 
+741 621 M (<name SYM> )[28 24 22 37 22 13 28 36 44 28  0]xS 
+741 680 M (<value> ->)[28 24 22 12 25 22 28 13 17  0]xS 
+1169 621 M (bind value in dictionary.)[24 12 24 25 13 24 22 12 25 22 13 12 24 13 25 12 22 15 12 26 24 22 17 23  0]xS 
+1645 621 M ( allows some data to be )[13 22 12 12 26 36 19 13 19 26 37 22 13 25 22 15 22 13 15 26 13 24 22  0]xS 
+1169 680 M (stored.)[19 15 26 17 22 25  0]xS 
+F1S3B Ji 
+175 885 M (Node Management)[43 29 32 26 15 56 30 33 30 30 26 48 26 33  0]xS 
+F0S32 Ji 
+194 1023 M (Number)[36 25 37 24 22  0]xS 
+381 1023 M (Name)[36 22 37  0]xS 
+772 1023 M (Behavior)[33 22 24 22 24 12 26  0]xS 
+1428 1023 M (Description)[36 22 19 22 17 12 25 15 12 26  0]xS 
+194 1108 M (32)[25  0]xS 
+381 1108 M (addr)[22 25 25  0]xS 
+772 1108 M (<ip> <port> <type> -> )[28 12 25 28 13 28 25 26 17 15 28 13 28 15 23 25 22 28 13 17 28  0]xS 
+772 1167 M (NODE-ADDR)[36 36 36 31 17 35 36 36  0]xS 
+1428 1108 M (Compose a node address from the )[33 26 37 25 26 19 22 13 22 13 24 26 25 22 13 22 25 25 17 22 19 19 13 15 17 26 37 13 15 24 22  0]xS 
+1428 1167 M (addr given.)[22 25 25 17 13 25 12 24 22 24  0]xS 
+1428 1226 M (type: 1, ipv4udp; 2, ipv4tcp.)[15 23 25 22 14 13 25 13 13 12 25 24 25 25 25 25 13 13 25 13 13 12 25 24 25 15 22 25  0]xS 
+194 1311 M (33)[25  0]xS 
+381 1311 M (node-id)[24 26 25 22 17 12  0]xS 
+772 1311 M (<guid> -> NODE-ADDR)[28 25 25 12 25 28 13 17 28 13 36 36 36 31 17 35 36 36  0]xS 
+1428 1311 M (Compose a node address from)[33 26 37 25 26 19 22 13 22 13 24 26 25 22 13 22 25 25 17 22 19 19 13 15 17 26  0]xS 
+2031 1311 M ( the )[13 15 24 22  0]xS 
+1428 1370 M (guid \(may involve a search to)[25 25 12 25 13 17 37 22 23 13 12 24 24 26 12 24 22 13 22 13 19 22 22 17 22 24 13 15  0]xS 
+1428 1429 M (locate the node\).)[12 26 22 22 15 22 13 15 24 22 13 24 26 25 22 17  0]xS 
+194 1514 M (34)[25  0]xS 
+381 1514 M (yref)[23 17 22  0]xS 
+772 1514 M (<obj-id> -> REF)[28 26 24 12 17 12 25 28 13 17 28 13 33 31  0]xS 
+1428 1514 M (reference to object on target node)[17 22 15 22 17 22 24 22 22 13 15 26 13 26 24 12 22 22 15 13 26 24 13 15 22 17 25 22 15 13 24 26
+25  0]xS 
+2101 1514 M (.)S 
+194 1598 M (35)[25  0]xS 
+381 1598 M (rref)[17 17 22  0]xS 
+772 1598 M (<obj-id> <obj-type> -> REF)[28 26 24 12 17 12 25 28 13 28 26 24 12 17 15 23 25 22 28 13 17 28 13 33 31  0]xS 
+1428 1598 M (reference to object on source node.)[17 22 15 22 17 22 24 22 22 13 15 26 13 26 24 12 22 22 15 13 26 24 13 19 26 25 17 22 22 13 24 26
+25 22  0]xS 
+194 1683 M (36)[25  0]xS 
+381 1683 M (lref)[12 17 22  0]xS 
+772 1683 M (<on ADDR> <obj-id> )[28 26 24 13 35 36 36 33 28 13 28 26 24 12 17 12 25 28  0]xS 
+772 1742 M (<obj-type> -> REF)[28 26 24 12 17 15 23 25 22 28 13 17 28 13 33 31  0]xS 
+1428 1683 M (refernece to object on a distant node.)[17 22 15 22 17 24 22 22 22 13 15 26 13 26 24 12 22 22 15 13 26 24 13 22 13 25 12 19 15 22 24 15
+13 24 26 25 22  0]xS 
+194 1826 M (37)[25  0]xS 
+381 1826 M (dispatch)[25 12 19 25 22 15 22  0]xS 
+772 1826 M (<cont-id> <message> <from )[28 22 26 24 15 17 12 25 28 13 28 37 22 19 19 22 25 22 28 13 28 15 17 26 37  0]xS 
+772 1886 M (REF> <to REF> ->)[33 31 27 28 13 28 15 26 13 33 31 27 28 13 17  0]xS 
+1428 1826 M (dispatch message to object indicated in )[25 12 19 25 22 15 22 24 13 37 22 19 19 22 25 22 13 15 26 13 26 24 12 22 22 15 13 12 24 25 12 22
+22 15 22 25 13 12 24  0]xS 
+1428 1886 M ('to', or if 'to' is NULL then)[8 15 26 8 13 13 26 17 13 12 15 13 8 15 26 8 13 12 19 13 36 36 30 30 13 15 24 22  0]xS 
+1428 1945 M (the message is interpreted as referring )[15 24 22 13 37 22 19 19 22 25 22 13 12 19 13 12 24 15 22 17 25 17 22 15 22 25 13 22 19 13 17 22
+15 22 17 17 12 24 25  0]xS 
+1428 2004 M (to a named export.)[15 26 13 22 13 24 22 37 22 25 13 22 24 25 26 17 15  0]xS 
+1428 2063 M (if cont-id is 0 then no return value is to )[12 15 13 22 26 24 15 17 12 25 13 12 19 13 25 13 15 24 22 24 13 24 26 13 17 22 15 25 17 24 13 24
+22 12 25 22 13 12 19 13 15 26  0]xS 
+1428 2122 M (be sent.)[24 22 13 19 22 24 15  0]xS 
+194 2208 M (38)[25  0]xS 
+381 2208 M (setter)[19 22 15 15 22  0]xS 
+772 2208 M (<value REF> <cont-id> ->)[28 24 22 12 25 22 13 33 31 27 28 13 28 22 26 24 15 17 12 25 28 13 17  0]xS 
+1428 2208 M (returns a setter-object associated with )[17 22 15 25 17 24 19 13 22 13 19 22 15 15 22 17 17 26 24 12 22 22 15 13 22 19 19 26 22 12 22 15
+22 25 13 36 12 15 24  0]xS 
+1428 2267 M (a given reference.)[22 13 25 12 24 22 24 13 17 22 15 22 17 22 24 22 22  0]xS 
+194 2351 M (39)[25  0]xS 
+381 2351 M (return)[17 22 15 25 17  0]xS 
+772 2351 M (<value REF> <cont-id> ->)[28 24 22 12 25 22 13 33 31 27 28 13 28 22 26 24 15 17 12 25 28 13 17  0]xS 
+1428 2351 M (return value from a dispatch.)[17 22 15 25 17 24 13 24 22 12 25 22 13 15 17 26 37 13 22 13 25 12 19 25 22 15 22 24  0]xS 
+194 2436 M (40)[25  0]xS 
+381 2436 M (pop-ret)[25 26 25 17 17 22  0]xS 
+772 2436 M (<a> <cont-id> ->)[28 22 28 13 28 22 26 24 15 17 12 25 28 13 17  0]xS 
+1428 2436 M (pop value and send a return containing)[25 26 25 13 24 22 12 25 22 13 22 24 25 13 19 22 24 25 13 22 13 17 22 15 25 17 24 13 22 26 24 15
+22 12 24 12 24  0]xS 
+1428 2495 M ('a'.)[8 22 8  0]xS 
+194 2580 M (41)[25  0]xS 
+381 2580 M (dropped-reference)[25 17 26 25 25 22 25 17 17 22 15 22 17 22 24 22  0]xS 
+772 2580 M (<ref>)[28 17 22 15  0]xS 
+882 2580 M ( ->)[13 17  0]xS 
+1428 2580 M (all references from the source node )[22 12 12 13 17 22 15 22 17 22 24 22 22 19 13 15 17 26 37 13 15 24 22 13 19 26 25 17 22 22 13 24
+26 25 22  0]xS 
+1428 2639 M (were dropped.)[36 22 17 22 13 25 17 26 25 25 22 25  0]xS 
+194 2723 M (42)[25  0]xS 
+381 2723 M (search)[19 22 22 17 22  0]xS 
+772 2723 M (<dst-guid> <src-guid> )[28 25 19 15 17 25 25 12 25 28 13 28 19 17 22 17 25 25 12 25 28  0]xS 
+772 2783 M (<cont-id> <ttl>)[28 22 26 24 15 17 12 25 28 13 28 15 15 12  0]xS 
+1428 2723 M (search connections for a the address of )[19 22 22 17 22 24 13 22 26 24 24 22 22 15 12 26 24 19 13 15 26 17 13 22 13 15 24 22 13 22 25 25
+17 22 19 19 13 26 15  0]xS 
+1428 2783 M (dst-guid.)[25 19 15 17 25 25 12 25  0]xS 
+194 2867 M (43)[25  0]xS 
+381 2867 M (search-found)[19 22 22 17 22 24 17 15 26 25 24  0]xS 
+772 2867 M (<src-guid> <cont-id> )[28 19 17 22 17 25 25 12 25 28 13 28 22 26 24 15 17 12 25 28  0]xS 
+772 2926 M (<dst-addr ADDR> <ttl>)[28 25 19 15 17 22 25 25 17 13 35 36 36 33 28 13 28 15 15 12  0]xS 
+1428 2867 M (results of search.)[17 22 19 25 12 15 19 13 26 15 13 19 22 22 17 22 24  0]xS 
+LH
+(%%[Page: 4]%%) = 
+%%PageTrailer
+
+%%Page: 5 5
+%%PageBoundingBox: 18 8 593 784
+%%EndPageComments
+%%BeginPageSetup
+/DeviceRGB dup setcolorspace /colspABC exch def
+mysetup concat colspRefresh
+%%EndPageSetup
+
+/DeviceGray dup setcolorspace /colspABC exch def
+0 0 scol F0S2A Ji 
+0 38 M (MRP)[37 27  0]xS 
+1701 38 M (file:///F:/bgb.pub2/bgb-sys/MRP_01.html)[13 12 12 18 12 12 12 12 23 12 12 20 21 20 11 21 21 20 21 12 20 21 20 14 16 19 16 12 37 27 23 21
+21 21 11 22 12 33  0]xS 
+0 3223 M (5)S 
+21 3223 M ( )S  32 3223 M (o)S  52 3223 M (f)S  65 3223 M ( )S  76 3223 M (5)S  
+2068 3223 M (7)S 
+2089 3223 M (/)S  2101 3223 M (1)S  2122 3223 M (0)S  2143 3223 M (/)S  2155 3223 M (2)S  2176 3223 M (0)S  2197 3223 M (0)S  2218 3223 M (3)S  2239 3223 M ( )S  2250 3223 M (4)S  2271 3223 M (:)S  2283 3223 M (0)S  2304 3223 M (1)S  2325 3223 M ( )S  2336 3223 M (P)S  2359 3223 M (M)S 
+
+0.289 0 scol N 175 960 M 2222 960 I K 
+0.77 0 scol N 175 276 M 175 964 I K 
+N 175 276 M 2222 276 I K 
+0.289 0 scol N 2219 276 M 2219 964 I K 
+0.77 0 scol N 184 360 M 637 360 I K 
+0.289 0 scol N 184 285 M 184 363 I K 
+N 184 285 M 637 285 I K 
+0.77 0 scol N 634 285 M 634 363 I K 
+N 644 360 M 941 360 I K 
+0.289 0 scol N 644 285 M 644 363 I K 
+N 644 285 M 941 285 I K 
+0.77 0 scol N 938 285 M 938 363 I K 
+N 947 360 M 2213 360 I K 
+0.289 0 scol N 947 285 M 947 363 I K 
+N 947 285 M 2213 285 I K 
+0.77 0 scol N 2210 285 M 2210 363 I K 
+N 184 444 M 637 444 I K 
+0.289 0 scol N 184 369 M 184 447 I K 
+N 184 369 M 637 369 I K 
+0.77 0 scol N 634 369 M 634 447 I K 
+N 644 444 M 941 444 I K 
+0.289 0 scol N 644 369 M 644 447 I K 
+N 644 369 M 941 369 I K 
+0.77 0 scol N 938 369 M 938 447 I K 
+N 947 444 M 2213 444 I K 
+0.289 0 scol N 947 369 M 947 447 I K 
+N 947 369 M 2213 369 I K 
+0.77 0 scol N 2210 369 M 2210 447 I K 
+N 184 529 M 637 529 I K 
+0.289 0 scol N 184 454 M 184 532 I K 
+N 184 454 M 637 454 I K 
+0.77 0 scol N 634 454 M 634 532 I K 
+N 644 529 M 941 529 I K 
+0.289 0 scol N 644 454 M 644 532 I K 
+N 644 454 M 941 454 I K 
+0.77 0 scol N 938 454 M 938 532 I K 
+N 947 529 M 2213 529 I K 
+0.289 0 scol N 947 454 M 947 532 I K 
+N 947 454 M 2213 454 I K 
+0.77 0 scol N 2210 454 M 2210 532 I K 
+N 184 613 M 637 613 I K 
+0.289 0 scol N 184 538 M 184 616 I K 
+N 184 538 M 637 538 I K 
+0.77 0 scol N 634 538 M 634 616 I K 
+N 644 613 M 941 613 I K 
+0.289 0 scol N 644 538 M 644 616 I K 
+N 644 538 M 941 538 I K 
+0.77 0 scol N 938 538 M 938 616 I K 
+N 947 613 M 2213 613 I K 
+0.289 0 scol N 947 538 M 947 616 I K 
+N 947 538 M 2213 538 I K 
+0.77 0 scol N 2210 538 M 2210 616 I K 
+N 184 698 M 637 698 I K 
+0.289 0 scol N 184 623 M 184 701 I K 
+N 184 623 M 637 623 I K 
+0.77 0 scol N 634 623 M 634 701 I K 
+N 644 698 M 941 698 I K 
+0.289 0 scol N 644 623 M 644 701 I K 
+N 644 623 M 941 623 I K 
+0.77 0 scol N 938 623 M 938 701 I K 
+N 947 698 M 2213 698 I K 
+0.289 0 scol N 947 623 M 947 701 I K 
+N 947 623 M 2213 623 I K 
+0.77 0 scol N 2210 623 M 2210 701 I K 
+N 184 782 M 637 782 I K 
+0.289 0 scol N 184 707 M 184 785 I K 
+N 184 707 M 637 707 I K 
+0.77 0 scol N 634 707 M 634 785 I K 
+N 644 782 M 941 782 I K 
+0.289 0 scol N 644 707 M 644 785 I K 
+N 644 707 M 941 707 I K 
+0.77 0 scol N 938 707 M 938 785 I K 
+N 947 782 M 2213 782 I K 
+0.289 0 scol N 947 707 M 947 785 I K 
+N 947 707 M 2213 707 I K 
+0.77 0 scol N 2210 707 M 2210 785 I K 
+N 184 866 M 637 866 I K 
+0.289 0 scol N 184 791 M 184 869 I K 
+N 184 791 M 637 791 I K 
+0.77 0 scol N 634 791 M 634 869 I K 
+N 644 866 M 941 866 I K 
+0.289 0 scol N 644 791 M 644 869 I K 
+N 644 791 M 941 791 I K 
+0.77 0 scol N 938 791 M 938 869 I K 
+N 947 866 M 2213 866 I K 
+0.289 0 scol N 947 791 M 947 869 I K 
+N 947 791 M 2213 791 I K 
+0.77 0 scol N 2210 791 M 2210 869 I K 
+N 184 951 M 637 951 I K 
+0.289 0 scol N 184 876 M 184 954 I K 
+N 184 876 M 637 876 I K 
+0.77 0 scol N 634 876 M 634 954 I K 
+N 644 951 M 941 951 I K 
+0.289 0 scol N 644 876 M 644 954 I K 
+N 644 876 M 941 876 I K 
+0.77 0 scol N 938 876 M 938 954 I K 
+N 947 951 M 2213 951 I K 
+0.289 0 scol N 947 876 M 947 954 I K 
+N 947 876 M 2213 876 I K 
+0.77 0 scol N 2210 876 M 2210 954 I K 
+0.289 0 scol N 175 2047 M 2222 2047 I K 
+0.77 0 scol N 175 1209 M 175 2050 I K 
+N 175 1209 M 2222 1209 I K 
+0.289 0 scol N 2219 1209 M 2219 2050 I K 
+0.77 0 scol N 184 1294 M 365 1294 I K 
+0.289 0 scol N 184 1219 M 184 1297 I K 
+N 184 1219 M 365 1219 I K 
+0.77 0 scol N 362 1219 M 362 1297 I K 
+N 372 1294 M 697 1294 I K 
+0.289 0 scol N 372 1219 M 372 1297 I K 
+N 372 1219 M 697 1219 I K 
+0.77 0 scol N 694 1219 M 694 1297 I K 
+N 703 1294 M 1312 1294 I K 
+0.289 0 scol N 703 1219 M 703 1297 I K 
+N 703 1219 M 1312 1219 I K 
+0.77 0 scol N 1309 1219 M 1309 1297 I K 
+N 1319 1294 M 2213 1294 I K 
+0.289 0 scol N 1319 1219 M 1319 1297 I K 
+N 1319 1219 M 2213 1219 I K 
+0.77 0 scol N 2210 1219 M 2210 1297 I K 
+N 184 1378 M 365 1378 I K 
+0.289 0 scol N 184 1303 M 184 1381 I K 
+N 184 1303 M 365 1303 I K 
+0.77 0 scol N 362 1303 M 362 1381 I K 
+N 372 1378 M 697 1378 I K 
+0.289 0 scol N 372 1303 M 372 1381 I K 
+N 372 1303 M 697 1303 I K 
+0.77 0 scol N 694 1303 M 694 1381 I K 
+N 703 1378 M 1312 1378 I K 
+0.289 0 scol N 703 1303 M 703 1381 I K 
+N 703 1303 M 1312 1303 I K 
+0.77 0 scol N 1309 1303 M 1309 1381 I K 
+N 1319 1378 M 2213 1378 I K 
+0.289 0 scol N 1319 1303 M 1319 1381 I K 
+N 1319 1303 M 2213 1303 I K 
+0.77 0 scol N 2210 1303 M 2210 1381 I K 
+N 184 1521 M 365 1521 I K 
+0.289 0 scol N 184 1387 M 184 1525 I K 
+N 184 1387 M 365 1387 I K 
+0.77 0 scol N 362 1387 M 362 1525 I K 
+N 372 1521 M 697 1521 I K 
+0.289 0 scol N 372 1387 M 372 1525 I K 
+N 372 1387 M 697 1387 I K 
+0.77 0 scol N 694 1387 M 694 1525 I K 
+N 703 1521 M 1312 1521 I K 
+0.289 0 scol N 703 1387 M 703 1525 I K 
+N 703 1387 M 1312 1387 I K 
+0.77 0 scol N 1309 1387 M 1309 1525 I K 
+N 1319 1521 M 2213 1521 I K 
+0.289 0 scol N 1319 1387 M 1319 1525 I K 
+N 1319 1387 M 2213 1387 I K 
+0.77 0 scol N 2210 1387 M 2210 1525 I K 
+N 184 1665 M 365 1665 I K 
+0.289 0 scol N 184 1531 M 184 1669 I K 
+N 184 1531 M 365 1531 I K 
+0.77 0 scol N 362 1531 M 362 1669 I K 
+N 372 1665 M 697 1665 I K 
+0.289 0 scol N 372 1531 M 372 1669 I K 
+N 372 1531 M 697 1531 I K 
+0.77 0 scol N 694 1531 M 694 1669 I K 
+N 703 1665 M 1312 1665 I K 
+0.289 0 scol N 703 1531 M 703 1669 I K 
+N 703 1531 M 1312 1531 I K 
+0.77 0 scol N 1309 1531 M 1309 1669 I K 
+N 1319 1665 M 2213 1665 I K 
+0.289 0 scol N 1319 1531 M 1319 1669 I K 
+N 1319 1531 M 2213 1531 I K 
+0.77 0 scol N 2210 1531 M 2210 1669 I K 
+N 184 1809 M 365 1809 I K 
+0.289 0 scol N 184 1675 M 184 1813 I K 
+N 184 1675 M 365 1675 I K 
+0.77 0 scol N 362 1675 M 362 1813 I K 
+N 372 1809 M 697 1809 I K 
+0.289 0 scol N 372 1675 M 372 1813 I K 
+N 372 1675 M 697 1675 I K 
+0.77 0 scol N 694 1675 M 694 1813 I K 
+N 703 1809 M 1312 1809 I K 
+0.289 0 scol N 703 1675 M 703 1813 I K 
+N 703 1675 M 1312 1675 I K 
+0.77 0 scol N 1309 1675 M 1309 1813 I K 
+N 1319 1809 M 2213 1809 I K 
+0.289 0 scol N 1319 1675 M 1319 1813 I K 
+N 1319 1675 M 2213 1675 I K 
+0.77 0 scol N 2210 1675 M 2210 1813 I K 
+N 184 1894 M 365 1894 I K 
+0.289 0 scol N 184 1819 M 184 1897 I K 
+N 184 1819 M 365 1819 I K 
+0.77 0 scol N 362 1819 M 362 1897 I K 
+N 372 1894 M 697 1894 I K 
+0.289 0 scol N 372 1819 M 372 1897 I K 
+N 372 1819 M 697 1819 I K 
+0.77 0 scol N 694 1819 M 694 1897 I K 
+N 703 1894 M 1312 1894 I K 
+0.289 0 scol N 703 1819 M 703 1897 I K 
+N 703 1819 M 1312 1819 I K 
+0.77 0 scol N 1309 1819 M 1309 1897 I K 
+N 1319 1894 M 2213 1894 I K 
+0.289 0 scol N 1319 1819 M 1319 1897 I K 
+N 1319 1819 M 2213 1819 I K 
+0.77 0 scol N 2210 1819 M 2210 1897 I K 
+N 184 2037 M 365 2037 I K 
+0.289 0 scol N 184 1903 M 184 2041 I K 
+N 184 1903 M 365 1903 I K 
+0.77 0 scol N 362 1903 M 362 2041 I K 
+N 372 2037 M 697 2037 I K 
+0.289 0 scol N 372 1903 M 372 2041 I K 
+N 372 1903 M 697 1903 I K 
+0.77 0 scol N 694 1903 M 694 2041 I K 
+N 703 2037 M 1312 2037 I K 
+0.289 0 scol N 703 1903 M 703 2041 I K 
+N 703 1903 M 1312 1903 I K 
+0.77 0 scol N 1309 1903 M 1309 2041 I K 
+N 1319 2037 M 2213 2037 I K 
+0.289 0 scol N 1319 1903 M 1319 2041 I K 
+N 1319 1903 M 2213 1903 I K 
+0.77 0 scol N 2210 1903 M 2210 2041 I K 
+0 0 scol /F1S32 F1 [50 0 0 -50 0 0 ] mFS
+F1S32 Ji 
+175 197 M (Reference Types)[36 22 16 22 21 22 28 22 22 13 33 25 28 22  0]xS 
+F0S32 Ji 
+194 340 M (Name)[36 22 37  0]xS 
+653 340 M (Value)[36 22 12 25  0]xS 
+956 340 M (Description)[36 22 19 22 17 12 25 15 12 26  0]xS 
+194 425 M (OBJECT)[36 33 19 31 33  0]xS 
+653 425 M (1)S 
+956 425 M (reference to a general object type.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 25 22 24 22 17 22 12 13 26 24 12 22 22 15 13 15 23
+25 22  0]xS 
+194 509 M (CONS)[33 36 36  0]xS 
+653 509 M (2)S 
+956 509 M (reference to a cons cell/list.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 22 26 24 19 13 22 22 12 12 14 12 12 19 15  0]xS 
+194 594 M (CLOSURE)[33 30 36 28 36 33  0]xS 
+653 594 M (1<<3+1)[25 28 28 25 28  0]xS 
+956 594 M (reference to a closure.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 22 12 26 19 25 17 22  0]xS 
+194 678 M (ENV)[31 36  0]xS 
+653 678 M (2<<3+1)[25 28 28 25 28  0]xS 
+956 678 M (reference to a first class environment.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 15 12 17 19 15 13 22 12 22 19 19 13 22 24 24 12 17
+26 24 37 22 24 15  0]xS 
+194 762 M (ENVOBJ)[31 36 36 36 33  0]xS 
+653 762 M (3<<3+1)[25 28 28 25 28  0]xS 
+956 762 M (reference to an object.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 24 13 26 24 12 22 22 15  0]xS 
+194 847 M (CONTEXT)[33 36 36 31 31 36  0]xS 
+653 847 M (4<<3+1)[25 28 28 25 28  0]xS 
+956 847 M (reference to a thread/process.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 15 24 17 22 22 25 14 25 17 26 22 22 19 19  0]xS 
+194 931 M (FUNCTION)[27 36 36 33 31 17 36  0]xS 
+653 931 M (5<<3+1)[25 28 28 25 28  0]xS 
+956 931 M (reference to a built in function.)[17 22 15 22 17 22 24 22 22 13 15 26 13 22 13 24 25 12 12 15 13 12 24 13 15 25 24 22 15 12 26 24
+ 0]xS 
+F1S3B Ji 
+175 1136 M (Object Management)[46 32 20 26 26 20 15 56 30 33 30 30 26 48 26 33  0]xS 
+F0S32 Ji 
+194 1274 M (Number)[36 25 37 24 22  0]xS 
+381 1274 M (Name)[36 22 37  0]xS 
+713 1274 M (Behavior)[33 22 24 22 24 12 26  0]xS 
+1328 1274 M (Description)[36 22 19 22 17 12 25 15 12 26  0]xS 
+194 1358 M (64)[25  0]xS 
+381 1358 M (stub-object)[19 15 25 24 17 26 24 12 22 22  0]xS 
+713 1358 M (<mirrors> -> obj)[28 37 12 17 17 26 17 19 28 13 17 28 13 26 24  0]xS 
+1328 1358 M (sends an object stub.)[19 22 24 25 19 13 22 24 13 26 24 12 22 22 15 13 19 15 25 24  0]xS 
+194 1443 M (65)[25  0]xS 
+381 1443 M (mirror)[37 12 17 17 26  0]xS 
+713 1443 M (<of REF> <cont-id> ->)[28 26 15 13 33 31 27 28 13 28 22 26 24 15 17 12 25 28 13 17  0]xS 
+1328 1443 M (sent to request that a flat form of 'of' be )[19 22 24 15 13 15 26 13 17 22 25 25 22 19 15 13 15 24 22 15 13 22 13 15 12 22 15 13 15 26 17 37
+13 26 15 13 8 26 15 8 13 24 22  0]xS 
+1328 1502 M (sent \(via return\) to 'cont-id'.)[19 22 24 15 13 17 24 12 22 13 17 22 15 25 17 24 17 13 15 26 13 8 22 26 24 15 17 12 25 8  0]xS 
+194 1586 M (66)[25  0]xS 
+381 1586 M (notify-stub)[24 26 15 12 15 23 17 19 15 25  0]xS 
+713 1586 M (<to REF> <from REF> ->)[28 15 26 13 33 31 27 28 13 28 15 17 26 37 13 33 31 27 28 13 17  0]xS 
+1328 1586 M (message sent from new stubs to objects to )[37 22 19 19 22 25 22 13 19 22 24 15 13 15 17 26 37 13 24 22 36 13 19 15 25 24 19 13 15 26 13 26
+24 12 22 22 15 19 13 15 26  0]xS 
+1328 1646 M (notify them of existance.)[24 26 15 12 15 23 13 15 24 22 37 13 26 15 13 22 24 12 19 15 22 24 22 22  0]xS 
+194 1730 M (67)[25  0]xS 
+381 1730 M (notify-mirror)[24 26 15 12 15 23 17 37 12 17 17 26  0]xS 
+713 1730 M (<to REF> <from REF> ->)[28 15 26 13 33 31 27 28 13 28 15 17 26 37 13 33 31 27 28 13 17  0]xS 
+1328 1730 M (sent from stubs after they activate to )[19 22 24 15 13 15 17 26 37 13 19 15 25 24 19 13 22 15 15 22 17 13 15 24 22 23 13 22 22 15 12 24
+22 15 22 13 15 26  0]xS 
+1328 1789 M (indicate their activation)[12 24 25 12 22 22 15 22 13 15 24 22 12 17 13 22 22 15 12 24 22 15 12 26  0]xS 
+1792 1789 M (.)S 
+194 1874 M (68)[25  0]xS 
+381 1874 M (notify-removed)[24 26 15 12 15 23 17 17 22 37 26 24 22  0]xS 
+713 1874 M (<to REF> <from REF> ->)[28 15 26 13 33 31 27 28 13 28 15 17 26 37 13 33 31 27 28 13 17  0]xS 
+1328 1874 M (sent to indicate the mirror has gone away.)[19 22 24 15 13 15 26 13 12 24 25 12 22 22 15 22 13 15 24 22 13 37 12 17 17 26 17 13 24 22 19 13
+25 26 24 22 13 22 36 22 23  0]xS 
+194 1958 M (69)[25  0]xS 
+381 1958 M (delta)[25 22 12 15  0]xS 
+713 1958 M (<stamp> <pairs> <to REF> )[28 19 15 22 37 25 28 13 28 25 22 12 17 19 28 13 28 15 26 13 33 31 27 28  0]xS 
+713 2018 M (<from REF> ->)[28 15 17 26 37 13 33 31 27 28 13 17  0]xS 
+1328 1958 M (sent to indicate a state change in one of the )[19 22 24 15 13 15 26 13 12 24 25 12 22 22 15 22 13 22 13 19 15 22 15 22 13 22 24 22 24 25 22 13
+12 24 13 26 24 22 13 26 15 13 15 24 22  0]xS 
+1328 2018 M (mirrors.)[37 12 17 17 26 17 19  0]xS 
+175 2155 M (objects/deltas will be represented as lists of pairs.)[26 24 12 22 22 15 19 14 25 22 12 15 22 19 13 36 12 12 12 13 24 22 13 17 22 25 17 22 19 22 24 15
+22 25 13 22 19 13 12 12 19 15 19 13 26 15 13 25 22 12 17 19  0]xS 
+175 2214 M (each pair will have the form:)[22 22 22 24 13 25 22 12 17 13 36 12 12 12 13 24 22 24 22 13 15 24 22 13 15 26 17 37  0]xS 
+175 2273 M (\(pattern value\).)[17 25 22 15 15 22 17 24 13 24 22 12 25 22 17  0]xS 
+175 2392 M (pattern may be a symbol or list:)[25 22 15 15 22 17 24 13 37 22 23 13 24 22 13 22 13 19 23 37 24 26 12 13 26 17 13 12 12 19 15  0]xS 
+175 2451 M ('<key:>' will indicate a value slot;)[8 28 25 22 23 14 28 8 13 36 12 12 12 13 12 24 25 12 22 22 15 22 13 22 13 24 22 12 25 22 13 19
+12 26 15  0]xS 
+175 2510 M ('<sym>' will indicate a method of variable arguments;)[8 28 19 23 37 28 8 13 36 12 12 12 13 12 24 25 12 22 22 15 22 13 22 13 37 22 15 24 26 25 13 26
+15 13 24 22 17 12 22 24 12 22 13 22 17 25 25 37 22 24 15 19  0]xS 
+175 2569 M (\(<patterns>*\) will indicate a method recieving 'patterns' as args.)
+[17 28 25 22 15 15 22 17 24 19 28 25 17 13 36 12 12 12 13 12 24 25 12 22 22 15 22 13 22 13 37 22
+15 24 26 25 13 17 22 22 12 22 24 12 24 25 13 8 25 22 15 15 22 17 24 19 8 13 22 19 13 22 17 25
+19  0]xS 
+175 2688 M (values are out of scope for this, as the current definition depends on)
+[24 22 12 25 22 19 13 22 17 22 13 26 25 15 13 26 15 13 19 22 26 25 22 13 15 26 17 13 15 24 12 19
+13 13 22 19 13 15 24 22 13 22 25 17 17 22 24 15 13 25 22 15 12 24 12 15 12 26 24 13 25 22 25 22
+24 25 19 13 26  0]xS 
+175 2747 M (specifics of my lang.)[19 25 22 22 12 15 12 22 19 13 26 15 13 37 23 13 12 22 24 25  0]xS 
+175 2806 M (basically values are code fragments which evaluate to the slot values.)
+[24 22 19 12 22 22 12 12 23 13 24 22 12 25 22 19 13 22 17 22 13 22 26 25 22 13 15 17 22 25 37 22
+24 15 19 13 36 24 12 22 24 13 22 24 22 12 25 22 15 22 13 15 26 13 15 24 22 13 19 12 26 15 13 24
+22 12 25 22 19  0]xS 
+LH
+(%%[Page: 5]%%) = 
+%%PageTrailer
+
+%%Trailer
+%%BoundingBox: 18 8 593 784
+%%DocumentNeededResources: 
+%%+ font Times-Roman
+%%+ font Times-Bold
+%%DocumentSuppliedResources: 
+%%+ procset Pscript_WinNT_ErrorHandler 5.0 0
+%%+ procset Pscript_FatalError 5.0 0
+%%+ procset Pscript_Win_Basic 5.0 0
+%%+ procset Pscript_Win_Utils_L2 5.0 0
+%%+ procset Pscript_Text 5.0 0
+%%+ procset Pscript_Encoding256 5.0 0
+%%+ procset Pscript_Win_GdiObject 5.0 0
+%%+ procset Pscript_Win_GdiObject_L2 5.0 0
+Pscript_WinNT_Incr dup /terminate get exec
+ehsave restore
+%%Pages: 5
+(%%[LastPage]%%) = 
+%%EOF
+

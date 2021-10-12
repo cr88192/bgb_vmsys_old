@@ -1,0 +1,10 @@
+2002-04-30:
+need macros
+need call/cc
+need to generally fill in r5rs features...
+
+need slotted objects
+implement ports as slotted objects
+
+possibly implement slotted objects as vectors with entry 0 being a reference to a vector of slot names (again with slot 0 reserved). the vectors of slot names may not be modified as they may be shared, but they may be replaced.
+clone will copy the values vector but leave the slot names alone. modification may effect both. possibly make the "slotted object" a wrapper for these vectors so that object identity is maintained after modification.

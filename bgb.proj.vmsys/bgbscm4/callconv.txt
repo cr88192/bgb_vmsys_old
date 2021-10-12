@@ -1,0 +1,25 @@
+edi: will point to the current continuation
+this will contain the static env, the dynamic env, return continuation, return stack frame, and return address.
+
+at present the continuations will be created on the stack.
+
+the static env will be an array of values, slot 0 is reserved, slot 1 is up, slot 2+ are values.
+
+a closure will be a vector, slot 0 will point to the static bindings, slot 1 will point to the entry point.
+
+prim_apply:
+this will be called with the closure in eax.
+
+prim_close:
+this will be called with eax containing the closure entry point,
+edx will point to the args list (used in reconstructing the binding env)
+the rest of the closure will be generated from the current continuation.
+
+prim_bindargs:
+bind all the current arguments to the current env (first by creating a new layer).
+
+eax will be a list of the argument names used also to find the args count.
+
+prim_bind:
+will make a single binding in the current layer.
+eax will be the value to be bound and edx will by the symbol.

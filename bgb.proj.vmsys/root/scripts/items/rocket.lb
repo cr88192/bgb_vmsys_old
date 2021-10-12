@@ -1,0 +1,87 @@
+define missile
+	newobject entity-obj
+		(spawn:)
+			self.movetype := MOVETYPE_FLYMISSILE
+			self.solid := SOLID_BBOX
+			self model: "progs/missile.mdl"
+			self.velocity :=
+				vec* self.forward 1000
+			
+		(touch: other)
+			if (other != self.owner)
+				begin
+					damage-radius self self.owner 200 world
+					edict-remove self
+
+function rock-att-frame ()
+//	print "frame " self.owner.weaponframe "\n"
+	self.owner 'weaponframe
+		self.owner.weaponframe + 1
+	if (self.owner.weaponframe <= 6)
+		begin
+			self 'th_func rock-att-frame
+			self 'nextthink (time + 0.1)
+		self.owner 'weaponframe 0
+
+function rock-attack ()
+//	print self.owner.classname "\n"
+	self.owner 'weaponframe 0
+	self.origin := self.owner.origin
+
+//	damage-radius self self.owner 100 self.owner
+	let ((rock (edict-spawn "missile" self.owner.origin self.owner.v_angle)))
+		rock.owner := self.owner
+	rock-att-frame
+
+define weapon_rocketlauncher
+	newobject entity-obj
+		(spawn:)
+			precache-model "progs/g_rock2.mdl"
+			self.solid := SOLID_TRIGGER
+			self.movetype := MOVETYPE_TOSS
+			self model: "progs/g_rock2.mdl"
+			self size: #(-16 -16 0) #(16 16 56)
+
+		(owner-equip: owner)
+			if(owner.weapon != #z)
+				owner.weapon owner-toss:
+
+			self.owner := owner
+			owner.weapon := self
+			owner.weaponmodel := "progs/v_rock2.mdl"
+			owner.weaponframe := 0
+			owner.currentammo := 0
+
+		(owner-use:)
+			rock-attack
+
+		(owner-toss:)
+			self.flags
+			self.solid := SOLID_NOT
+			self.movetype := MOVETYPE_TOSS
+			self model: "progs/g_rock2.mdl"
+			self size: #(-16 -16 0) #(16 16 56)
+
+			self origin:
+				vec+ self.owner.origin
+					vec* self.owner.forward 56
+			self.vecocity :=
+				vec+
+					vec* self.owner.forward 36
+					vec* self.owner.up 8
+
+			self.owner := #z
+			self.owner.weapon := #z
+
+		(think:)
+//			print "axe think\n"
+			self.th_func
+
+		(touch: other)
+//			print "rock touch " other.classname "\n"
+			if(other.classname = "player")
+				begin
+					self.solid := SOLID_NOT
+					self.movetype := MOVETYPE_NONE
+					self model: ""
+					self owner-equip: other

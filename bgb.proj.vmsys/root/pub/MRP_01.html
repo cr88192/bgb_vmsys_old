@@ -1,0 +1,702 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>MRP</title>
+             
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+</head>
+  <body>
+   
+<h1>MRP 0.1</h1>
+  Created: 2003-07-09<br>
+  Modified: 2003-07-16<br>
+  <br>
+  each node will be viewed as a unique entity;<br>
+  a node is identified partly by a guid and partly by it's current net address;<br>
+  any node made be connected to a number of other nodes;<br>
+  the protocol will be a simplistic stack machine and make use of dynamic 
+typing;<br>
+  there will be (for now) a reference counting shared gc.<br>
+  <br>
+  this is at present not very general and would likely need a fair amount 
+of work to generalize.<br>
+  <br>
+ by default nodes will use the port TCP/8192.<br>
+ 
+<h2>Encoding</h2>
+  each fragment of a message will begin with a header byte indicating the 
+type and encoding of the rest of the associated data. these will not define 
+specific protocol operations, but will mostly flag types.<br>
+  <br>
+  the lower 3 bits will define the base type:<br>
+  &nbsp;&nbsp;&nbsp; 0: Numbers;<br>
+  &nbsp;&nbsp;&nbsp; 1: Opcode;<br>
+  &nbsp;&nbsp;&nbsp; 2: Object.<br>
+   
+<h3>Numbers</h3>
+  the next 3 bits will define an additional type, qualifying the numeric
+type.<br>
+  &nbsp;&nbsp;&nbsp; 0: unsigned ineger;<br>
+  &nbsp;&nbsp;&nbsp; 1: signed integer;<br>
+  &nbsp;&nbsp;&nbsp; 2: ieee float;<br>
+  &nbsp;&nbsp;&nbsp; 3: misc/constant types.<br>
+  <br>
+  2 bits after (the 2 high order bits) this will give the numeric length,<br>
+  which (with the exception of widenum) has the following values:<br>
+  &nbsp;&nbsp;&nbsp; 0: single byte;<br>
+  &nbsp;&nbsp;&nbsp; 1: 16 bit word;<br>
+  &nbsp;&nbsp;&nbsp; 2: 32 bit word;<br>
+  &nbsp;&nbsp;&nbsp; 3: 64 bit word.<br>
+  <br>
+  after the header will be the bytes defining the value.<br>
+  these values are in big-endian order.<br>
+  <br>
+  misc: will have an extra type field at the low end of the value, this will<br>
+  be 4 bits:<br>
+  &nbsp;&nbsp;&nbsp; 0: misc constants;<br>
+  &nbsp;&nbsp;&nbsp; 1: characters.<br>
+  &nbsp;&nbsp;&nbsp; 2-11: reserved for mrp.<br>
+  &nbsp;&nbsp;&nbsp; 12-15: are allowed for extensions.<br>
+  <br>
+  the behavior of unknown extension value types is undefined.<br>
+  <br>
+  misc constants have a set of values (the rest of the value field):<br>
+  &nbsp;&nbsp;&nbsp; 1: FALSE;<br>
+  &nbsp;&nbsp;&nbsp; 2: TRUE;<br>
+  &nbsp;&nbsp;&nbsp; 3: NULL;<br>
+  &nbsp;&nbsp;&nbsp; 4: EOL;<br>
+  &nbsp;&nbsp;&nbsp; 5-7: reserved for mrp;<br>
+  &nbsp;&nbsp;&nbsp; 7-15: extensions;<br>
+  &nbsp;&nbsp;&nbsp; 16+: reserved.<br>
+  <br>
+  extension values may be shifted to NULL or some other implementation dependant
+ value if they are unknown.<br>
+   
+<h3>Objects</h3>
+  this will use the upper 5 bits of the header byte as a type.<br>
+  &nbsp;&nbsp;&nbsp; 0: reserved;<br>
+  &nbsp;&nbsp;&nbsp; 1: data object;<br>
+  &nbsp;&nbsp;&nbsp; 2: symbol-16;<br>
+  &nbsp;&nbsp;&nbsp; 3: string-16;<br>
+  &nbsp;&nbsp;&nbsp; 4: widenum;<br>
+&nbsp;&nbsp;&nbsp; 5: symbol-8;<br>
+&nbsp;&nbsp;&nbsp; 6: string-8;<br>
+  &nbsp;&nbsp;&nbsp; 7-15: reserved for mrp base types;<br>
+  &nbsp;&nbsp;&nbsp; 16-23: implementation;<br>
+  &nbsp;&nbsp;&nbsp; 24-31: reserved.<br>
+  <br>
+  after the header byte will be a length field. bit 7 will be used to chain
+ the bytes, and a byte with bit 7 set to 0 will be a terminator. the bytes
+ will be in a high-low ordering.<br>
+   
+<h4>Data Object</h4>
+  includes a byte defining the encoding.<br>
+  <br>
+  lower 3 compression, next 3 type, upper 2 reserved.<br>
+  compression:<br>
+  &nbsp;&nbsp;&nbsp; 0: raw;<br>
+  &nbsp;&nbsp;&nbsp; 1: deflate (optional).<br>
+  <br>
+  type:<br>
+  &nbsp;&nbsp;&nbsp; 0: raw data;<br>
+  &nbsp;&nbsp;&nbsp; 1: bytevector;<br>
+  &nbsp;&nbsp;&nbsp; 2: block (this will contain a block of mrp data/opcodes,
+ optional).<br>
+  <br>
+   
+<h4>Symbol-16/String-16</h4>
+  both will have the form of arrays of 16 bit words.<br>
+  null terminators will not be included, all character values will map to 
+unicode values.<br>
+  
+<h4>Symbol-8/String-8</h4>
+these are intended for the case when all characters in the symbol/string
+fall within the ascii range (0-127), in which case it is not useful to send
+a full 16 bit string.<br>
+both will have the form of arrays of bytes. null terminators will not be
+included, all character values will map to ascii values.<br>
+ 
+<h4>Widenum</h4>
+ widenums will be an array of shorts in high-low ordering. the whole value 
+will be two's complement.<br>
+ <br>
+   
+<h2>Opcodes</h2>
+  will have the upper 4 bits of the header form the upper 4 for the opcode,
+ and the next byte as the lower 8. this gives a total of 12 bits for an opcode.<br>
+   <br>
+   the next bit after the type will be used as a width indicator, this will
+ expand the opcode to 24 bits (the next 3 bytes after header, high-low ordering).<br>
+  the upper 4 bits of the header byte will be reserved. this is intended
+for  future extension.<br>
+   <br>
+   the basic space will be divided into blocks of 256 opcodes:<br>
+   0/1 are reserved for mrp;<br>
+   2: is reserved for implementation extensions;<br>
+   3: optional extensions (all have the form MARK ... &lt;opcode&gt;, and 
+are ignored if unknown);<br>
+   4/5: are for extensions that may be configured;<br>
+   6-15: are reserved.<br>
+   <br>
+   
+<h3>Basic Opcodes</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+    <tbody>
+      <tr>
+        <td valign="top">Number<br>
+        </td>
+        <td valign="top">Name<br>
+        </td>
+        <td valign="top" nowrap="nowrap">Behavior<br>
+        </td>
+        <td valign="top">Description<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">0<br>
+        </td>
+        <td valign="top">nop<br>
+        </td>
+        <td valign="top" nowrap="nowrap"><br>
+        </td>
+        <td valign="top">does nothing.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">1<br>
+        </td>
+        <td valign="top">pop<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;a&gt; -&gt;<br>
+        </td>
+        <td valign="top">pop the value from existance.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">2<br>
+        </td>
+        <td valign="top">mark<br>
+        </td>
+        <td valign="top" nowrap="nowrap">-&gt; MARK<br>
+        </td>
+        <td valign="top">pushes a mark onto the stack.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">3<br>
+        </td>
+        <td valign="top">cons<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;a&gt; &lt;b&gt; -&gt; (a . b)<br>
+        </td>
+        <td valign="top">conses arguments.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">4<br>
+        </td>
+        <td valign="top">list<br>
+        </td>
+        <td valign="top" nowrap="nowrap">MARK ... -&gt; (...)<br>
+        </td>
+        <td valign="top">form a proper list from the arguments.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">5<br>
+        </td>
+        <td valign="top">listi<br>
+        </td>
+        <td valign="top" nowrap="nowrap">MARK ... &lt;b&gt; -&gt; (... .
+b)<br>
+        </td>
+        <td valign="top">form an improper list from arguments (non-eol terminal).<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">6<br>
+        </td>
+        <td valign="top">vector<br>
+        </td>
+        <td valign="top" nowrap="nowrap">MARK ... -&gt; #(...)<br>
+        </td>
+        <td valign="top">forms a vector (1d hetrogeneous array) from the
+arguments.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">7<br>
+        </td>
+        <td valign="top">invalid-opcode<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;opcode-num&gt; -&gt;<br>
+        </td>
+        <td valign="top">signals that an invalid opcode was recieved (unsupported
+ extension).<br>
+  upon recieving an unknown opcode all subsequent opcodes/data may be flushed
+ on the sender.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">8<br>
+        </td>
+        <td valign="top">invalid-basetype<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;basetype&gt; -&gt;<br>
+        </td>
+        <td valign="top">signals that an unknown basetype was recieved (also
+ unsupported extension). the basetype includes values from the header byte
+and possibly following  bytes, it is to only include up to the value in question
+(everything past is zeroed). all subsequent data/opcodes are to be flushed
+on the sender.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">9<br>
+        </td>
+        <td valign="top">request-property<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;name SYM&gt; -&gt;<br>
+        </td>
+        <td valign="top">request the value of a property.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">10<br>
+        </td>
+        <td valign="top">reply-property<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;name SYM&gt; &lt;value&gt; -&gt;<br>
+        </td>
+        <td valign="top">declares the value of a property on the source node.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">11<br>
+        </td>
+        <td valign="top">lookup<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;name SYM&gt; -&gt; &lt;value&gt;<br>
+        </td>
+        <td valign="top">lookup value in dictionary. NULL will be the result
+ if value not found.<br>
+  for the time being this will be viewed as a facility for looking up extension
+ info.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">12<br>
+        </td>
+        <td valign="top">bind<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;name SYM&gt; &lt;value&gt; -&gt;<br>
+        </td>
+        <td valign="top">bind value in dictionary. allows some data to be 
+stored.<br>
+        </td>
+      </tr>
+     <tr>
+       <td valign="top">13<br>
+       </td>
+       <td valign="top">apply<br>
+       </td>
+       <td valign="top" nowrap="nowrap">... &lt;block&gt; -&gt; ... (block)<br>
+ MARK ... &lt;func&gt; -&gt; &lt;ret&gt;<br>
+       </td>
+       <td valign="top">apply arguments to a function/block.<br>
+       </td>
+     </tr>
+       
+  </tbody>  
+</table>
+  <br>
+   
+<h3>Node Management</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+    <tbody>
+      <tr>
+        <td valign="top">Number<br>
+        </td>
+        <td valign="top">Name<br>
+        </td>
+        <td valign="top" nowrap="nowrap">Behavior<br>
+        </td>
+        <td valign="top">Description<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">32<br>
+        </td>
+        <td valign="top">addr<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;ip INT&gt; &lt;port&gt; &lt;type&gt;
+-&gt; NODE-ADDR<br>
+        </td>
+        <td valign="top">Compose a node address from the addr given. type:
+1, ipv4udp; 2, ipv4tcp.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">33<br>
+        </td>
+        <td valign="top">node-id<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;guid BYTEVEC&gt; -&gt; NODE-ADDR<br>
+        </td>
+        <td valign="top">Compose a node address from the guid (may involve
+ a search to locate the node).<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">34<br>
+        </td>
+        <td valign="top">yref<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;obj-id&gt; -&gt; REF<br>
+        </td>
+        <td valign="top">reference to object on target node.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">35<br>
+        </td>
+        <td valign="top">rref<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;obj-id&gt; &lt;obj-type&gt;
+-&gt; REF<br>
+        </td>
+        <td valign="top">reference to object on source node.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">36<br>
+        </td>
+        <td valign="top">lref<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;on ADDR&gt; &lt;obj-id&gt; &lt;obj-type&gt;
+-&gt;  REF<br>
+        </td>
+        <td valign="top">refernece to object on a distant node.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">37<br>
+        </td>
+        <td valign="top">dispatch<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;message&gt; &lt;from REF&gt;
+&lt;to REF&gt; &lt;cont-id&gt; -&gt;<br>
+        </td>
+        <td valign="top">dispatch message to object indicated in 'to', or 
+if 'to' is NULL then the message is interpreted as referring to a named export.
+if cont-id is 0 then no return value is to be sent.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">38<br>
+        </td>
+        <td valign="top">setter<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;value REF&gt; &lt;cont-id&gt;
+-&gt;<br>
+        </td>
+        <td valign="top">returns a setter-object associated with a given
+reference.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">39<br>
+        </td>
+        <td valign="top">return<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;value REF&gt; &lt;cont-id&gt;
+-&gt;<br>
+        </td>
+        <td valign="top">return value from a dispatch.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">40<br>
+        </td>
+        <td valign="top">pop-ret<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;a&gt; &lt;cont-id&gt; -&gt;<br>
+        </td>
+        <td valign="top">pop value and send a return containing 'a'.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">41<br>
+        </td>
+        <td valign="top">dropped-reference<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;ref&gt; -&gt;<br>
+        </td>
+        <td valign="top">all references from the source node were dropped.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">42<br>
+        </td>
+        <td valign="top">search<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;dst-guid&gt; &lt;src-guid&gt;
+&lt;cont-id&gt;  &lt;ttl&gt;<br>
+        </td>
+        <td valign="top">search connections for a the address of dst-guid.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">43<br>
+        </td>
+        <td valign="top">search-found<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;src-guid&gt; &lt;cont-id&gt;
+&lt;dst-addr ADDR&gt;  &lt;ttl&gt;<br>
+        </td>
+        <td valign="top">results of search.<br>
+        </td>
+      </tr>
+       
+  </tbody>  
+</table>
+  <br>
+   
+<h4>Reference Types</h4>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+    <tbody>
+      <tr>
+        <td valign="top">Name<br>
+        </td>
+        <td valign="top">Value<br>
+        </td>
+        <td valign="top">Description<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">OBJECT<br>
+        </td>
+        <td valign="top">1<br>
+        </td>
+        <td valign="top">reference to a general object type.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">CONS<br>
+        </td>
+        <td valign="top">2<br>
+        </td>
+        <td valign="top">reference to a cons cell/list.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">CLOSURE<br>
+        </td>
+        <td valign="top">1&lt;&lt;3+1<br>
+        </td>
+        <td valign="top">reference to a closure.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">ENV<br>
+        </td>
+        <td valign="top">2&lt;&lt;3+1<br>
+        </td>
+        <td valign="top">reference to a first class environment.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">ENVOBJ<br>
+        </td>
+        <td valign="top">3&lt;&lt;3+1<br>
+        </td>
+        <td valign="top">reference to an object.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">CONTEXT<br>
+        </td>
+        <td valign="top">4&lt;&lt;3+1<br>
+        </td>
+        <td valign="top">reference to a thread/process.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">FUNCTION<br>
+        </td>
+        <td valign="top">5&lt;&lt;3+1<br>
+        </td>
+        <td valign="top">reference to a built in function.<br>
+        </td>
+      </tr>
+       
+  </tbody>  
+</table>
+  <br>
+   
+<h3>Object Management</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+    <tbody>
+      <tr>
+        <td valign="top">Number<br>
+        </td>
+        <td valign="top">Name<br>
+        </td>
+        <td valign="top" nowrap="nowrap">Behavior<br>
+        </td>
+        <td valign="top">Description<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">64<br>
+        </td>
+        <td valign="top">stub-object<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;mirrors&gt; -&gt; &lt;obj&gt;<br>
+        </td>
+        <td valign="top">sends an object stub.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">65<br>
+        </td>
+        <td valign="top">mirror<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;of REF&gt; &lt;cont-id&gt; -&gt;<br>
+&lt;of GUID&gt; &lt;cont-id&gt; -&gt;<br>
+        </td>
+        <td valign="top">sent to request that a flat form of 'of' be sent 
+(via return) to 'cont-id'.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">66<br>
+        </td>
+        <td valign="top">notify-stub<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;to REF&gt; &lt;from REF&gt;
+-&gt;<br>
+        </td>
+        <td valign="top">message sent from new stubs to objects to notify 
+them of existance.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">67<br>
+        </td>
+        <td valign="top">notify-mirror<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;to REF&gt; &lt;from REF&gt;
+-&gt;<br>
+        </td>
+        <td valign="top">sent from stubs after they activate to indicate
+their  activation.<br>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">68<br>
+        </td>
+        <td valign="top">notify-removed<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;to REF&gt; &lt;from REF&gt;
+-&gt;<br>
+        </td>
+        <td valign="top">sent to indicate the mirror has gone away.<br>
+        </td>
+      </tr>
+      <tr>
+       <td valign="top">69<br>
+       </td>
+       <td valign="top">delta<br>
+       </td>
+       <td valign="top" nowrap="nowrap">&lt;obj&gt; &lt;pattern&gt; &lt;value&gt;
+&lt;stamp&gt; -&gt;<br>
+       </td>
+       <td valign="top">sent to indicate a single slot change.<br>
+       </td>
+     </tr>
+     <tr>
+        <td valign="top">70<br>
+        </td>
+        <td valign="top">delta2<br>
+        </td>
+        <td valign="top" nowrap="nowrap">&lt;stamp&gt; &lt;pairs&gt; &lt;to
+REF&gt; &lt;from  REF&gt; -&gt;<br>
+        </td>
+        <td valign="top">sent to indicate a state change in one of the mirrors.<br>
+        </td>
+      </tr>
+    <tr>
+      <td valign="top">71<br>
+      </td>
+      <td valign="top">ty-flat<br>
+      </td>
+      <td valign="top" nowrap="nowrap">&lt;flat&gt; &lt;type-name&gt; -&gt;
+&lt;obj&gt;<br>
+      </td>
+      <td valign="top">sent to give the flat version of a type-extended object.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">72<br>
+      </td>
+      <td valign="top">ty-stub<br>
+      </td>
+      <td valign="top" nowrap="nowrap">&lt;mirrors&gt; &lt;type-name SYM&gt;
+-&gt; &lt;stub&gt;<br>
+&lt;rsrc-id&gt; &lt;type-name SYM&gt; -&gt; &lt;stub&gt;<br>
+      </td>
+      <td valign="top">sends the stub of a given type-extended object. in
+the case of &nbsp;mirrors it is synchronized. rsrc-id is a bytevector giving
+the guid of the object resource. those identified by guids are viewed as
+immutable and are thus cached, pulled from cache, or mirrored as needed.<br>
+      </td>
+    </tr>
+       
+  </tbody>  
+</table>
+  <br>
+  objects/deltas will be represented as lists of pairs.<br>
+  each pair will have the form:<br>
+  (pattern value).<br>
+  <br>
+  pattern may be a symbol or list:<br>
+  '&lt;key:&gt;' will indicate a value slot;<br>
+  '&lt;sym&gt;' will indicate a method of variable arguments;<br>
+  (&lt;patterns&gt;*) will indicate a method recieving 'patterns' as args.<br>
+  <br>
+  values are out of scope for this, as the current definition depends on<br>
+  specifics of my lang.<br>
+  basically values are code fragments which evaluate to the slot values.<br>
+  <br>
+   
+<h2>Handshake</h2>
+ a handshake process will be present. this will be done via the request-property/reply-property 
+opcodes (not clearly named).<br>
+ on connection each end should send the symbol "MRP" and the request-reply 
+opcode, the other end should send "MRP" with the version.<br>
+ after this these may be used to &nbsp;request/reply properties of the node.
+if this is not recieved as the first action then the connection should be
+dropped.<br>
+ after all this is done "GO" then request-reply is used to flag the connection 
+as up (indicating it is safe to send messages across).<br>
+ <br>
+ others:<br>
+ "MRP"; this queries/indicates the protocol version the given node is using, 
+responses are numbers in the form 8.8, with the upper 8 being the major version 
+and the lower the minor, this is to be queried by each end as their first
+action;<br>
+ "NAME"; this queries/indicates the name associated with the given node,
+responses are strings;<br>
+ "GUID"; this queries/indicates the guid associated with the given node,
+responses are in the form of a bytevector;<br>
+ "PORT"; this queries/indicates the port associated with the given node,
+the response is a number, this is used when forwarding the node addresses.<br>
+ <br>
+</body>
+</html>

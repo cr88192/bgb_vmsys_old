@@ -1,0 +1,58 @@
+(defobject trigger-obj entity-obj
+  ((spawn:)
+   (set! self.solid SOLID_TRIGGER)
+   (set! self.movetype MOVETYPE_NONE)
+   (self model: self.model)
+   (self origin: self.origin)
+   (set! self.angles #(0 0 0))
+   (set! self.modelindex 0)
+   (set! self.model "")
+   (self spawn2:)))
+
+(defobject trigger_changelevel trigger-obj
+  ((touch: other)
+   (if (= other.classname "player")
+       (local-command (string-append "changelevel " self.map "\n")))))
+
+(defobject trigger_multiple trigger-obj
+  ((spawn2:)
+   (if (!= self.health 0)
+       (begin
+	 (set! self.solid SOLID_BBOX)
+	 (self origin: self.origin))))
+
+  ((damage: other)
+   (use-targets self.target))
+
+  ((touch: other)
+   (if (= other.classname "player")
+       (use-targets self.target))))
+
+(defobject trigger_once trigger-obj
+  ((spawn2:)
+   (if (!= self.health 0)
+       (begin
+	 (set! self.solid SOLID_BBOX)
+	 (self origin: self.origin))))
+ 
+ ((damage: other)
+   (use-targets self.target)
+   (self remove:))
+
+  ((touch: other)
+   (if (= other.classname "player")
+       (begin
+	 (use-targets self.target)
+	 (self remove:)))))
+
+(defobject trigger_relay entity-obj
+  ((use:)
+   (use-targets self.target)))
+
+(defobject trigger_counter entity-obj
+  ((use:)
+   (set! self.count (- self.count 1))
+   (if (= self.count 0)
+       (begin
+	 (use-targets self.target)
+	 (self remove:)))))

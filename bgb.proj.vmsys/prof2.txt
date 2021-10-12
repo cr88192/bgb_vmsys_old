@@ -1,0 +1,1271 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 12.42      0.97     0.97 22626200     0.00     0.00  HpiInterp_RunStep
+ 11.85      1.91     0.93  5656526     0.00     0.00  Namespace2_RetrieveTrace
+  5.80      2.36     0.46 10286663     0.00     0.00  TyFcn_Cons
+  5.35      2.78     0.42 29327282     0.00     0.00  ELEM_OBJTYPEPi
+  5.10      3.18     0.40  3085387     0.00     0.00  HpiOp_Return
+  3.95      3.49     0.31  3599606     0.00     0.00  HpiOp_Apply
+  3.31      3.75     0.26  5142820     0.00     0.00  TyFcn_VectorRef
+  3.25      4.00     0.26  3085387     0.00     0.00  HpiCmd_NewFrame
+  3.18      4.25     0.25  2571162     0.00     0.00  TyMisc_EvalSpecial
+  3.12      4.50     0.24  5656526     0.00     0.00  HpiOp_Refer
+  2.99      4.74     0.23  6170749     0.00     0.00  TyMath_ToDouble
+  2.93      4.96     0.23 10287402     0.00     0.00  TyFcn_Cdr
+  2.87      5.19     0.23  5656535     0.00     0.00  TyFcn_UnConsList
+  2.80      5.41     0.22       10     0.02     0.02  HpiInterp_RunLoop
+  2.17      5.58     0.17  6170774     0.00     0.00  TyFcn_VectorBody
+  2.04      5.74     0.16 12855744     0.00     0.00  ELEM_OBJTYPEPi
+  1.78      5.88     0.14  1542737     0.00     0.00  TyMath_FromDouble
+  1.53      6.00     0.12  5142379     0.00     0.00  TyFcn_Car
+  1.46      6.12     0.12 11313064     0.00     0.00  ELEM_TOFIXNUMi
+  1.34      6.22     0.10 12347333     0.00     0.00  ELEM_TOFIXNUMi
+  1.27      6.32     0.10  2571162     0.00     0.00  invoke_func
+  1.21      6.42     0.10  1542738     0.00     0.00  TyFcn_NReverse
+  1.15      6.50     0.09  6170777     0.00     0.00  HpiOp_Argument
+  1.15      6.59     0.09  6170746     0.00     0.00  ELEM_TOFIXNUMi
+  1.15      6.68     0.09  5142293     0.00     0.00  TyFcn_UnCons
+  1.08      6.77     0.09  5144396     0.00     0.00  TyFcn_VectorLength
+  1.08      6.86     0.09  2571173     0.00     0.00  HpiOp_Constant
+  1.02      6.93     0.08 11313515     0.00     0.00  ELEM_OBJTYPEPi
+  1.02      7.01     0.08  3085551     0.00     0.00  TyFcn_SetCdr
+  1.02      7.09     0.08  1028767     0.00     0.00  TyFcn_ListLength
+  0.96      7.17     0.07  6170756     0.00     0.00  TyFcn_WidenumIs
+  0.96      7.25     0.07  3085387     0.00     0.00  HpiOp_Frame
+  0.83      7.31     0.07  1028457     0.00     0.00  TyMath_SubFlonum
+  0.76      7.37     0.06  3599615     0.00     0.00  SYMGi
+  0.76      7.43     0.06   514228     0.00     0.00  TyMath_AddFlonum
+  0.64      7.48     0.05  5656526     0.00     0.00  Namespace3_RetrieveTrace
+  0.57      7.53     0.04  6685068     0.00     0.00  TyFcn_VectorIs
+  0.51      7.57     0.04  1028457     0.00     0.00  HpiOp_Test
+  0.51      7.61     0.04      314     0.00     0.00  sa_multicons
+  0.38      7.63     0.03  1028457     0.00     0.00  TyMath_LessP
+  0.38      7.67     0.03                             SYMGi
+  0.25      7.68     0.02  5144576     0.00     0.00  sa_cons
+  0.25      7.71     0.02        1     0.02     0.02  HpiComp_Init
+  0.25      7.72     0.02        1     0.02     0.02  TyFcn_Init
+  0.19      7.74     0.01                             HpiCmd_EvalConstraint
+  0.19      7.75     0.01                             HpiInterp_MiniApply
+  0.19      7.77     0.01                             TyFcn_VectorType
+  0.19      7.79     0.01                             TyMath_FromBignum
+  0.13      7.79     0.01      528     0.00     0.00  TyFcn_Symbol
+  0.13      7.80     0.01       38     0.00     0.00  Namespace3_Trace
+  0.13      7.82     0.01        6     0.00     0.00  TyFcn_NewTypedVector
+  0.06      7.82     0.01        3     0.00     0.00  HpiOp_Close
+  0.06      7.83     0.01        1     0.01     0.01  TyMath_Init
+  0.06      7.83     0.01                             ELEM_OBJTYPEPi
+  0.06      7.83     0.01                             Namespace2_LocativeTrace
+  0.06      7.84     0.01                             TyFcn_DumpElemBR
+  0.06      7.84     0.01                             TyFcn_ObjPokeElem
+  0.06      7.85     0.01                             TyMath_CmpFlonum
+  0.00      7.85     0.00  5144598     0.00     0.00  sa_malloc
+  0.00      7.85     0.00     6011     0.00     0.00  TyFcn_EqualP
+  0.00      7.85     0.00     1576     0.00     0.00  TyFcn_VectorSet
+  0.00      7.85     0.00      888     0.00     0.00  ScmParse_SpecialP
+  0.00      7.85     0.00      528     0.00     0.00  TyFcn_SymbolList
+  0.00      7.85     0.00      498     0.00     0.00  ScmParse_EatWhite
+  0.00      7.85     0.00      460     0.00     0.00  sa_alloc
+  0.00      7.85     0.00      365     0.00     0.00  Sys_TimeDUS
+  0.00      7.85     0.00      356     0.00     0.00  ScmParse_Token
+  0.00      7.85     0.00      256     0.00     0.00  Namespace2_Lookup
+  0.00      7.85     0.00      256     0.00     0.00  Namespace3_Lookup
+  0.00      7.85     0.00      227     0.00     0.00  TyFcn_Symbol2
+  0.00      7.85     0.00      197     0.00     0.00  TyFcn_SetCar
+  0.00      7.85     0.00      184     0.00     0.00  SAGC_BindNameAddr
+  0.00      7.85     0.00      152     0.00     0.00  Interp_DefinePrimative
+  0.00      7.85     0.00      152     0.00     0.00  TyFcn_Function
+  0.00      7.85     0.00      145     0.00     0.00  ELEM_OBJTYPEPi
+  0.00      7.85     0.00      133     0.00     0.00  ScmParse_Item
+  0.00      7.85     0.00       78     0.00     0.00  HpiComp_Compile
+  0.00      7.85     0.00       71     0.00     0.00  ScmParse_Symbol
+  0.00      7.85     0.00       49     0.00     0.00  ScmParse_List
+  0.00      7.85     0.00       38     0.00     0.00  Namespace2_Trace
+  0.00      7.85     0.00       33     0.00     0.00  HpiComp_CompileExpr
+  0.00      7.85     0.00       33     0.00     0.00  TyFcn_NewVector
+  0.00      7.85     0.00       32     0.00     0.00  HpiComp_DefineSpecial
+  0.00      7.85     0.00       32     0.00     0.00  TyFcn_Special
+  0.00      7.85     0.00       28     0.00     0.00  HpiInterp_DefineOpcode
+  0.00      7.85     0.00       27     0.00     0.00  SAGC_AddRoot
+  0.00      7.85     0.00       21     0.00     0.00  sa_free
+  0.00      7.85     0.00       19     0.00     0.00  TyFcn_ListCopyRec
+  0.00      7.85     0.00       13     0.00     0.00  sa_prints
+  0.00      7.85     0.00       12     0.00     0.00  sa_print
+  0.00      7.85     0.00       11     0.00     0.00  HpiComp_PopEnv
+  0.00      7.85     0.00       11     0.00     0.00  HpiComp_PushEnv
+  0.00      7.85     0.00       11     0.00     0.00  TyPrint_Elem
+  0.00      7.85     0.00        9     0.00     0.00  HpiInterp_RunCtx
+  0.00      7.85     0.00        9     0.00     0.00  HpiOp_XchgRPAX
+  0.00      7.85     0.00        9     0.00     0.00  Interp_EvalTop
+  0.00      7.85     0.00        9     0.00     0.00  ScmParse_Line
+  0.00      7.85     0.00        8     0.00     0.00  ScmParse_Float
+  0.00      7.85     0.00        7     0.00     0.00  TyPrint_Object
+  0.00      7.85     0.00        7     0.00     0.00  TyPrint_PrintFlags
+  0.00      7.85     0.00        6     0.00     0.00  HpiComp_Lookup
+  0.00      7.85     0.00        6     0.00     0.00  HpiOp_Assign
+  0.00      7.85     0.00        6     0.00     0.00  HpiOp_Bind
+  0.00      7.85     0.00        6     0.00     0.00  HpiSpecial_Define
+  0.00      7.85     0.00        6     0.00     0.00  Namespace2_AssignTrace
+  0.00      7.85     0.00        6     0.00     0.00  Namespace3_AssignTrace
+  0.00      7.85     0.00        6     0.00     0.00  Namespace3_Bind
+  0.00      7.85     0.00        6     0.00     0.00  TyFcn_String
+  0.00      7.85     0.00        6     0.00     0.00  TyFcn_UnString
+  0.00      7.85     0.00        6     0.00     0.00  sa_ralloc
+  0.00      7.85     0.00        5     0.00     0.00  HpiSpecial_Begin
+  0.00      7.85     0.00        5     0.00     0.00  TyFcn_Reverse
+  0.00      7.85     0.00        3     0.00     0.00  HpiSpecial_Lambda
+  0.00      7.85     0.00        3     0.00     0.00  Interp_DefineVar
+  0.00      7.85     0.00        3     0.00     2.56  Interp_EvalStringTop
+  0.00      7.85     0.00        3     0.00     0.00  TyFcn_DumpElem
+  0.00      7.85     0.00        3     0.00     0.00  TyPrint_PrintDefaults
+  0.00      7.85     0.00        2     0.00     0.00  Builtin_Time
+  0.00      7.85     0.00        2     0.00     0.00  ELEM_TOFIXNUMi
+  0.00      7.85     0.00        2     0.00     0.00  HpiOp_BindArgs
+  0.00      7.85     0.00        2     0.00     0.00  HpiSpecial_If
+  0.00      7.85     0.00        2     0.00     0.00  HpiSpecial_Let
+  0.00      7.85     0.00        2     0.00     0.00  Namespace3_BindArgs
+  0.00      7.85     0.00        2     0.00     0.00  SAGC_AddNamedRoot
+  0.00      7.85     0.00        2     0.00     0.00  Sys_TimeMS
+  0.00      7.85     0.00        2     0.00     0.00  TyPrint_Misc
+  0.00      7.85     0.00        1     0.00     0.00  Builtin_Eval
+  0.00      7.85     0.00        1     0.00     0.01  Builtin_Init
+  0.00      7.85     0.00        1     0.00     0.00  Builtin_Print
+  0.00      7.85     0.00        1     0.00     0.00  HpiInterp_Init
+  0.00      7.85     0.00        1     0.00     0.00  HpiInterp_RunCtxSafe
+  0.00      7.85     0.00        1     0.00     0.00  HpiSpecial_QQ_Inner
+  0.00      7.85     0.00        1     0.00     0.00  HpiSpecial_Quasiquote
+  0.00      7.85     0.00        1     0.00     0.00  Interp_Init
+  0.00      7.85     0.00        1     0.00     0.00  Interp_Load
+  0.00      7.85     0.00        1     0.00     0.00  MF_Quit
+  0.00      7.85     0.00        1     0.00     0.00  TyFcn_CopyVector
+  0.00      7.85     0.00        1     0.00     0.00  TyFcn_NAppend
+  0.00      7.85     0.00        1     0.00     0.00  TyObj_Init
+  0.00      7.85     0.00        1     0.00     0.00  TyPrint_Init
+  0.00      7.85     0.00        1     0.00     0.00  TyPrint_List
+  0.00      7.85     0.00        1     0.00     0.00  TyPrint_VecType
+  0.00      7.85     0.00        1     0.00     0.00  TypeX_Init
+  0.00      7.85     0.00        1     0.00     0.00  sa_loadfile
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.13% of 7.85 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     98.5    0.00    7.74                 main [1]
+                0.00    7.68       3/3           Interp_EvalStringTop [2]
+                0.02    0.00       1/1           HpiComp_Init [45]
+                0.02    0.00       1/1           TyFcn_Init [46]
+                0.00    0.01       1/1           Builtin_Init [57]
+                0.00    0.00       1/1           TyObj_Init [64]
+                0.00    0.00       1/1           Interp_Init [67]
+                0.00    0.00       1/1           HpiInterp_Init [79]
+                0.00    0.00       6/528         TyFcn_Symbol [52]
+                0.00    0.00       1/152         Interp_DefinePrimative [65]
+                0.00    0.00       3/3           TyFcn_DumpElem [111]
+                0.00    0.00       1/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    7.68       3/3           main [1]
+[2]     97.8    0.00    7.68       3         Interp_EvalStringTop [2]
+                1.85    5.83       3/3           Interp_EvalTop <cycle 2> [94]
+                0.00    0.00       3/9           ScmParse_Line [76]
+-----------------------------------------------
+[3]     97.8    1.85    5.83       3+31368287 <cycle 2 as a whole> [3]
+                0.97    2.73 22626200             HpiInterp_RunStep <cycle 2> [4]
+                0.31    1.53 3599606             HpiOp_Apply <cycle 2> [5]
+                0.10    0.91 2571162             invoke_func <cycle 2> [9]
+                0.25    0.63 2571162             TyMisc_EvalSpecial <cycle 2> [10]
+                0.22    0.00      10             HpiInterp_RunLoop <cycle 2> [24]
+                0.00    0.01      78             HpiComp_Compile <cycle 2> [56]
+                0.00    0.00       6             HpiSpecial_Define <cycle 2> [66]
+                0.00    0.00      33             HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00       1             Interp_Load <cycle 2> [75]
+                0.00    0.00       2             HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       3             HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00       2             HpiSpecial_If <cycle 2> [88]
+                0.00    0.00       9             Interp_EvalTop <cycle 2> [94]
+                0.00    0.00       5             HpiSpecial_Begin <cycle 2> [103]
+                0.00    0.00       1             HpiInterp_RunCtxSafe <cycle 2> [115]
+                0.00    0.00       1             Builtin_Eval <cycle 2> [147]
+-----------------------------------------------
+                             22626200             HpiInterp_RunLoop <cycle 2> [24]
+[4]     47.3    0.97    2.73 22626200         HpiInterp_RunStep <cycle 2> [4]
+                0.24    1.38 5656526/5656526     HpiOp_Refer [6]
+                0.07    0.38 3085387/3085387     HpiOp_Frame [16]
+                0.09    0.31 6170777/6170777     HpiOp_Argument [18]
+                0.07    0.05  514239/3085387     HpiOp_Return [11]
+                0.09    0.00 2571173/2571173     HpiOp_Constant [38]
+                0.04    0.00 1028457/1028457     HpiOp_Test [43]
+                0.01    0.01       3/3           HpiOp_Close [54]
+                0.00    0.00     191/256         Namespace3_Lookup [82]
+                0.00    0.00       6/6           HpiOp_Bind [95]
+                0.00    0.00       6/6           HpiOp_Assign [101]
+                0.00    0.00       2/2           HpiOp_BindArgs [108]
+                0.00    0.00       9/3599615     SYMGi [41]
+                0.00    0.00     191/197         TyFcn_SetCar [127]
+                0.00    0.00       9/9           HpiOp_XchgRPAX [139]
+                             3599606             HpiOp_Apply <cycle 2> [5]
+-----------------------------------------------
+                             3599606             HpiInterp_RunStep <cycle 2> [4]
+[5]     23.5    0.31    1.53 3599606         HpiOp_Apply <cycle 2> [5]
+                0.33    0.25 2571148/3085387     HpiOp_Return [11]
+                0.26    0.32 5142290/5142820     TyFcn_VectorRef [12]
+                0.10    0.04 2571148/5656535     TyFcn_UnConsList [20]
+                0.09    0.00 7199212/12855744     ELEM_OBJTYPEPi [28]
+                0.06    0.00 3599606/3599615     SYMGi [41]
+                0.05    0.01 1028458/10286663     TyFcn_Cons [14]
+                0.01    0.02 1028458/6685068     TyFcn_VectorIs [30]
+                             2571148             TyMisc_EvalSpecial <cycle 2> [10]
+-----------------------------------------------
+                0.24    1.38 5656526/5656526     HpiInterp_RunStep <cycle 2> [4]
+[6]     20.7    0.24    1.38 5656526         HpiOp_Refer [6]
+                0.05    1.12 5656526/5656526     Namespace3_RetrieveTrace [7]
+                0.04    0.10 5656526/6685068     TyFcn_VectorIs [30]
+                0.07    0.00 5656526/12855744     ELEM_OBJTYPEPi [28]
+-----------------------------------------------
+                0.05    1.12 5656526/5656526     HpiOp_Refer [6]
+[7]     15.0    0.05    1.12 5656526         Namespace3_RetrieveTrace [7]
+                0.93    0.19 5656526/5656526     Namespace2_RetrieveTrace [8]
+-----------------------------------------------
+                             5656526             Namespace2_RetrieveTrace [8]
+                0.93    0.19 5656526/5656526     Namespace3_RetrieveTrace [7]
+[8]     14.3    0.93    0.19 5656526+5656526 Namespace2_RetrieveTrace [8]
+                0.11    0.00 11313052/11313064     ELEM_TOFIXNUMi [34]
+                0.08    0.00 11313052/11313515     ELEM_OBJTYPEPi [39]
+                             5656526             Namespace2_RetrieveTrace [8]
+-----------------------------------------------
+                             2571162             TyMisc_EvalSpecial <cycle 2> [10]
+[9]     12.9    0.10    0.91 2571162         invoke_func <cycle 2> [9]
+                0.07    0.46 1028457/1028457     TyMath_SubFlonum [13]
+                0.03    0.16 1028457/1028457     TyMath_LessP [25]
+                0.06    0.13  514228/514228      TyMath_AddFlonum [26]
+                0.00    0.00       1/1           HpiSpecial_Quasiquote [69]
+                0.00    0.00       1/1           Builtin_Print [93]
+                0.00    0.00       2/2           Builtin_Time [110]
+                0.00    0.00       1/1           MF_Quit [148]
+                                   6             HpiSpecial_Define <cycle 2> [66]
+                                   3             HpiSpecial_Lambda <cycle 2> [84]
+                                   2             HpiSpecial_Let <cycle 2> [83]
+                                   2             HpiSpecial_If <cycle 2> [88]
+                                   1             Interp_Load <cycle 2> [75]
+                                   1             Builtin_Eval <cycle 2> [147]
+-----------------------------------------------
+                                  14             HpiComp_CompileExpr <cycle 2> [74]
+                             2571148             HpiOp_Apply <cycle 2> [5]
+[10]    11.3    0.25    0.63 2571162         TyMisc_EvalSpecial <cycle 2> [10]
+                0.09    0.15 1542687/1542738     TyFcn_NReverse [22]
+                0.14    0.02 3085377/10286663     TyFcn_Cons [14]
+                0.12    0.00 5142349/5142379     TyFcn_Car [33]
+                0.11    0.00 5142349/10287402     TyFcn_Cdr [23]
+                             2571162             invoke_func <cycle 2> [9]
+-----------------------------------------------
+                0.07    0.05  514239/3085387     HpiInterp_RunStep <cycle 2> [4]
+                0.33    0.25 2571148/3085387     HpiOp_Apply <cycle 2> [5]
+[11]     8.9    0.40    0.30 3085387         HpiOp_Return [11]
+                0.12    0.05 3085387/5656535     TyFcn_UnConsList [20]
+                0.09    0.04 3085387/6170774     TyFcn_VectorBody [21]
+-----------------------------------------------
+                0.00    0.00       2/5142820     TyPrint_VecType <cycle 3> [105]
+                0.00    0.00     528/5142820     TyFcn_Symbol [52]
+                0.26    0.32 5142290/5142820     HpiOp_Apply <cycle 2> [5]
+[12]     7.4    0.26    0.32 5142820         TyFcn_VectorRef [12]
+                0.08    0.07 5142820/5144396     TyFcn_VectorLength [29]
+                0.09    0.00 10285640/12347333     ELEM_TOFIXNUMi [35]
+                0.07    0.00 5142820/29327282     ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                0.07    0.46 1028457/1028457     invoke_func <cycle 2> [9]
+[13]     6.7    0.07    0.46 1028457         TyMath_SubFlonum [13]
+                0.12    0.13 3085371/6170749     TyMath_ToDouble [15]
+                0.08    0.05 1028457/1028767     TyFcn_ListLength [32]
+                0.09    0.00 1028457/1542737     TyMath_FromDouble [31]
+-----------------------------------------------
+                                 314             TyFcn_Cons [14]
+                0.00    0.00       1/10286663     main [1]
+                0.00    0.00       3/10286663     HpiOp_Close [54]
+                0.00    0.00       3/10286663     TyPrint_Init [87]
+                0.00    0.00       4/10286663     Namespace3_BindArgs [109]
+                0.00    0.00       5/10286663     HpiSpecial_Quasiquote [69]
+                0.00    0.00       5/10286663     TyFcn_Reverse [104]
+                0.00    0.00       6/10286663     ScmParse_Item <cycle 1> [72]
+                0.00    0.00       6/10286663     Interp_Init [67]
+                0.00    0.00       8/10286663     HpiSpecial_If <cycle 2> [88]
+                0.00    0.00      12/10286663     Interp_DefineVar [86]
+                0.00    0.00      18/10286663     HpiComp_Init [45]
+                0.00    0.00      22/10286663     HpiComp_PushEnv [97]
+                0.00    0.00      22/10286663     HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00      24/10286663     Namespace3_Bind [96]
+                0.00    0.00      27/10286663     HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00      32/10286663     HpiCmd_NewFrame [19]
+                0.00    0.00      38/10286663     TyFcn_ListCopyRec [92]
+                0.00    0.00      56/10286663     HpiInterp_DefineOpcode [78]
+                0.00    0.00      70/10286663     HpiSpecial_Define <cycle 2> [66]
+                0.00    0.00      76/10286663     Namespace2_Trace [89]
+                0.00    0.00     121/10286663     ScmParse_List <cycle 1> [91]
+                0.00    0.00     128/10286663     HpiComp_DefineSpecial [77]
+                0.00    0.00     160/10286663     HpiSpecial_QQ_Inner [70]
+                0.00    0.00     167/10286663     HpiComp_Compile <cycle 2> [56]
+                0.00    0.00     202/10286663     HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00     227/10286663     TyFcn_SymbolList [90]
+                0.00    0.00     608/10286663     Interp_DefinePrimative [65]
+                0.05    0.01 1028458/10286663     HpiOp_Apply <cycle 2> [5]
+                0.14    0.02 3085377/10286663     TyMisc_EvalSpecial <cycle 2> [10]
+                0.27    0.04 6170777/10286663     HpiOp_Argument [18]
+[14]     6.6    0.45    0.06 10286663+314     TyFcn_Cons [14]
+                0.04    0.02     314/314         sa_multicons [42]
+                                 314             TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       1/6170749     TyPrint_Object <cycle 3> [100]
+                0.00    0.00       7/6170749     TyPrint_PrintFlags [98]
+                0.04    0.04 1028456/6170749     TyMath_AddFlonum [26]
+                0.08    0.08 2056914/6170749     TyMath_LessP [25]
+                0.12    0.13 3085371/6170749     TyMath_SubFlonum [13]
+[15]     6.2    0.23    0.25 6170749         TyMath_ToDouble [15]
+                0.07    0.09 6170749/6170756     TyFcn_WidenumIs [27]
+                0.09    0.00 6170746/6170746     ELEM_TOFIXNUMi [36]
+-----------------------------------------------
+                0.07    0.38 3085387/3085387     HpiInterp_RunStep <cycle 2> [4]
+[16]     5.8    0.07    0.38 3085387         HpiOp_Frame [16]
+                0.26    0.13 3085387/3085387     HpiCmd_NewFrame [19]
+-----------------------------------------------
+                0.00    0.00       1/29327282     TyFcn_CopyVector [116]
+                0.00    0.00       7/29327282     TyFcn_UnString [113]
+                0.00    0.00     348/29327282     TyFcn_SymbolList [90]
+                0.00    0.00    1576/29327282     TyFcn_VectorSet [85]
+                0.00    0.00   11536/29327282     TyFcn_EqualP [80]
+                0.07    0.00 5142820/29327282     TyFcn_VectorRef [12]
+                0.07    0.00 5144396/29327282     TyFcn_VectorLength [29]
+                0.09    0.00 6170756/29327282     TyFcn_WidenumIs [27]
+                0.09    0.00 6170774/29327282     TyFcn_VectorBody [21]
+                0.10    0.00 6685068/29327282     TyFcn_VectorIs [30]
+[17]     5.4    0.42    0.00 29327282         ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                0.09    0.31 6170777/6170777     HpiInterp_RunStep <cycle 2> [4]
+[18]     5.1    0.09    0.31 6170777         HpiOp_Argument [18]
+                0.27    0.04 6170777/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.26    0.13 3085387/3085387     HpiOp_Frame [16]
+[19]     4.9    0.26    0.13 3085387         HpiCmd_NewFrame [19]
+                0.09    0.04 3085387/6170774     TyFcn_VectorBody [21]
+                0.00    0.00      32/1542737     TyMath_FromDouble [31]
+                0.00    0.00      32/10286663     TyFcn_Cons [14]
+                0.00    0.00      32/33          TyFcn_NewVector [102]
+-----------------------------------------------
+                0.10    0.04 2571148/5656535     HpiOp_Apply <cycle 2> [5]
+                0.12    0.05 3085387/5656535     HpiOp_Return [11]
+[20]     4.0    0.23    0.09 5656535         TyFcn_UnConsList [20]
+                0.09    0.00 5142293/5142293     TyFcn_UnCons [37]
+-----------------------------------------------
+                0.09    0.04 3085387/6170774     HpiCmd_NewFrame [19]
+                0.09    0.04 3085387/6170774     HpiOp_Return [11]
+[21]     3.3    0.17    0.09 6170774         TyFcn_VectorBody [21]
+                0.09    0.00 6170774/29327282     ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                0.00    0.00       2/1542738     HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00      49/1542738     ScmParse_List <cycle 1> [91]
+                0.09    0.15 1542687/1542738     TyMisc_EvalSpecial <cycle 2> [10]
+[22]     3.1    0.10    0.15 1542738         TyFcn_NReverse [22]
+                0.08    0.00 3085500/3085551     TyFcn_SetCdr [40]
+                0.07    0.00 3085500/10287402     TyFcn_Cdr [23]
+-----------------------------------------------
+                0.00    0.00       1/10287402     TyFcn_NAppend [114]
+                0.00    0.00      19/10287402     HpiComp_CompileExpr <cycle 2> [74]
+                0.05    0.00 2059533/10287402     TyFcn_ListLength [32]
+                0.07    0.00 3085500/10287402     TyFcn_NReverse [22]
+                0.11    0.00 5142349/10287402     TyMisc_EvalSpecial <cycle 2> [10]
+[23]     2.9    0.23    0.00 10287402         TyFcn_Cdr [23]
+-----------------------------------------------
+                                   1             HpiInterp_RunCtxSafe <cycle 2> [115]
+                                   9             HpiInterp_RunCtx <cycle 2> [138]
+[24]     2.8    0.22    0.00      10         HpiInterp_RunLoop <cycle 2> [24]
+                0.00    0.00     365/365         Sys_TimeDUS [124]
+                             22626200             HpiInterp_RunStep <cycle 2> [4]
+-----------------------------------------------
+                0.03    0.16 1028457/1028457     invoke_func <cycle 2> [9]
+[25]     2.5    0.03    0.16 1028457         TyMath_LessP [25]
+                0.08    0.08 2056914/6170749     TyMath_ToDouble [15]
+-----------------------------------------------
+                0.06    0.13  514228/514228      invoke_func <cycle 2> [9]
+[26]     2.4    0.06    0.13  514228         TyMath_AddFlonum [26]
+                0.04    0.04 1028456/6170749     TyMath_ToDouble [15]
+                0.05    0.00  514228/1542737     TyMath_FromDouble [31]
+-----------------------------------------------
+                0.00    0.00       7/6170756     TyPrint_Object <cycle 3> [100]
+                0.07    0.09 6170749/6170756     TyMath_ToDouble [15]
+[27]     2.1    0.07    0.09 6170756         TyFcn_WidenumIs [27]
+                0.09    0.00 6170756/29327282     ELEM_OBJTYPEPi [17]
+                0.00    0.00       4/12347333     ELEM_TOFIXNUMi [35]
+-----------------------------------------------
+                0.00    0.00       6/12855744     HpiOp_Assign [101]
+                0.07    0.00 5656526/12855744     HpiOp_Refer [6]
+                0.09    0.00 7199212/12855744     HpiOp_Apply <cycle 2> [5]
+[28]     2.0    0.16    0.00 12855744         ELEM_OBJTYPEPi [28]
+-----------------------------------------------
+                0.00    0.00    1576/5144396     TyFcn_VectorSet [85]
+                0.08    0.07 5142820/5144396     TyFcn_VectorRef [12]
+[29]     2.0    0.09    0.07 5144396         TyFcn_VectorLength [29]
+                0.07    0.00 5144396/29327282     ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                0.00    0.00      13/6685068     HpiComp_Compile <cycle 2> [56]
+                0.00    0.00      71/6685068     HpiComp_CompileExpr <cycle 2> [74]
+                0.01    0.02 1028458/6685068     HpiOp_Apply <cycle 2> [5]
+                0.04    0.10 5656526/6685068     HpiOp_Refer [6]
+[30]     2.0    0.04    0.11 6685068         TyFcn_VectorIs [30]
+                0.10    0.00 6685068/29327282     ELEM_OBJTYPEPi [17]
+                0.02    0.00 2056916/12347333     ELEM_TOFIXNUMi [35]
+-----------------------------------------------
+                0.00    0.00       1/1542737     TyFcn_Init [46]
+                0.00    0.00       2/1542737     Builtin_Time [110]
+                0.00    0.00       2/1542737     Interp_Init [67]
+                0.00    0.00       7/1542737     Builtin_Print [93]
+                0.00    0.00       8/1542737     ScmParse_Item <cycle 1> [72]
+                0.00    0.00      32/1542737     HpiCmd_NewFrame [19]
+                0.05    0.00  514228/1542737     TyMath_AddFlonum [26]
+                0.09    0.00 1028457/1542737     TyMath_SubFlonum [13]
+[31]     1.8    0.14    0.00 1542737         TyMath_FromDouble [31]
+                0.00    0.00       3/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       6/1028767     Interp_DefineVar [86]
+                0.00    0.00     304/1028767     Interp_DefinePrimative [65]
+                0.08    0.05 1028457/1028767     TyMath_SubFlonum [13]
+[32]     1.6    0.08    0.05 1028767         TyFcn_ListLength [32]
+                0.05    0.00 2059533/10287402     TyFcn_Cdr [23]
+-----------------------------------------------
+                0.00    0.00      30/5142379     HpiComp_CompileExpr <cycle 2> [74]
+                0.12    0.00 5142349/5142379     TyMisc_EvalSpecial <cycle 2> [10]
+[33]     1.5    0.12    0.00 5142379         TyFcn_Car [33]
+-----------------------------------------------
+                0.00    0.00      12/11313064     Namespace2_AssignTrace [106]
+                0.11    0.00 11313052/11313064     Namespace2_RetrieveTrace [8]
+[34]     1.5    0.12    0.00 11313064         ELEM_TOFIXNUMi [34]
+-----------------------------------------------
+                0.00    0.00       4/12347333     TyFcn_WidenumIs [27]
+                0.00    0.00      12/12347333     TyFcn_NewTypedVector [55]
+                0.00    0.00      33/12347333     TyFcn_NewVector [102]
+                0.00    0.00    4728/12347333     TyFcn_VectorSet [85]
+                0.02    0.00 2056916/12347333     TyFcn_VectorIs [30]
+                0.09    0.00 10285640/12347333     TyFcn_VectorRef [12]
+[35]     1.3    0.10    0.00 12347333         ELEM_TOFIXNUMi [35]
+-----------------------------------------------
+                0.09    0.00 6170746/6170746     TyMath_ToDouble [15]
+[36]     1.1    0.09    0.00 6170746         ELEM_TOFIXNUMi [36]
+-----------------------------------------------
+                0.09    0.00 5142293/5142293     TyFcn_UnConsList [20]
+[37]     1.1    0.09    0.00 5142293         TyFcn_UnCons [37]
+-----------------------------------------------
+                0.09    0.00 2571173/2571173     HpiInterp_RunStep <cycle 2> [4]
+[38]     1.1    0.09    0.00 2571173         HpiOp_Constant [38]
+-----------------------------------------------
+                0.00    0.00      12/11313515     Namespace2_AssignTrace [106]
+                0.00    0.00     130/11313515     Namespace2_Trace [89]
+                0.00    0.00     321/11313515     Namespace2_Lookup [81]
+                0.08    0.00 11313052/11313515     Namespace2_RetrieveTrace [8]
+[39]     1.0    0.08    0.00 11313515         ELEM_OBJTYPEPi [39]
+-----------------------------------------------
+                0.00    0.00       1/3085551     TyFcn_NAppend [114]
+                0.00    0.00      12/3085551     TyFcn_SymbolList [90]
+                0.00    0.00      38/3085551     TyFcn_ListCopyRec [92]
+                0.08    0.00 3085500/3085551     TyFcn_NReverse [22]
+[40]     1.0    0.08    0.00 3085551         TyFcn_SetCdr [40]
+-----------------------------------------------
+                0.00    0.00       9/3599615     HpiInterp_RunStep <cycle 2> [4]
+                0.06    0.00 3599606/3599615     HpiOp_Apply <cycle 2> [5]
+[41]     0.8    0.06    0.00 3599615         SYMGi [41]
+                0.00    0.00       2/528         TyFcn_Symbol [52]
+-----------------------------------------------
+                0.04    0.02     314/314         TyFcn_Cons [14]
+[42]     0.8    0.04    0.02     314         sa_multicons [42]
+                0.02    0.00 5144576/5144576     sa_cons [47]
+-----------------------------------------------
+                0.04    0.00 1028457/1028457     HpiInterp_RunStep <cycle 2> [4]
+[43]     0.5    0.04    0.00 1028457         HpiOp_Test [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[44]     0.4    0.03    0.00                 SYMGi [44]
+-----------------------------------------------
+                0.02    0.00       1/1           main [1]
+[45]     0.3    0.02    0.00       1         HpiComp_Init [45]
+                0.00    0.00      32/32          HpiComp_DefineSpecial [77]
+                0.00    0.00       8/528         TyFcn_Symbol [52]
+                0.00    0.00      18/10286663     TyFcn_Cons [14]
+                0.00    0.00       8/27          SAGC_AddRoot [132]
+                0.00    0.00       1/6           TyFcn_String [141]
+-----------------------------------------------
+                0.02    0.00       1/1           main [1]
+[46]     0.3    0.02    0.00       1         TyFcn_Init [46]
+                0.00    0.00    1024/1576        TyFcn_VectorSet [85]
+                0.00    0.00       1/1           TyPrint_Init [87]
+                0.00    0.00       1/1542737     TyMath_FromDouble [31]
+                0.00    0.00       1/33          TyFcn_NewVector [102]
+                0.00    0.00       3/27          SAGC_AddRoot [132]
+                0.00    0.00       1/12          sa_print [135]
+                0.00    0.00       1/1           TypeX_Init [150]
+-----------------------------------------------
+                0.02    0.00 5144576/5144576     sa_multicons [42]
+[47]     0.3    0.02    0.00 5144576         sa_cons [47]
+                0.00    0.00 5144576/5144598     sa_malloc [120]
+-----------------------------------------------
+                                                 <spontaneous>
+[48]     0.2    0.01    0.00                 HpiCmd_EvalConstraint [48]
+-----------------------------------------------
+                                                 <spontaneous>
+[49]     0.2    0.01    0.00                 HpiInterp_MiniApply [49]
+-----------------------------------------------
+                                                 <spontaneous>
+[50]     0.2    0.01    0.00                 TyFcn_VectorType [50]
+-----------------------------------------------
+                                                 <spontaneous>
+[51]     0.2    0.01    0.00                 TyMath_FromBignum [51]
+-----------------------------------------------
+                0.00    0.00       2/528         HpiSpecial_If <cycle 2> [88]
+                0.00    0.00       2/528         HpiSpecial_Quasiquote [69]
+                0.00    0.00       2/528         SYMGi [41]
+                0.00    0.00       3/528         ScmParse_Item <cycle 1> [72]
+                0.00    0.00       3/528         Interp_DefineVar [86]
+                0.00    0.00       3/528         TyPrint_Init [87]
+                0.00    0.00       6/528         HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00       6/528         HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       6/528         main [1]
+                0.00    0.00       8/528         HpiComp_Init [45]
+                0.00    0.00      14/528         HpiSpecial_Define <cycle 2> [66]
+                0.00    0.00      28/528         HpiInterp_DefineOpcode [78]
+                0.00    0.00      32/528         HpiComp_DefineSpecial [77]
+                0.00    0.00      45/528         HpiComp_Compile <cycle 2> [56]
+                0.00    0.00      65/528         HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00      71/528         ScmParse_Symbol [73]
+                0.00    0.00      80/528         HpiSpecial_QQ_Inner [70]
+                0.00    0.00     152/528         Interp_DefinePrimative [65]
+[52]     0.1    0.01    0.00     528         TyFcn_Symbol [52]
+                0.00    0.00     528/5142820     TyFcn_VectorRef [12]
+                0.00    0.00     528/1576        TyFcn_VectorSet [85]
+                0.00    0.00     528/528         TyFcn_SymbolList [90]
+-----------------------------------------------
+                0.00    0.00       6/38          HpiComp_Lookup [68]
+                0.01    0.00      32/38          HpiComp_Compile <cycle 2> [56]
+[53]     0.1    0.01    0.00      38         Namespace3_Trace [53]
+                0.00    0.00      38/38          Namespace2_Trace [89]
+-----------------------------------------------
+                0.01    0.01       3/3           HpiInterp_RunStep <cycle 2> [4]
+[54]     0.1    0.01    0.01       3         HpiOp_Close [54]
+                0.01    0.00       3/6           TyFcn_NewTypedVector [55]
+                0.00    0.00      18/1576        TyFcn_VectorSet [85]
+                0.00    0.00       3/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       1/6           Interp_Init [67]
+                0.00    0.00       2/6           TyObj_Init [64]
+                0.01    0.00       3/6           HpiOp_Close [54]
+[55]     0.1    0.01    0.00       6         TyFcn_NewTypedVector [55]
+                0.00    0.00      12/12347333     ELEM_TOFIXNUMi [35]
+                0.00    0.00       6/460         sa_alloc [123]
+-----------------------------------------------
+                                   1             Builtin_Eval <cycle 2> [147]
+                                   2             HpiSpecial_Let <cycle 2> [83]
+                                   5             HpiSpecial_Begin <cycle 2> [103]
+                                   6             HpiSpecial_Define <cycle 2> [66]
+                                   6             HpiSpecial_If <cycle 2> [88]
+                                   9             Interp_EvalTop <cycle 2> [94]
+                                  49             HpiComp_CompileExpr <cycle 2> [74]
+[56]     0.1    0.00    0.01      78         HpiComp_Compile <cycle 2> [56]
+                0.01    0.00      32/38          Namespace3_Trace [53]
+                0.00    0.00      45/528         TyFcn_Symbol [52]
+                0.00    0.00      32/256         Namespace3_Lookup [82]
+                0.00    0.00     167/10286663     TyFcn_Cons [14]
+                0.00    0.00      13/6685068     TyFcn_VectorIs [30]
+                0.00    0.00     110/145         ELEM_OBJTYPEPi [130]
+                                  33             HpiComp_CompileExpr <cycle 2> [74]
+-----------------------------------------------
+                0.00    0.01       1/1           main [1]
+[57]     0.1    0.00    0.01       1         Builtin_Init [57]
+                0.01    0.00       1/1           TyMath_Init [58]
+                0.00    0.00     119/152         Interp_DefinePrimative [65]
+                0.00    0.00       1/3           Interp_DefineVar [86]
+-----------------------------------------------
+                0.01    0.00       1/1           Builtin_Init [57]
+[58]     0.1    0.01    0.00       1         TyMath_Init [58]
+                0.00    0.00      23/152         Interp_DefinePrimative [65]
+-----------------------------------------------
+                                                 <spontaneous>
+[59]     0.1    0.01    0.00                 ELEM_OBJTYPEPi [59]
+-----------------------------------------------
+                                                 <spontaneous>
+[60]     0.1    0.01    0.00                 Namespace2_LocativeTrace [60]
+-----------------------------------------------
+                                                 <spontaneous>
+[61]     0.1    0.01    0.00                 TyFcn_DumpElemBR [61]
+-----------------------------------------------
+                                                 <spontaneous>
+[62]     0.1    0.01    0.00                 TyFcn_ObjPokeElem [62]
+-----------------------------------------------
+                                                 <spontaneous>
+[63]     0.1    0.01    0.00                 TyMath_CmpFlonum [63]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[64]     0.0    0.00    0.00       1         TyObj_Init [64]
+                0.00    0.00       2/6           TyFcn_NewTypedVector [55]
+                0.00    0.00       9/152         Interp_DefinePrimative [65]
+                0.00    0.00       2/3           Interp_DefineVar [86]
+                0.00    0.00       6/1576        TyFcn_VectorSet [85]
+                0.00    0.00       3/27          SAGC_AddRoot [132]
+-----------------------------------------------
+                0.00    0.00       1/152         main [1]
+                0.00    0.00       9/152         TyObj_Init [64]
+                0.00    0.00      23/152         TyMath_Init [58]
+                0.00    0.00     119/152         Builtin_Init [57]
+[65]     0.0    0.00    0.00     152         Interp_DefinePrimative [65]
+                0.00    0.00     152/528         TyFcn_Symbol [52]
+                0.00    0.00     304/1028767     TyFcn_ListLength [32]
+                0.00    0.00     608/10286663     TyFcn_Cons [14]
+                0.00    0.00     152/152         TyFcn_Function [129]
+                0.00    0.00     152/184         SAGC_BindNameAddr [128]
+-----------------------------------------------
+                                   6             invoke_func <cycle 2> [9]
+[66]     0.0    0.00    0.00       6         HpiSpecial_Define <cycle 2> [66]
+                0.00    0.00       6/6           HpiComp_Lookup [68]
+                0.00    0.00      14/528         TyFcn_Symbol [52]
+                0.00    0.00      70/10286663     TyFcn_Cons [14]
+                0.00    0.00       6/11          HpiComp_PushEnv [97]
+                0.00    0.00       6/11          HpiComp_PopEnv [136]
+                                   6             HpiComp_Compile <cycle 2> [56]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[67]     0.0    0.00    0.00       1         Interp_Init [67]
+                0.00    0.00       1/6           TyFcn_NewTypedVector [55]
+                0.00    0.00       6/10286663     TyFcn_Cons [14]
+                0.00    0.00       2/1542737     TyMath_FromDouble [31]
+                0.00    0.00       9/27          SAGC_AddRoot [132]
+                0.00    0.00       2/2           SAGC_AddNamedRoot [144]
+-----------------------------------------------
+                0.00    0.00       6/6           HpiSpecial_Define <cycle 2> [66]
+[68]     0.0    0.00    0.00       6         HpiComp_Lookup [68]
+                0.00    0.00       6/38          Namespace3_Trace [53]
+-----------------------------------------------
+                0.00    0.00       1/1           invoke_func <cycle 2> [9]
+[69]     0.0    0.00    0.00       1         HpiSpecial_Quasiquote [69]
+                0.00    0.00       1/1           HpiSpecial_QQ_Inner [70]
+                0.00    0.00       2/528         TyFcn_Symbol [52]
+                0.00    0.00       5/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                                   8             HpiSpecial_QQ_Inner [70]
+                0.00    0.00       1/1           HpiSpecial_Quasiquote [69]
+[70]     0.0    0.00    0.00       1+8       HpiSpecial_QQ_Inner [70]
+                0.00    0.00      80/528         TyFcn_Symbol [52]
+                0.00    0.00     160/10286663     TyFcn_Cons [14]
+                0.00    0.00       8/19          TyFcn_ListCopyRec [92]
+                                   8             HpiSpecial_QQ_Inner [70]
+-----------------------------------------------
+[71]     0.0    0.00    0.00      15+1021    <cycle 1 as a whole> [71]
+                0.00    0.00     133+3           ScmParse_Item <cycle 1> [72]
+                0.00    0.00      49             ScmParse_List <cycle 1> [91]
+                0.00    0.00     498+164         ScmParse_EatWhite <cycle 1> [122]
+-----------------------------------------------
+                                   3             ScmParse_Item <cycle 1> [72]
+                                   2             ScmParse_EatWhite <cycle 1> [122]
+                                 122             ScmParse_List <cycle 1> [91]
+                0.00    0.00       9/15          ScmParse_Line [76]
+[72]     0.0    0.00    0.00     133+3       ScmParse_Item <cycle 1> [72]
+                0.00    0.00      71/71          ScmParse_Symbol [73]
+                0.00    0.00       3/528         TyFcn_Symbol [52]
+                0.00    0.00       8/1542737     TyMath_FromDouble [31]
+                0.00    0.00       6/10286663     TyFcn_Cons [14]
+                0.00    0.00       8/8           ScmParse_Float [140]
+                0.00    0.00       5/6           TyFcn_String [141]
+                                 136             ScmParse_EatWhite <cycle 1> [122]
+                                 136             ScmParse_Token <cycle 1> [125]
+                                  49             ScmParse_List <cycle 1> [91]
+                                   3             ScmParse_Item <cycle 1> [72]
+-----------------------------------------------
+                0.00    0.00      71/71          ScmParse_Item <cycle 1> [72]
+[73]     0.0    0.00    0.00      71         ScmParse_Symbol [73]
+                0.00    0.00      71/528         TyFcn_Symbol [52]
+-----------------------------------------------
+                                  33             HpiComp_Compile <cycle 2> [56]
+[74]     0.0    0.00    0.00      33         HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00      65/528         TyFcn_Symbol [52]
+                0.00    0.00      33/256         Namespace3_Lookup [82]
+                0.00    0.00     202/10286663     TyFcn_Cons [14]
+                0.00    0.00      71/6685068     TyFcn_VectorIs [30]
+                0.00    0.00      30/5142379     TyFcn_Car [33]
+                0.00    0.00      19/10287402     TyFcn_Cdr [23]
+                0.00    0.00      33/145         ELEM_OBJTYPEPi [130]
+                                  49             HpiComp_Compile <cycle 2> [56]
+                                  14             TyMisc_EvalSpecial <cycle 2> [10]
+-----------------------------------------------
+                                   1             invoke_func <cycle 2> [9]
+[75]     0.0    0.00    0.00       1         Interp_Load <cycle 2> [75]
+                0.00    0.00       6/15          ScmParse_EatWhite <cycle 1> [122]
+                0.00    0.00       6/9           ScmParse_Line [76]
+                0.00    0.00       1/6           TyFcn_UnString [113]
+                0.00    0.00       1/5144598     sa_malloc [120]
+                0.00    0.00       1/1           sa_loadfile [151]
+                0.00    0.00       1/21          sa_free [133]
+                                   6             Interp_EvalTop <cycle 2> [94]
+-----------------------------------------------
+                0.00    0.00       3/9           Interp_EvalStringTop [2]
+                0.00    0.00       6/9           Interp_Load <cycle 2> [75]
+[76]     0.0    0.00    0.00       9         ScmParse_Line [76]
+                0.00    0.00       9/15          ScmParse_Item <cycle 1> [72]
+-----------------------------------------------
+                0.00    0.00      32/32          HpiComp_Init [45]
+[77]     0.0    0.00    0.00      32         HpiComp_DefineSpecial [77]
+                0.00    0.00      32/528         TyFcn_Symbol [52]
+                0.00    0.00     128/10286663     TyFcn_Cons [14]
+                0.00    0.00      32/32          TyFcn_Special [131]
+                0.00    0.00      32/184         SAGC_BindNameAddr [128]
+-----------------------------------------------
+                0.00    0.00      28/28          HpiInterp_Init [79]
+[78]     0.0    0.00    0.00      28         HpiInterp_DefineOpcode [78]
+                0.00    0.00      28/528         TyFcn_Symbol [52]
+                0.00    0.00      56/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[79]     0.0    0.00    0.00       1         HpiInterp_Init [79]
+                0.00    0.00      28/28          HpiInterp_DefineOpcode [78]
+                0.00    0.00       3/27          SAGC_AddRoot [132]
+-----------------------------------------------
+                0.00    0.00     552/6011        Namespace2_Trace [89]
+                0.00    0.00    5459/6011        Namespace2_Lookup [81]
+[80]     0.0    0.00    0.00    6011         TyFcn_EqualP [80]
+                0.00    0.00   11536/29327282     ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                                  65             Namespace2_Lookup [81]
+                0.00    0.00     256/256         Namespace3_Lookup [82]
+[81]     0.0    0.00    0.00     256+65      Namespace2_Lookup [81]
+                0.00    0.00    5459/6011        TyFcn_EqualP [80]
+                0.00    0.00     321/11313515     ELEM_OBJTYPEPi [39]
+                                  65             Namespace2_Lookup [81]
+-----------------------------------------------
+                0.00    0.00      32/256         HpiComp_Compile <cycle 2> [56]
+                0.00    0.00      33/256         HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00     191/256         HpiInterp_RunStep <cycle 2> [4]
+[82]     0.0    0.00    0.00     256         Namespace3_Lookup [82]
+                0.00    0.00     256/256         Namespace2_Lookup [81]
+-----------------------------------------------
+                                   2             invoke_func <cycle 2> [9]
+[83]     0.0    0.00    0.00       2         HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       6/528         TyFcn_Symbol [52]
+                0.00    0.00      22/10286663     TyFcn_Cons [14]
+                0.00    0.00       2/1542738     TyFcn_NReverse [22]
+                0.00    0.00       2/19          TyFcn_ListCopyRec [92]
+                0.00    0.00       2/11          HpiComp_PushEnv [97]
+                0.00    0.00       2/145         ELEM_OBJTYPEPi [130]
+                0.00    0.00       2/11          HpiComp_PopEnv [136]
+                                   2             HpiSpecial_Begin <cycle 2> [103]
+                                   2             HpiComp_Compile <cycle 2> [56]
+-----------------------------------------------
+                                   3             invoke_func <cycle 2> [9]
+[84]     0.0    0.00    0.00       3         HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00       6/528         TyFcn_Symbol [52]
+                0.00    0.00      27/10286663     TyFcn_Cons [14]
+                0.00    0.00       3/11          HpiComp_PushEnv [97]
+                0.00    0.00       3/11          HpiComp_PopEnv [136]
+                                   3             HpiSpecial_Begin <cycle 2> [103]
+-----------------------------------------------
+                0.00    0.00       6/1576        TyObj_Init [64]
+                0.00    0.00      18/1576        HpiOp_Close [54]
+                0.00    0.00     528/1576        TyFcn_Symbol [52]
+                0.00    0.00    1024/1576        TyFcn_Init [46]
+[85]     0.0    0.00    0.00    1576         TyFcn_VectorSet [85]
+                0.00    0.00    1576/5144396     TyFcn_VectorLength [29]
+                0.00    0.00    4728/12347333     ELEM_TOFIXNUMi [35]
+                0.00    0.00    1576/29327282     ELEM_OBJTYPEPi [17]
+-----------------------------------------------
+                0.00    0.00       1/3           Builtin_Init [57]
+                0.00    0.00       2/3           TyObj_Init [64]
+[86]     0.0    0.00    0.00       3         Interp_DefineVar [86]
+                0.00    0.00       3/528         TyFcn_Symbol [52]
+                0.00    0.00       6/1028767     TyFcn_ListLength [32]
+                0.00    0.00      12/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       1/1           TyFcn_Init [46]
+[87]     0.0    0.00    0.00       1         TyPrint_Init [87]
+                0.00    0.00       3/528         TyFcn_Symbol [52]
+                0.00    0.00       3/10286663     TyFcn_Cons [14]
+                0.00    0.00       1/27          SAGC_AddRoot [132]
+-----------------------------------------------
+                                   2             invoke_func <cycle 2> [9]
+[88]     0.0    0.00    0.00       2         HpiSpecial_If <cycle 2> [88]
+                0.00    0.00       2/528         TyFcn_Symbol [52]
+                0.00    0.00       8/10286663     TyFcn_Cons [14]
+                                   6             HpiComp_Compile <cycle 2> [56]
+-----------------------------------------------
+                                  92             Namespace2_Trace [89]
+                0.00    0.00      38/38          Namespace3_Trace [53]
+[89]     0.0    0.00    0.00      38+92      Namespace2_Trace [89]
+                0.00    0.00     552/6011        TyFcn_EqualP [80]
+                0.00    0.00      76/10286663     TyFcn_Cons [14]
+                0.00    0.00     130/11313515     ELEM_OBJTYPEPi [39]
+                                  92             Namespace2_Trace [89]
+-----------------------------------------------
+                0.00    0.00     528/528         TyFcn_Symbol [52]
+[90]     0.0    0.00    0.00     528         TyFcn_SymbolList [90]
+                0.00    0.00     227/10286663     TyFcn_Cons [14]
+                0.00    0.00     348/29327282     ELEM_OBJTYPEPi [17]
+                0.00    0.00      12/3085551     TyFcn_SetCdr [40]
+                0.00    0.00     227/227         TyFcn_Symbol2 [126]
+-----------------------------------------------
+                                  49             ScmParse_Item <cycle 1> [72]
+[91]     0.0    0.00    0.00      49         ScmParse_List <cycle 1> [91]
+                0.00    0.00      49/1542738     TyFcn_NReverse [22]
+                0.00    0.00     121/10286663     TyFcn_Cons [14]
+                0.00    0.00       1/1           TyFcn_NAppend [114]
+                                 220             ScmParse_Token <cycle 1> [125]
+                                 122             ScmParse_Item <cycle 1> [72]
+-----------------------------------------------
+                                  19             TyFcn_ListCopyRec [92]
+                0.00    0.00       2/19          HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       8/19          HpiSpecial_QQ_Inner [70]
+                0.00    0.00       9/19          Interp_EvalTop <cycle 2> [94]
+[92]     0.0    0.00    0.00      19+19      TyFcn_ListCopyRec [92]
+                0.00    0.00      38/10286663     TyFcn_Cons [14]
+                0.00    0.00      38/3085551     TyFcn_SetCdr [40]
+                                  19             TyFcn_ListCopyRec [92]
+-----------------------------------------------
+                0.00    0.00       1/1           invoke_func <cycle 2> [9]
+[93]     0.0    0.00    0.00       1         Builtin_Print [93]
+                0.00    0.00       7/7           TyPrint_PrintFlags [98]
+                0.00    0.00       7/1542737     TyMath_FromDouble [31]
+-----------------------------------------------
+                                   6             Interp_Load <cycle 2> [75]
+                1.85    5.83       3/3           Interp_EvalStringTop [2]
+[94]     0.0    0.00    0.00       9         Interp_EvalTop <cycle 2> [94]
+                0.00    0.00       9/19          TyFcn_ListCopyRec [92]
+                                   9             HpiComp_Compile <cycle 2> [56]
+                                   9             HpiInterp_RunCtx <cycle 2> [138]
+-----------------------------------------------
+                0.00    0.00       6/6           HpiInterp_RunStep <cycle 2> [4]
+[95]     0.0    0.00    0.00       6         HpiOp_Bind [95]
+                0.00    0.00       6/6           Namespace3_Bind [96]
+-----------------------------------------------
+                0.00    0.00       6/6           HpiOp_Bind [95]
+[96]     0.0    0.00    0.00       6         Namespace3_Bind [96]
+                0.00    0.00      24/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       2/11          HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       3/11          HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00       6/11          HpiSpecial_Define <cycle 2> [66]
+[97]     0.0    0.00    0.00      11         HpiComp_PushEnv [97]
+                0.00    0.00      22/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       7/7           Builtin_Print [93]
+[98]     0.0    0.00    0.00       7         TyPrint_PrintFlags [98]
+                0.00    0.00       7/6170749     TyMath_ToDouble [15]
+                0.00    0.00       7/10          TyPrint_Elem <cycle 3> [137]
+                0.00    0.00      14/5144598     sa_malloc [120]
+                0.00    0.00      14/21          sa_free [133]
+                0.00    0.00       7/12          sa_print [135]
+-----------------------------------------------
+[99]     0.0    0.00    0.00      10+10      <cycle 3 as a whole> [99]
+                0.00    0.00       7             TyPrint_Object <cycle 3> [100]
+                0.00    0.00       1             TyPrint_VecType <cycle 3> [105]
+                0.00    0.00      11             TyPrint_Elem <cycle 3> [137]
+-----------------------------------------------
+                                   7             TyPrint_Elem <cycle 3> [137]
+[100]    0.0    0.00    0.00       7         TyPrint_Object <cycle 3> [100]
+                0.00    0.00       7/6170756     TyFcn_WidenumIs [27]
+                0.00    0.00       5/6           TyFcn_UnString [113]
+                0.00    0.00       1/6170749     TyMath_ToDouble [15]
+                0.00    0.00       5/13          sa_prints [134]
+                                   1             TyPrint_VecType <cycle 3> [105]
+-----------------------------------------------
+                0.00    0.00       6/6           HpiInterp_RunStep <cycle 2> [4]
+[101]    0.0    0.00    0.00       6         HpiOp_Assign [101]
+                0.00    0.00       6/6           Namespace3_AssignTrace [107]
+                0.00    0.00       6/12855744     ELEM_OBJTYPEPi [28]
+-----------------------------------------------
+                0.00    0.00       1/33          TyFcn_Init [46]
+                0.00    0.00      32/33          HpiCmd_NewFrame [19]
+[102]    0.0    0.00    0.00      33         TyFcn_NewVector [102]
+                0.00    0.00      33/12347333     ELEM_TOFIXNUMi [35]
+                0.00    0.00      33/460         sa_alloc [123]
+-----------------------------------------------
+                                   2             HpiSpecial_Let <cycle 2> [83]
+                                   3             HpiSpecial_Lambda <cycle 2> [84]
+[103]    0.0    0.00    0.00       5         HpiSpecial_Begin <cycle 2> [103]
+                0.00    0.00       5/5           TyFcn_Reverse [104]
+                                   5             HpiComp_Compile <cycle 2> [56]
+-----------------------------------------------
+                0.00    0.00       5/5           HpiSpecial_Begin <cycle 2> [103]
+[104]    0.0    0.00    0.00       5         TyFcn_Reverse [104]
+                0.00    0.00       5/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                                   1             TyPrint_Object <cycle 3> [100]
+[105]    0.0    0.00    0.00       1         TyPrint_VecType <cycle 3> [105]
+                0.00    0.00       2/5142820     TyFcn_VectorRef [12]
+                0.00    0.00       2/13          sa_prints [134]
+                                   1             TyPrint_List <cycle 3> [149]
+-----------------------------------------------
+                                   6             Namespace2_AssignTrace [106]
+                0.00    0.00       6/6           Namespace3_AssignTrace [107]
+[106]    0.0    0.00    0.00       6+6       Namespace2_AssignTrace [106]
+                0.00    0.00      12/11313064     ELEM_TOFIXNUMi [34]
+                0.00    0.00      12/11313515     ELEM_OBJTYPEPi [39]
+                0.00    0.00       6/197         TyFcn_SetCar [127]
+                                   6             Namespace2_AssignTrace [106]
+-----------------------------------------------
+                0.00    0.00       6/6           HpiOp_Assign [101]
+[107]    0.0    0.00    0.00       6         Namespace3_AssignTrace [107]
+                0.00    0.00       6/6           Namespace2_AssignTrace [106]
+-----------------------------------------------
+                0.00    0.00       2/2           HpiInterp_RunStep <cycle 2> [4]
+[108]    0.0    0.00    0.00       2         HpiOp_BindArgs [108]
+                0.00    0.00       2/2           Namespace3_BindArgs [109]
+-----------------------------------------------
+                0.00    0.00       2/2           HpiOp_BindArgs [108]
+[109]    0.0    0.00    0.00       2         Namespace3_BindArgs [109]
+                0.00    0.00       4/10286663     TyFcn_Cons [14]
+-----------------------------------------------
+                0.00    0.00       2/2           invoke_func <cycle 2> [9]
+[110]    0.0    0.00    0.00       2         Builtin_Time [110]
+                0.00    0.00       2/1542737     TyMath_FromDouble [31]
+                0.00    0.00       2/2           Sys_TimeMS [145]
+-----------------------------------------------
+                0.00    0.00       3/3           main [1]
+[111]    0.0    0.00    0.00       3         TyFcn_DumpElem [111]
+                0.00    0.00       3/3           TyPrint_PrintDefaults [112]
+-----------------------------------------------
+                0.00    0.00       3/3           TyFcn_DumpElem [111]
+[112]    0.0    0.00    0.00       3         TyPrint_PrintDefaults [112]
+                0.00    0.00       3/10          TyPrint_Elem <cycle 3> [137]
+                0.00    0.00       6/5144598     sa_malloc [120]
+                0.00    0.00       6/21          sa_free [133]
+                0.00    0.00       3/12          sa_print [135]
+-----------------------------------------------
+                0.00    0.00       1/6           Interp_Load <cycle 2> [75]
+                0.00    0.00       5/6           TyPrint_Object <cycle 3> [100]
+[113]    0.0    0.00    0.00       6         TyFcn_UnString [113]
+                0.00    0.00       7/29327282     ELEM_OBJTYPEPi [17]
+                0.00    0.00       6/6           sa_ralloc [142]
+-----------------------------------------------
+                0.00    0.00       1/1           ScmParse_List <cycle 1> [91]
+[114]    0.0    0.00    0.00       1         TyFcn_NAppend [114]
+                0.00    0.00       1/3085551     TyFcn_SetCdr [40]
+                0.00    0.00       1/10287402     TyFcn_Cdr [23]
+-----------------------------------------------
+                                   1             Builtin_Eval <cycle 2> [147]
+[115]    0.0    0.00    0.00       1         HpiInterp_RunCtxSafe <cycle 2> [115]
+                0.00    0.00       1/1           TyFcn_CopyVector [116]
+                                   1             HpiInterp_RunLoop <cycle 2> [24]
+-----------------------------------------------
+                0.00    0.00       1/1           HpiInterp_RunCtxSafe <cycle 2> [115]
+[116]    0.0    0.00    0.00       1         TyFcn_CopyVector [116]
+                0.00    0.00       1/29327282     ELEM_OBJTYPEPi [17]
+                0.00    0.00       1/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       1/5144598     Interp_Load <cycle 2> [75]
+                0.00    0.00       1/5144598     sa_loadfile [151]
+                0.00    0.00       6/5144598     TyPrint_PrintDefaults [112]
+                0.00    0.00      14/5144598     TyPrint_PrintFlags [98]
+                0.00    0.00 5144576/5144598     sa_cons [47]
+[120]    0.0    0.00    0.00 5144598         sa_malloc [120]
+-----------------------------------------------
+                0.00    0.00     888/888         ScmParse_Token <cycle 1> [125]
+[121]    0.0    0.00    0.00     888         ScmParse_SpecialP [121]
+-----------------------------------------------
+                                 164             ScmParse_EatWhite <cycle 1> [122]
+                                 136             ScmParse_Item <cycle 1> [72]
+                                 356             ScmParse_Token <cycle 1> [125]
+                0.00    0.00       6/15          Interp_Load <cycle 2> [75]
+[122]    0.0    0.00    0.00     498+164     ScmParse_EatWhite <cycle 1> [122]
+                                   2             ScmParse_Item <cycle 1> [72]
+                                 164             ScmParse_EatWhite <cycle 1> [122]
+-----------------------------------------------
+                0.00    0.00       1/460         TyFcn_CopyVector [116]
+                0.00    0.00       3/460         TyMath_FromDouble [31]
+                0.00    0.00       6/460         TyFcn_NewTypedVector [55]
+                0.00    0.00       6/460         TyFcn_String [141]
+                0.00    0.00      32/460         TyFcn_Special [131]
+                0.00    0.00      33/460         TyFcn_NewVector [102]
+                0.00    0.00     152/460         TyFcn_Function [129]
+                0.00    0.00     227/460         TyFcn_Symbol2 [126]
+[123]    0.0    0.00    0.00     460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00     365/365         HpiInterp_RunLoop <cycle 2> [24]
+[124]    0.0    0.00    0.00     365         Sys_TimeDUS [124]
+-----------------------------------------------
+                                 136             ScmParse_Item <cycle 1> [72]
+                                 220             ScmParse_List <cycle 1> [91]
+[125]    0.0    0.00    0.00     356         ScmParse_Token <cycle 1> [125]
+                0.00    0.00     888/888         ScmParse_SpecialP [121]
+                                 356             ScmParse_EatWhite <cycle 1> [122]
+-----------------------------------------------
+                0.00    0.00     227/227         TyFcn_SymbolList [90]
+[126]    0.0    0.00    0.00     227         TyFcn_Symbol2 [126]
+                0.00    0.00     227/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       6/197         Namespace2_AssignTrace [106]
+                0.00    0.00     191/197         HpiInterp_RunStep <cycle 2> [4]
+[127]    0.0    0.00    0.00     197         TyFcn_SetCar [127]
+-----------------------------------------------
+                0.00    0.00      32/184         HpiComp_DefineSpecial [77]
+                0.00    0.00     152/184         Interp_DefinePrimative [65]
+[128]    0.0    0.00    0.00     184         SAGC_BindNameAddr [128]
+-----------------------------------------------
+                0.00    0.00     152/152         Interp_DefinePrimative [65]
+[129]    0.0    0.00    0.00     152         TyFcn_Function [129]
+                0.00    0.00     152/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       2/145         HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00      33/145         HpiComp_CompileExpr <cycle 2> [74]
+                0.00    0.00     110/145         HpiComp_Compile <cycle 2> [56]
+[130]    0.0    0.00    0.00     145         ELEM_OBJTYPEPi [130]
+-----------------------------------------------
+                0.00    0.00      32/32          HpiComp_DefineSpecial [77]
+[131]    0.0    0.00    0.00      32         TyFcn_Special [131]
+                0.00    0.00      32/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       1/27          TyPrint_Init [87]
+                0.00    0.00       3/27          HpiInterp_Init [79]
+                0.00    0.00       3/27          TyFcn_Init [46]
+                0.00    0.00       3/27          TyObj_Init [64]
+                0.00    0.00       8/27          HpiComp_Init [45]
+                0.00    0.00       9/27          Interp_Init [67]
+[132]    0.0    0.00    0.00      27         SAGC_AddRoot [132]
+-----------------------------------------------
+                0.00    0.00       1/21          Interp_Load <cycle 2> [75]
+                0.00    0.00       6/21          TyPrint_PrintDefaults [112]
+                0.00    0.00      14/21          TyPrint_PrintFlags [98]
+[133]    0.0    0.00    0.00      21         sa_free [133]
+-----------------------------------------------
+                0.00    0.00       2/13          TyPrint_VecType <cycle 3> [105]
+                0.00    0.00       2/13          TyPrint_Misc [146]
+                0.00    0.00       2/13          TyPrint_Elem <cycle 3> [137]
+                0.00    0.00       2/13          TyPrint_List <cycle 3> [149]
+                0.00    0.00       5/13          TyPrint_Object <cycle 3> [100]
+[134]    0.0    0.00    0.00      13         sa_prints [134]
+-----------------------------------------------
+                0.00    0.00       1/12          TyFcn_Init [46]
+                0.00    0.00       1/12          sa_loadfile [151]
+                0.00    0.00       3/12          TyPrint_PrintDefaults [112]
+                0.00    0.00       7/12          TyPrint_PrintFlags [98]
+[135]    0.0    0.00    0.00      12         sa_print [135]
+-----------------------------------------------
+                0.00    0.00       2/11          HpiSpecial_Let <cycle 2> [83]
+                0.00    0.00       3/11          HpiSpecial_Lambda <cycle 2> [84]
+                0.00    0.00       6/11          HpiSpecial_Define <cycle 2> [66]
+[136]    0.0    0.00    0.00      11         HpiComp_PopEnv [136]
+-----------------------------------------------
+                                   1             TyPrint_List <cycle 3> [149]
+                0.00    0.00       3/10          TyPrint_PrintDefaults [112]
+                0.00    0.00       7/10          TyPrint_PrintFlags [98]
+[137]    0.0    0.00    0.00      11         TyPrint_Elem <cycle 3> [137]
+                0.00    0.00       2/2           ELEM_TOFIXNUMi [143]
+                0.00    0.00       2/13          sa_prints [134]
+                0.00    0.00       2/2           TyPrint_Misc [146]
+                                   7             TyPrint_Object <cycle 3> [100]
+-----------------------------------------------
+                                   9             Interp_EvalTop <cycle 2> [94]
+[138]    0.0    0.00    0.00       9         HpiInterp_RunCtx <cycle 2> [138]
+                                   9             HpiInterp_RunLoop <cycle 2> [24]
+-----------------------------------------------
+                0.00    0.00       9/9           HpiInterp_RunStep <cycle 2> [4]
+[139]    0.0    0.00    0.00       9         HpiOp_XchgRPAX [139]
+-----------------------------------------------
+                0.00    0.00       8/8           ScmParse_Item <cycle 1> [72]
+[140]    0.0    0.00    0.00       8         ScmParse_Float [140]
+-----------------------------------------------
+                0.00    0.00       1/6           HpiComp_Init [45]
+                0.00    0.00       5/6           ScmParse_Item <cycle 1> [72]
+[141]    0.0    0.00    0.00       6         TyFcn_String [141]
+                0.00    0.00       6/460         sa_alloc [123]
+-----------------------------------------------
+                0.00    0.00       6/6           TyFcn_UnString [113]
+[142]    0.0    0.00    0.00       6         sa_ralloc [142]
+-----------------------------------------------
+                0.00    0.00       2/2           TyPrint_Elem <cycle 3> [137]
+[143]    0.0    0.00    0.00       2         ELEM_TOFIXNUMi [143]
+-----------------------------------------------
+                0.00    0.00       2/2           Interp_Init [67]
+[144]    0.0    0.00    0.00       2         SAGC_AddNamedRoot [144]
+-----------------------------------------------
+                0.00    0.00       2/2           Builtin_Time [110]
+[145]    0.0    0.00    0.00       2         Sys_TimeMS [145]
+-----------------------------------------------
+                0.00    0.00       2/2           TyPrint_Elem <cycle 3> [137]
+[146]    0.0    0.00    0.00       2         TyPrint_Misc [146]
+                0.00    0.00       2/13          sa_prints [134]
+-----------------------------------------------
+                                   1             invoke_func <cycle 2> [9]
+[147]    0.0    0.00    0.00       1         Builtin_Eval <cycle 2> [147]
+                                   1             HpiComp_Compile <cycle 2> [56]
+                                   1             HpiInterp_RunCtxSafe <cycle 2> [115]
+-----------------------------------------------
+                0.00    0.00       1/1           invoke_func <cycle 2> [9]
+[148]    0.0    0.00    0.00       1         MF_Quit [148]
+-----------------------------------------------
+                                   1             TyPrint_VecType <cycle 3> [105]
+[149]    0.0    0.00    0.00       1         TyPrint_List <cycle 3> [149]
+                0.00    0.00       2/13          sa_prints [134]
+                                   1             TyPrint_Elem <cycle 3> [137]
+-----------------------------------------------
+                0.00    0.00       1/1           TyFcn_Init [46]
+[150]    0.0    0.00    0.00       1         TypeX_Init [150]
+-----------------------------------------------
+                0.00    0.00       1/1           Interp_Load <cycle 2> [75]
+[151]    0.0    0.00    0.00       1         sa_loadfile [151]
+                0.00    0.00       1/12          sa_print [135]
+                0.00    0.00       1/5144598     sa_malloc [120]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+ [147] Builtin_Eval           [86] Interp_DefineVar      [127] TyFcn_SetCar
+  [57] Builtin_Init            [2] Interp_EvalStringTop   [40] TyFcn_SetCdr
+  [93] Builtin_Print          [94] Interp_EvalTop        [131] TyFcn_Special
+ [110] Builtin_Time           [67] Interp_Init           [141] TyFcn_String
+ [130] ELEM_OBJTYPEPi (scmcc.h) [75] Interp_Load          [52] TyFcn_Symbol
+  [28] ELEM_OBJTYPEPi (scmcc.h) [148] MF_Quit            [126] TyFcn_Symbol2
+  [17] ELEM_OBJTYPEPi (scmcc.h) [106] Namespace2_AssignTrace [90] TyFcn_SymbolList
+  [59] ELEM_OBJTYPEPi (scmcc.h) [60] Namespace2_LocativeTrace [37] TyFcn_UnCons
+  [39] ELEM_OBJTYPEPi (scmcc.h) [81] Namespace2_Lookup    [20] TyFcn_UnConsList
+  [35] ELEM_TOFIXNUMi (scmcc.h) [8] Namespace2_RetrieveTrace [113] TyFcn_UnString
+ [143] ELEM_TOFIXNUMi (scmcc.h) [89] Namespace2_Trace     [21] TyFcn_VectorBody
+  [36] ELEM_TOFIXNUMi (scmcc.h) [107] Namespace3_AssignTrace [30] TyFcn_VectorIs
+  [34] ELEM_TOFIXNUMi (scmcc.h) [96] Namespace3_Bind      [29] TyFcn_VectorLength
+  [48] HpiCmd_EvalConstraint [109] Namespace3_BindArgs    [12] TyFcn_VectorRef
+  [19] HpiCmd_NewFrame        [82] Namespace3_Lookup      [85] TyFcn_VectorSet
+  [56] HpiComp_Compile         [7] Namespace3_RetrieveTrace [50] TyFcn_VectorType
+  [74] HpiComp_CompileExpr    [53] Namespace3_Trace       [27] TyFcn_WidenumIs
+  [77] HpiComp_DefineSpecial [144] SAGC_AddNamedRoot      [26] TyMath_AddFlonum
+  [45] HpiComp_Init          [132] SAGC_AddRoot           [63] TyMath_CmpFlonum
+  [68] HpiComp_Lookup        [128] SAGC_BindNameAddr      [51] TyMath_FromBignum
+ [136] HpiComp_PopEnv         [44] SYMGi (scmcc.h)        [31] TyMath_FromDouble
+  [97] HpiComp_PushEnv        [41] SYMGi (scmcc.h)        [58] TyMath_Init
+  [78] HpiInterp_DefineOpcode [122] ScmParse_EatWhite     [25] TyMath_LessP
+  [79] HpiInterp_Init        [140] ScmParse_Float         [13] TyMath_SubFlonum
+  [49] HpiInterp_MiniApply    [72] ScmParse_Item          [15] TyMath_ToDouble
+ [138] HpiInterp_RunCtx       [76] ScmParse_Line          [10] TyMisc_EvalSpecial
+ [115] HpiInterp_RunCtxSafe   [91] ScmParse_List          [64] TyObj_Init
+  [24] HpiInterp_RunLoop     [121] ScmParse_SpecialP     [137] TyPrint_Elem
+   [4] HpiInterp_RunStep      [73] ScmParse_Symbol        [87] TyPrint_Init
+   [5] HpiOp_Apply           [125] ScmParse_Token        [149] TyPrint_List
+  [18] HpiOp_Argument        [124] Sys_TimeDUS           [146] TyPrint_Misc
+ [101] HpiOp_Assign          [145] Sys_TimeMS            [100] TyPrint_Object
+  [95] HpiOp_Bind             [33] TyFcn_Car             [112] TyPrint_PrintDefaults
+ [108] HpiOp_BindArgs         [23] TyFcn_Cdr              [98] TyPrint_PrintFlags
+  [54] HpiOp_Close            [14] TyFcn_Cons            [105] TyPrint_VecType
+  [38] HpiOp_Constant        [116] TyFcn_CopyVector      [150] TypeX_Init
+  [16] HpiOp_Frame           [111] TyFcn_DumpElem          [9] invoke_func (hpi3_compile.c)
+   [6] HpiOp_Refer            [61] TyFcn_DumpElemBR      [123] sa_alloc
+  [11] HpiOp_Return           [80] TyFcn_EqualP           [47] sa_cons
+  [43] HpiOp_Test            [129] TyFcn_Function        [133] sa_free
+ [139] HpiOp_XchgRPAX         [46] TyFcn_Init            [151] sa_loadfile
+ [103] HpiSpecial_Begin       [92] TyFcn_ListCopyRec     [120] sa_malloc
+  [66] HpiSpecial_Define      [32] TyFcn_ListLength       [42] sa_multicons
+  [88] HpiSpecial_If         [114] TyFcn_NAppend         [135] sa_print
+  [84] HpiSpecial_Lambda      [22] TyFcn_NReverse        [134] sa_prints
+  [83] HpiSpecial_Let         [55] TyFcn_NewTypedVector  [142] sa_ralloc
+  [70] HpiSpecial_QQ_Inner   [102] TyFcn_NewVector        [71] <cycle 1>
+  [69] HpiSpecial_Quasiquote  [62] TyFcn_ObjPokeElem       [3] <cycle 2>
+  [65] Interp_DefinePrimative [104] TyFcn_Reverse         [99] <cycle 3>

@@ -1,0 +1,13 @@
+define pid-0
+	begin-thread
+		rlet f ()
+			recieve-case
+				(from . msg)
+					print "pid-0 got: " msg "\n"
+			f
+
+define sock-0
+	socket-pid pid-0 '(ipv4udp (_ 8765) sexpr0)
+
+define addr-0
+	list->addr sock-0 '(ipv4udp ((127 0 0 1) 8765) sexpr0)

@@ -1,0 +1,71 @@
+gui:
+the console can be summoned via tab, and tab can also make it go away.
+
+F2 puts the gui into "3d mode" which is a different space than the 2d plane (later I may allow multiple 3d spaces, but for now there is one...).
+
+2d mode:
+arrows can pan the gui. delete and end control zoom (this is partly related to my handedness).
+input focus follows the mouse, rmb can drag objects.
+lmb can be used to pan (ie: by "dragging" the plane). center can also be used for mouse controlled zoom.
+
+(render show: ...) can be use to make objects visible. some objects are created in the gui init script but are not shown by default.
+
+render is a general object used for interaction with the local gui. when a 'render:' handler is called 'render' still refers to the local gui, but 'from' may refer to a non-local one (similar goes for other handlers as well).
+
+3d mode:
+3d mode is a seperate space from 2d mode. controls differ as well:
+up/down are forwards/backwards. left/right control strafing. delete/end control up/down movement.
+the mouse controls angles. mouse+lmb can control forwards/backwards movement.
+
+up/down angles are constrained to +-90, mostly as I wanted to avoid getting the camera "upside down" (for some things this could be useful, so I will consider it). similarly for now I do not have roll, but may add that later (it is in my mind complicated and rarely useful...).
+
+(render3d show: ...) can show 3d objects (primitives, groups, entities).
+
+(render3d camera: entity) set the entity to be used as a camera.
+
+(primitive-3d key opts...) can create a 3d primitive.
+key can be: 'cube:', 'cylinder:', 'sphere:' or 'disk:' at present.
+
+cylinder, sphere, and disk are normally aligned along the XY plane.
+
+options are keywords which may be followed by values:
+	name: symbol, allows the primitive to be named
+	min: vector, defines the minimum extents (cube)
+	max: vector, defines the maximum extents (also cube)
+	radius: scalar, defines the normal radius (cylinder, sphere, disk)
+	radius-top: scalar, radius at top (cylinder, top is +Z)
+	radius-bottom: scalar, radius at bottom (cylinder, bottom is -Z)
+	height: scalar, the height of a cylinder
+
+	translate: vector, translates primitive by vector (local)
+	rotate: vector, rotates by vector (local)
+	scale: vector, scales by vector (also local)
+
+	identity:, resets back to identity value
+
+transforms are cummulative, meaning that (annoyingly enough) at present one has to reset identity to get non-local transforms (though I may add "global" forms of the transforms for this), and has to take the order into account when performing transformations.
+
+these options can be passed to primitives after creation for the purpose of altering them.
+
+(group-3d opts... objs...) creates a group of objects.
+
+at present opts is limited to those for transformation and to 'name:'.
+
+with a group though one can reference named primitives:
+(define c (group-3d (primitive-3d sphere: name: 'sphere radius: 10)))
+c.sphere would refer to the inner sphere.
+
+physics:
+physics will be centered around normal objects (entities).
+
+(phys add: ent) will add the entity to the physics system.
+(phys gravity:) will fetch the gravity vector.
+(phys gravity: vector) will set the gravity vector.
+
+for now there will be bounding box collision.
+bbox-min and bbox-max will refer to the bounding extents of the entity. I may later add finer collision detection (such as primitive base, aabb's are very simple though).
+entities will have friction, this will indicate how much to slow other entities that contact it.
+
+I may have "physics" and "solid" mode fields (similar to quake) for the purpose of specialized movement (or maybe just flags, as this is more flexible and less specialized).
+maybe these could just be property lists, though this would involve some performace cost (minor though, saving for the extra 'or' annoyance), '+' could just be used. I don't know.
+

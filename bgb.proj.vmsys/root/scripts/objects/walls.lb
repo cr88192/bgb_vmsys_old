@@ -1,0 +1,25 @@
+define func_wall
+	newobject entity-obj
+		(spawn:)
+			set-movedir
+
+			self origin: self.origin
+			self.solid := SOLID_BSP
+			self.movetype := MOVETYPE_PUSH
+			self model: self.model
+
+define func_slick
+	newobject entity-obj
+		(spawn:)
+			set-movedir
+
+			self origin: self.origin
+			self.solid := SOLID_BSP
+			self.movetype := MOVETYPE_PUSH
+			self model: self.model
+			self.flags := (self.flags + FL_SLICK)
+
+define func_bossgate		func_wall
+//define trigger_changelevel	func_wall
+//define func_plat		func_wall
+//define func_door		func_wall

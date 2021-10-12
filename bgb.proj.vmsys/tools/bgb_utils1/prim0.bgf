@@ -1,0 +1,32 @@
+(piece cube0
+       (vertices
+        (vertex 16 16 16)
+        (vertex -16 16 16)
+        (vertex 16 -16 16)
+        (vertex -16 -16 16)
+        (vertex 16 16 -16)
+        (vertex -16 16 -16)
+        (vertex 16 -16 -16)
+        (vertex -16 -16 -16))
+
+       (polyidx (1 3 2))
+       (polyidx (2 0 1))
+
+       (polyidx (4 6 7))
+       (polyidx (7 5 4))
+
+       (polyidx (5 7 3))
+       (polyidx (3 1 5))
+
+       (polyidx (0 2 6))
+       (polyidx (6 4 0))
+
+       (polyidx (5 1 0))
+       (polyidx (0 4 5))
+
+       (polyidx (3 7 6))
+       (polyidx (6 2 3)))
+
+(cylinder cyl0 (radius 8) (height 64) (dir 0 1 0))
+(sphere sph0 (radius 24) (org 0 0 32))
+(cube cube1 (min -24 -24 -24) (max 24 24 24) (org 0 0 -32))

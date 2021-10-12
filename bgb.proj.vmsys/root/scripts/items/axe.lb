@@ -1,0 +1,69 @@
+function axe-att-frame ()
+//	print "frame " self.owner.weaponframe "\n"
+	self.owner 'weaponframe
+		self.owner.weaponframe + 1
+	if (self.owner.weaponframe <= 4)
+		begin
+			self 'th_func axe-att-frame
+			self 'nextthink (time + 0.1)
+		self.owner 'weaponframe 0
+
+function axe-attack ()
+	print self.owner.classname "\n"
+	self.owner 'weaponframe 0
+	self.origin := self.owner.origin
+
+	damage-radius self self.owner 100 self.owner
+	axe-att-frame
+
+define weapon_axe
+	newobject entity-obj
+		(spawn:)
+			precache-model "progs/v_axe.mdl"
+			self.solid := SOLID_TRIGGER
+			self.movetype := MOVETYPE_TOSS
+			self model: "progs/v_axe.mdl"
+			self size: #(-16 -16 0) #(16 16 56)
+
+		(owner-equip: owner)
+			if(owner.weapon != #z)
+				owner.weapon owner-toss:
+
+			self.owner := owner
+			owner.weapon := self
+			owner.weaponmodel := "progs/v_axe.mdl"
+			owner.weaponframe := 0
+			owner.currentammo := 0
+
+		(owner-use:)
+			axe-attack
+
+		(owner-toss:)
+			self.solid := SOLID_NOT
+			self.movetype := MOVETYPE_TOSS
+			self model: "progs/g_axe.mdl"
+			self size: #(-16 -16 0) #(16 16 56)
+
+			self origin:
+				vec+ self.owner.origin
+					vec* self.owner.forward 56
+			self.vecocity :=
+				vec+
+					vec* self.owner.forward 36
+					vec* self.owner.up 8
+
+			self.owner := #z
+			self.owner.weapon := #z
+
+		(think:)
+//			print "axe think\n"
+			self.th_func
+
+		(touch: other)
+			print "axe touch " other.classname "\n"
+			if(other.classname = "player")
+				begin
+					self.solid := SOLID_NOT
+					self.movetype := MOVETYPE_NONE
+					self model: ""
+					self owner-equip: other

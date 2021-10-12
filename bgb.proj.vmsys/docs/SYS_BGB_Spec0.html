@@ -1,0 +1,1293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SYS/BGB Spec0</title>
+                                                
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+</head>
+  <body>
+                         
+<pre><font color="#ff0000">LANG/BGB Spec:<br>Initial: 2002-09-25 To: 2003-01-06<br><br>SYS/BGB Spec:<br>Initial: 2003-07-17<br></font><br></pre>
+             
+<h1>SYS/BGB</h1>
+      <a href="#LANGBGB">LANG/BGB<br>
+    </a>&nbsp;&nbsp;&nbsp; <a href="#Syntax">Syntax</a><br>
+ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#LBS_Syntax">LBS Syntax</a><br>
+ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a
+ href="#LB_Syntax_un-deprecated">LB Syntax</a><br>
+ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#LB2_Syntax">LB2 Syntax</a><br>
+ &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#Notations">Notations</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Semantics">Semantics</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Patterns_">Patterns</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Environments_">Environments<br>
+    </a>&nbsp;&nbsp;&nbsp; <a href="#Objects">Objects</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Macros">Macros</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#ThreadsMessages">Threads/Messages</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Misc">Misc</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Possible_Future_">Possible Future</a><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#Modules_">Modules</a><br>
+    <a href="#Features">Features</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Base_Language_Extensions">Base Language Extensions</a><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#Hash_Tables">Hash Tables</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Persistence">Persistence</a><br>
+    &nbsp;&nbsp;&nbsp; <a href="#Net">Net</a><br>
+   &nbsp;&nbsp;&nbsp; <a href="#Graphics">Graphics</a><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#2D_Mode">2D Mode</a><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#3D_Mode">3D Mode</a><br>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <a href="#Physics">Physics</a><br>
+    <br>
+                 
+<h2><a name="LANGBGB"></a>LANG/BGB</h2>
+                         
+<pre>This spec will outline differences between scheme as defined by R5RS and LANG/BGB.<br><br></pre>
+   
+<h3><a name="Syntax"></a>Syntax</h3>
+                       This section will talk about the syntaxes that may 
+be used with LANG/BGB. A syntax in LANG/BGB is selected via the extension 
+of the source file.<br>
+  later I may allow the syntax to be changed in the repl via repl commands.
+ the idea is that repl commands would have the form 'cmd:' or (cmd: ...),
+and are not passed to the interpreter.<br>
+ 
+<h4><a name="LBS_Syntax"></a>LBS Syntax</h4>
+        The LBS syntax will be a variation of s-expressions, these will be 
+similar    to the scheme s-expressions except:<br>
+        #z is defined as a general nil value. this is used to indicate a
+logical      response as being neither true or false, or a value as N/A.
+this is distinguished       from the empty list, which is intended to serve
+as such...<br>
+                    <br>
+        [...] will define soft lists, soft lists implicitly expand to (list
+ ...).<br>
+        #[...] will define soft vectors, similarly these expand to (vector 
+...).<br>
+        <br>
+        `[...] is a semi-hygenic version of backquote, it expands (adqq ...).
+  within  this form symbols of the form key$ are automatically gensym'd (and
+  are gueranteed  unique within this instance).<br>
+        <br>
+        Both #! ... !# and #| ... |# are notations for block comments. Block 
+ comments   are allowed to be nested. Block comments are required to terminate 
+ with the  same form as the began, thus #! ... !# or #| ... |#, but not #! 
+ ... |# or  #| ... !#. Both kinds may be nested within each other but the 
+previous rule  still holds, thus: #| #! |# !# is invalid.<br>
+        Block comments are not allowed to begin within line comments if the
+ end   is not on the same line.<br>
+       <br>
+       ; is the notation for line comments (as per r5rs).<br>
+       <br>
+       #;... is a notation for commenting out a single form (irrespective 
+of  type/linebreaks).<br>
+       ex: (+ 1 #;(+ 2 3) 4) =&gt; 5, as the center (+ 2 3) is commented
+out.<br>
+ <br>
+ <font color="#000000">           Otherwise it is syntactically similar to 
+scheme syntax as defined   in  R5RS.   </font><br>
+   
+<h4><a name="LB_Syntax_un-deprecated"></a><font color="#000000">LB Syntax 
+(un-deprecated)</font></h4>
+       <font color="#000000">This syntax is intended to be a useful comprimise 
+   between s-expressions  and  a more conventional syntax. For the most part 
+   the lang/bgb syntax will  map directly  to s-expressions. I have chosen 
+ not  to introduce any new semantics  through  the syntax, thus keeping the 
+ reader  simple. <br>
+            In this syntax every normal line is interpreted as a list:<br>
+       <br>
+  </font>              <font color="#000000">f x y =&gt; (f x y)<br>
+      <br>
+  </font>     <font color="#000000">     Lower lines with a higher indentation
+ are considered   as sub-lists to the   last line with a lower indentation:<br>
+       <br>
+  </font>              <font color="#000000">begin<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; f x y <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+   f2 z<br>
+      =&gt; (begin (f x y (f2 z)))<br>
+      <br>
+  </font>     <font color="#000000">     I will define that tab will normally
+ pad the   indentation up to a multiple   of 8 chars.<br>
+            '\' may be used as a line continuation character, in which case 
+ the   text   found on the next immediate line is considered as part of the 
+ current   line.<br>
+       <br>
+  </font>              <font color="#000000">f x y \<br>
+  </font>    <font color="#000000">	z<br>
+  </font>    <font color="#000000">=&gt; (f x y z)<br>
+  </font>    <font color="#000000"><br>
+      <br>
+  </font>     <font color="#000000">     in this case indentation is considered
+ as unimportant,   however no blank   lines or comments are allowed on the
+ next line.<br>
+       <br>
+  </font>              <font color="#000000">f x y \<br>
+  <br>
+  </font>        <font color="#000000">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+ z<br>
+      <br>
+      <br>
+  </font>     <font color="#000000">     Will be considered invalid.<br>
+            '^' will be used to mark an object on a line to be an expression, 
+  rather    than a list.<br>
+       <br>
+  </font>              <font color="#000000">^ x =&gt; x<br>
+  </font>     <font color="#000000">     This is intended to allow arguments
+ to be placed   on lower lines with relative   ease.<br>
+       <br>
+         Multiple objects may be placed after '^' in which case they will 
+all   be  submitted to the function:<br>
+       <br>
+  </font>             <font color="#000000">^ x y z =&gt; x y z<br>
+  </font>       <font color="#000000"><br>
+            Expressions may be wrapped in parenthesis, which will indicate
+ a  manual    list.<br>
+            This may be useful when it is not desired to code on a lower
+line,    or  to  avoid increasing nesting. All parenthesis are required to
+be matched,     and  the normal indentation rules still apply.<br>
+       <br>
+  </font>              <font color="#000000">f (f<br>
+      &nbsp;&nbsp;&nbsp; f x)<br>
+      =&gt; (f (f (f x)))<br>
+      <br>
+      <br>
+  </font>     <font color="#000000">     Comments will be indicated using 
+the c style   // and /* */ notations.<br>
+            /* and */ will be allowed to be nested.<br>
+  <br>
+          idea: make a seperation between (...) and [...]. square brackets
+ can   be  used for "soft lists", parens are processed directly however [...]
+ =&gt;   (list ...). also possible: soft vectors, #[...] becomes (vector
+...).<br>
+          {...}, block notation. a block is considered similar to an annonymous 
+   lambda.  {...} =&gt; (lambda () ...)<br>
+       <br>
+          lists entered directly or vectors with the #(...) notation would
+ be  considered   immutable...<br>
+       <br>
+            A&nbsp;'dot notation' is also supported. This is detected while 
+ parsing     symbols, such that:<br>
+       </font>                              
+<pre><font color="#000000">a =&gt; a, a.b =&gt; (a 'b), a.b.c =&gt; ((a 'b) 'c), ...</font></pre>
+       <font color="#000000">     This can be used when referring to objects
+  or  namespaces, ie: self.name,   root-env.system, ...<br>
+       <br>
+          Infix notation is also supported, names beginning with "!$%&amp;*+-/:&lt;+&gt;?^"
+     will be allowed to be infix. If such a name is the second element in
+a  list   it will default to being put in functional position. '.' also has
+ a special   use here, period prefixing a normal symbol will allow it to
+be  used infix,   and '.' prefixing an infix name will indicate that it is
+a normal symbol.<br>
+       <br>
+          + 1 2 =&gt; (+ 1 2)<br>
+          1 + 2 =&gt; (+ 1 2)<br>
+          f 1 2 =&gt; (f 1 2)<br>
+          1 .f 2 =&gt; (f 1 2)<br>
+          f .+ x =&gt; (f + x)<br>
+ </font> 
+<h4><a name="LB2_Syntax"></a>LB2 Syntax</h4>
+  The LB2 syntax is similar to the LB syntax, with the exception that it
+is not indentation sensitive, however it will remain line-sentisitve.<br>
+ LB2 will use "block notation" to acieve nesting.<br>
+ There will be 2 block forms:<br>
+ {...}, which will expand to (begin ...)<br>
+ #{...}, which will become just ...<br>
+ <br>
+ A&nbsp;block must follow an ordinary line, and will merge with the last
+line.<br>
+ <br>
+ '^' in LB has become '^' and '#^'.<br>
+ '^' will just expand to its arguments:<br>
+ ^ x =&gt; x.<br>
+ <br>
+ However, '#^' will merge its contents with the last line:<br>
+ foo x<br>
+ #^ y<br>
+ =&gt; (foo x y).<br>
+                         
+<h4><a name="Notations"></a>Misc Notations</h4>
+             LANG/BGB will include keywords, these will be ordinary symbols 
+ with   the exception  that the last character is ':'. key:, a:, a-list:, 
+... are   keywords.<br>
+            :key is an alternate notation for keywords.<br>
+       <br>
+       The 2 forms of keywords vary in a minor semantic respect:<br>
+       Keywords of the form key: will match symbols of the same base, ex: 
+foo:   matches 'foo;<br>
+       This does not hold for keywords of the form :key, they will only match 
+  themselves.<br>
+       <br>
+       Symbols ending in '$' are viewed as "hygenic symbols", these have
+the   property  of being automatically renamed in some forms.<br>
+             
+<h3><a name="Semantics"></a>Semantics</h3>
+       There will be a difference in the workings of binding between Scheme 
+ and   LANG/BGB:<br>
+       bindings may be patterns. When a pattern is bound with a value the 
+value    will be decomposed to bind the values in the pattern:<br>
+       (let (((x y) '(1 2))) (+ x y)) =&gt; 3<br>
+       <br>
+       Similar can also occure with lambda and plambda, but is not allowed
+ with   defvar or define.<br>
+       <br>
+       LANG/BGB will include dynamic variables.<br>
+            Dynamic variables will be bound using defvar and letvar.<br>
+                 <br>
+      (defvar var [value])<br>
+            Will define var as a dynamic var, and, if present, value will 
+be  bound    to  var.<br>
+            A dynamic var is required to be defined before it is referenced.<br>
+                 <br>
+      (letvar ((var value)*) body*)<br>
+            This is similar to let, however it will bind values within the
+ dynamic     environment  rather than the lexical environment.<br>
+                 <br>
+      (define var value)<br>
+            This is similar to the scheme define, it will bind if not present 
+  or  replace if present.<br>
+       <br>
+      (defmulti pattern value)<br>
+       This will be similar to define but will decompose value in order to
+ bind   to the variables in pattern.<br>
+             <br>
+      (defmultivar pattern value)<br>
+       This will be similar to defmulti but will bind in the dynamic environment. 
+   <br>
+      <br>
+      (rlet name ((var value)*)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+          This will be a renamed form of named let. the reason for this rename
+   is  that named let can be confusing when first seen.<br>
+       <br>
+      (function name (pattern)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+            This will be the preferred means by which to define a function.<br>
+            An implementation may allow multiple functions to share the same
+  name   and  differ in argument shape or structure. At present I will not
+ define  the order  in which definitions will be searched, so it will be
+considered    invalid for  function definitions to overlap.<br>
+            <br>
+                 (plambda (pattern)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+            This will be similar to lambda, but will preserve pattern for 
+later    matching.   I will not define if a plambda can be directly applied 
+to arguments.<br>
+            <br>
+                 (pattern closure)<br>
+            This will extract the pattern from a closure defined by plambda 
+ (not   implemented).<br>
+            <br>
+                 (match pattern arguments)<br>
+            Will return a weight indicating how closely arguments matches 
+pattern,     or  #f in the case that pattern and arguments do not match.<br>
+            Pattern matches will be based on whether both have the same general 
+   shape,   and that literals are equal.<br>
+             <br>
+      (eval form)<br>
+           In normal cases I will define eval to work within the environment
+  of  a  caller,  thus it may be used for defining new code within the caller.<br>
+             <br>
+      (eval form env)<br>
+           Evaluate form with the lexical environment given in env, and the 
+ present     dynamic environment.<br>
+           <br>
+           Environments are first class objects. I will define 'current-environment' 
+     as being able to take a snapshot of the bindings in existance from where 
+    it is called.<br>
+      (I may later allow for controlled "contexts", changes within these
+contexts    will be consistent between calls)<br>
+             <br>
+      (set! var value)<br>
+           Set! will assign a value to a variable or expression. Conceptually 
+  though    set! will not distinguish between variables and expressions, a
+ variable  reference  is considered as equivalent to a symbol identifying 
+the variable,  which is  equivalent to an expression evaluating to a given 
+location.<br>
+           Expressions will have 2 return values: a reference to the returned 
+  object,    and a reference to the slot in which that value came from. These 
+  2 values    will be referred to as 'ax' and 'rax' respectively.<br>
+           Rax does not necissarily refer to a location though, and can not 
+ normally     be passed up through statements; it is only visible from direct 
+ returns.    I will define that apply is to clear this value to #z, and it 
+ may be cleared     in other places as well.<br>
+           Other systems had defined the concept of a setter, however that
+ concept     is not viewed as fundamental in this case. A setter will be
+viewed  as a  function  which returns it's value in rax, and a getter returns
+it's  value   in ax.<br>
+           (bind-getter-setter getter setter) will create a function which
+ when   called   will invoke both functions on the given arguments, placing
+ the getter  in  ax and the setter in rax. This will be one way in which
+to  explicitly   return   a value in rax.<br>
+           <br>
+       <font color="#999999">    Locatives will be similar to typed, range
+ checked   pointers. Conceptually   a locative will contain: a lower extent,
+ an upper   extent, and a current reference.  Normally: lower&lt;=reference&lt;upper. 
+   The type will indicate the type of  data within the region referred to 
+by   this locative, and will be the same  as that for vectors.<br>
+           Locatives will also serve as handles for objects such as slots,
+ and   to  allow  an alternate form of string manipulation (these are what
+ will  be returned   in rax).<br>
+       <br>
+          possible:<br>
+          vec idx value;<br>
+          obj slot value;<br>
+          and, env var value; could possibly be removed.<br>
+       <br>
+           locative? obj<br>
+           Returns #t if obj is a locative, #f otherwise.<br>
+       <br>
+           locative-&gt;integer locative<br>
+           integer-&gt;locative integer<br>
+           These will convert between integers and locatives. I will leave
+ the   nature   of these an implementation issue.<br>
+       <br>
+           set* locative value<br>
+           Will assign value to the spot referred to by the current reference 
+  in  locative.<br>
+       <br>
+           contents locative<br>
+           Will extract the value from the spot referred to by the locative's 
+  reference.<br>
+       <br>
+           locative-new lower upper type<br>
+           Creates a new locative with the lower and upper bounds defined 
+by  lower    and upper, and the type type. The reference in a locative is 
+initially  set   to the lower bounds.<br>
+       <br>
+           locative-copy locative<br>
+           Create a copy of the locative which may be modified independantly
+  of  the   previous copy.<br>
+       <br>
+           loc++ locative<br>
+           loc-- locative<br>
+           Step the direction of the locative, referring to next and previous 
+  elements    respectively.<br>
+       </font>                                               
+<h3><a name="Patterns_"></a>Patterns<br>
+          </h3>
+            A pattern is either a literal, a symbol, or a list (which in
+turn   may   contain  more patterns).<br>
+            2 literals are to match if their values are equal (with the exception 
+    of  _:, which only requires the other to be a keyword).<br>
+       A keyword of the form key: will also match a symbol with the same
+base.<br>
+            An ordinary symbol will match any other type.<br>
+            A&nbsp;list will match another list with the same length if all 
+ the   members   match between the lists.          
+<h3><a name="Environments_"></a> Environments<br>
+          </h3>
+           Environments will be first class objects in LANG/BGB. The environments 
+    will be  viewed as a stack of layers, with the outer layers being closer 
+   to the "top  level" and the inner ones being increasingly closer to the 
+ current   lexical  bindings.<br>
+           During evaluation new layers are added on top and removed as execution 
+    winds  through the functions.<br>
+           At any given point 'current-environment' can be called to make 
+a  snapshot     of the bindings in place at that time, the position and shape 
+ of the environment     is considered as static at that point (excluding changes
+ later made to  the   environment, which are not to effect things created
+using this env).  Other   bindings may be added on top or at the current
+level, however only  assignment   will be visible within this env (excluding
+assignment to bindings  not in  place within this env).<br>
+           <br>
+          At present I will define that environments will also preserve syntactic 
+    bindings.<br>
+          <br>
+       (env 'sym)<br>
+           Refers to a binding within the env.<br>
+           <br>
+       (env 'sym value)<br>
+           Assigns a value to the binding within the env.<br>
+                         
+<h3><a name="Objects"></a>Objects</h3>
+             I will use a prototype object system.<br>
+            Objects will accept messages. An object has slots/handlers. A 
+given     slot may hold a certain value.<br>
+            Handlers will be defined using plambda and passed to objects. 
+When   an  object  recieves a handler it will add it to it's list of handlers.<br>
+            A message passed to an object will first be checked against the 
+ list   of  handlers, trying the closest match. Otherwise it will check if 
+ the message contains a plambda.<br>
+       A message without a matching handler will be silently dropped.<br>
+            <br>
+    Handlers and slots will have an associated "position", with the newest
+ being  searched first and the older ones later. this allows handlers to
+hide  each  other based on order (making the order of definition important).<br>
+    <br>
+    It is important not to have slots and handlers with matching bases (ex: 
+ the slot foo and a handler for the message (foo:)) as there may be conflicts.
+  Implicitly all slots can be viewed as handlers for a message of the form
+ (slot: . x).<br>
+    <br>
+            The general syntax for message passing will be:<br>
+                 (object message*)<br>
+            <br>
+            Objects will accept a few predefined messages:<br>
+                 <br>
+      (obj clone:)<br>
+            This will clone the object and cause it to return a copy of itself.<br>
+            <br>
+    (obj get: slot)<br>
+    Explicitly get a slot value.<br>
+    Slot may also be a pattern in which case the associated handler can be
+ fetched.<br>
+    <br>
+    (obj set: slot value)<br>
+    Explicitly set a slot value.<br>
+    <br>
+                 (obj slot-name)<br>
+            Will cause it to return the value associated with a given slot.<br>
+                 <br>
+    (obj (plambda ...))<br>
+    Will allow adding a handler to an object. If multiple handlers are added
+  with the same pattern (via equal?) then all but the last are dropped (as
+ it is not possible to match with them). By adding a handler the same pattern
+  one can replace the existing handler. The new handler will have the same
+ slot position as the previous.<br>
+    <br>
+    (obj pattern)<br>
+    Will allow one to fetch the handler associated with a given handler.<br>
+    <br>
+      (obj slot-name value)<br>
+            Will bind or assign value to the indicated slot.<br>
+            <br>
+            Worth noting is that it may not be possible to tell the difference
+   between    a slot and a message handler. This is not entirely bad as it
+ allows  transparent    invokation of functions as slots, an example of which
+ could  be:<br>
+                 (define triangle (root-obj clone:))<br>
+      (triangle 'a 0)<br>
+      (triangle 'b 0)<br>
+      (triangle (plambda (c:) (sqrt (exp (self 'a) 2) (exp (self 'b) 2)))<br>
+      <br>
+            For the convienience of defining objects there is the newobject 
+ macro:<br>
+            <br>
+                 (newobject parent . patterns)<br>
+            Parent is cloned, then each of the patterns is applied to the 
+new   object.<br>
+            Each has the form:<br>
+                 (name value)		//the definition of object slots<br>
+      ((pattern...) body)	//the definition of object handlers           <br>
+      <br>
+            This expands as:<br>
+                 let ((obj (parent clone:)))<br>
+      	(patterns)<br>
+      <br>
+            Where:<br>
+                 (name value) =&gt; (obj 'name value)<br>
+      ((pattern...) body) =&gt; (plambda (pattern...) body)             
+            
+<h3><a name="Macros"></a>Macros</h3>
+            Macros will be implemented in LANG/BGB. The idea is that a macro
+  will   take a piece  of code and perform some operation on it, and will
+return  a  new piece of code to be compiled in place of the macro call. It
+is also  possible  for macros  to return other macro definitions, in which
+case they  are evaluated  just the same as the original macro call.<br>
+       <br>
+      (define-syntax name func)<br>
+       Defines a macro which is bound to name. Func is a closure accepting
+ a   single   argument, the form it was invoked as.<br>
+           <br>
+       example:<br>
+       (define-syntax add <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; (lambda ((_ a b)) `(+ ,a ,b)))
+ <br>
+      (add 2 3)<br>
+            <br>
+       (pattern-case key . forms)<br>
+            Where each form is:<br>
+           (pattern body)<br>
+            <br>
+            Matches key against each pattern in forms, and once a match is
+ found,    returns  the result of executing body.<br>
+            If no match is found the result is undefined.<br>
+            <br>
+               (defmacro name (args)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+           This is a shorthand for macro definition, it exists mostly for 
+typing    convinience.<br>
+           <br>
+       <font color="#999999">    ``(pattern...)<br>
+           This is an alternative for quasiquote. ``(pattern...) expands
+as  (doubleqq     (pattern...)), and differs from the main quasiquote in
+that  it forms variable     renaming. At present this is done through hygenic 
+variables,  but later  it   may automatically rename bound variables (at which
+time a  syntax may  be in  place to cause capture). Hygenic variables are
+identified  by symbols  with  the form 'name;', and the renaming will work
+by replacing  such symbols  with  appropriate gensyms. Later occurances of
+the same symbol  within the  pattern  will use the same gensym, however the
+symbols will not  be valid outside that  pattern.<br>
+          problem: this is presently not sufficient to implement hygenic
+macros...<br>
+       <br>
+          possible new rule:<br>
+          within the quotation symbols are altered to indicate they refer 
+to  a  specific   environment, which is passed along with the expanded code.
+ new  bindings are  effectively renamed or bound within the passed environment.<br>
+          syntax first sums up the bindings used within the quotation and 
+generates     an env with these bound (having been renamed to gensyms). hygenic 
+symbols     could be considered literals which escape the conversion (as normal
+symbols).<br>
+          also: symbols could be replaced with objects which represent a
+binding     between  the actual object and the symbol name. the objects could
+differentiate     variable  and syntactic bindings, and could be handled
+during compilation.<br>
+          they would be replaced by constant forms as appropriate, or be
+expanded     in the case of syntax.<br>
+          new binds are just renamed to gensyms.<br>
+       </font>       <br>
+       (mini . opcodes*)<br>
+           This allows statements to be written within the LANG/BGB "minicode", 
+   this can  be viewed as a kind of high level assembler and is not intended 
+   to be used  in general programs (as the nature of the minicode may change).<br>
+           This makes use of ,, (doublemark) in order to allow inlining of
+ statements.<br>
+           During compilation the indicated minicode fragments will be substituted
+     in place of the mini construct, and inlined expressions will be compiled
+    and substituted in place.<br>
+                 
+<h3><a name="ThreadsMessages"></a>Threads/Messages</h3>
+       (begin-thread <br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+         Begin a thread which executes body then terminates. The return value 
+  is  the "pid" of the thread, which may be used to refer to the thread.<br>
+         <br>
+       (begin-looped-thread <br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; body*)<br>
+       Begins a thread which executes body in a continuous loop. This returns 
+  a  pid.<br>
+       <br>
+      (thread thunk)<br>
+         Begin a thread which evaluates thunk then terminates. Similarly
+this   also  returns a pid.<br>
+         <br>
+       (recieve-case (pattern handler)*)<br>
+         Recieves a message and dispatches it to the first handler in which 
+ the   message  matches pattern.<br>
+         <br>
+       (recieve)<br>
+         Recieves a message and returns the value.<br>
+         <br>
+       (pid args*)<br>
+         Sends a message to pid. the message is prepended with the sender's 
+ pid   so  that a response may be sent.<br>
+                 
+<h3><a name="Misc"></a>Misc</h3>
+          =, synonym for equal?<br>
+         ==, synonym for eq?<br>
+         !=, not equal?<br>
+         !==, not eq?<br>
+         :=, set!<br>
+          more to be added.<br>
+             
+<h2><a name="Possible_Future_"></a><i>   Possible Future</i><br>
+       </h2>
+             
+<h3><a name="Modules_"></a><i>   Modules</i><br>
+       </h3>
+          Modules will exist as environments with a controlled set of bindings.<br>
+          During creation of a module a new binding layer will be created 
+representing     the new top level, all lower bindings will be left intact 
+and will exist    as part of the lexical environment for defined closures.<br>
+          When that form is returned from the layer will be stripped off
+and   used   as the top level of a new module.<br>
+          <br>
+          module<br>
+          &nbsp;&nbsp;&nbsp; forms...<br>
+          Will create a new annonymous module.<br>
+          <br>
+          defmodule location name<br>
+          &nbsp;&nbsp;&nbsp; forms...<br>
+          Will define a new module.<br>
+          <br>
+          import module<br>
+          Import bindings from module and bind them in the present lexical
+ env   (likely   using bindings which exist at compile time).<br>
+          <br>
+          also possible:<br>
+          export vars...<br>
+          or: export (modname var)...<br>
+          <br>
+          Create an annonymous module containing vars (second notation supporting 
+    renaming).<br>
+          <br>
+          import module vars...<br>
+          or: import module (var modname)...<br>
+          Import a controlled set of vars with possible renaming.<br>
+          <br>
+          also:<br>
+          with-import module (vars... | (var modname)...)<br>
+          &nbsp;&nbsp;&nbsp; body...<br>
+          Similar, but imports only temporarily.<br>
+          <br>
+          these forms of import and export could be created using macros:<br>
+          export vars... =&gt;<br>
+          ``(let ((mod (empty-env))) (mod 'var var)... mod)<br>
+          export (modname var)... =&gt;<br>
+           ``(let ((mod (empty-env))) (mod 'modname var)... mod)<br>
+          <br>
+          import and with-import could expand to define's and let's respectively.<br>
+          <br>
+          misc: would need to preserve variable/syntax identity, possible:
+ at  present   not allow import/export of syntax.<br>
+          idea: generalized import could exist, however the module would
+need   to  exist  at compile time. runtime importing could exist but be limited 
+ to a  finate  set of variables.<br>
+                 <br>
+               
+<h2><a name="Features"></a>Features</h2>
+       This section will talk about the features present within the system.<br>
+       <br>
+ 
+<h3><a name="Base_Language_Extensions"></a>Base Language Extensions</h3>
+ 
+<h4><a name="Hash_Tables"></a>Hash Tables</h4>
+ Hash tables will associate keys with values. There is little restriction 
+to what can be used as a key. Hash tables will be "hash by value", thus it 
+is not allowed to have more than one type of key in a given hash.<br>
+ <br>
+ (hash-new)<br>
+ This will allow creation of a new hash table which is initially empty.<br>
+ <br>
+ (&lt;hash&gt; &lt;key&gt; &lt;value&gt;)<br>
+ Will allow binding of key within the hash table.<br>
+ <br>
+ (&lt;hash&gt; &lt;key&gt;)<br>
+ Will retrieve the value associated with &lt;key&gt; from the hash.<br>
+ #z is returned if key is not found, at present it is not possible to determine 
+if the key is not found or the key is bound to #z.<br>
+             
+<h3><a name="Persistence"></a>Persistence</h3>
+       By use of the '--store', '--nostore', and '--image' command line options 
+   one will be able to enable, disable, or control the store image to be used.<br>
+       <br>
+       The rest of this will talk in the context of the strore being enabled.<br>
+       <br>
+       The main repl by default not be persistent. The main repl will by
+defualt    represent the most recent state of the system, and will be clean
+on each   boot.<br>
+       This will not be the case for alternate repl's, which will be persistent 
+   and, thus, may reflect an older state of the system. New repl's, however, 
+   will reflect the state of the system at the time of creation.<br>
+       <br>
+       All data is implicitly persistent, and without any need for programmer 
+  intervention;  however, without extra effort in some cases the data may 
+not  be accessible  and thus collected upon subsequent runs (an example of 
+this  would be bindings  only present within the main repl).<br>
+       <br>
+       'sys-root' will be a binding to an environment which is used for storing 
+   data between runs. This will be one of a number of ways in which data may
+   be bound to the system and thus later accessible.<br>
+       <br>
+             
+<h3><a name="Net"></a>Net</h3>
+       The default SYS/BGB network interface will be a crude distributed
+system.<br>
+       <br>
+       The general idea is that nodes will be looked up based on guids.<br>
+       <br>
+       There is a search protocol so that a node can change addresses and 
+another    node (assuming it can aquire or has open links to other nodes) 
+can locate    the node in question.<br>
+       The fairly simple algorithm of passing the search requests forward 
+over   all open links (dropping ones extending past their ttl or having passed
+ by  there already) is used. If a match is found it is passed backwards to
+ the  source (enough info is maintained to trace the response back to the
+sender,  though if it takes too long this info will be wiped out and the
+response dropped when it hits a broken link).<br>
+        <br>
+       Control Nodes will be used to locate/contact other nodes (though a 
+number    of control nodes can be set up, links to multiple can be held, ...).
+Nearly    any allready connected node can be used as a control node, or a
+disconnected    node could also be used (though messages would be confined 
+to the enclosing    mesh unless an external link is formed somewhere).<br>
+       <br>
+       References to many remote objects will be largely transparent, others
+  will  be copied. Passed references may be applied and to a lesser extent
+ used in  other ways, copied objects may be used normally, but will not maintain 
+  identity  with the source objects. Other objects may be 'mirrored'. A mirrored
+object will remain synchronized with the source, but will be cheaper than
+an object passed by reference.<br>
+       <br>
+       There will also be persistent references/links. Persistent links mean
+  that  a node can shut down, then come back up, and have its links (to nodes
+  also  still up) still in place, and links from other nodes to this one
+will   "revive"  (currently this is not very efficient, I will need to add
+a way   to limit how quickly it polls/tries to reconnect, ie: a timer).<br>
+       <br>
+       Identity (in this context) will mean that the source object and the
+ object   recieved when it is passed in a message are necessarily the same,
+ and that   modifications to the recieved object will be reflected in the
+source.<br>
+Psuedo Identity will be maintained with mirrored objects. Mirrored objects
+will largely behave like those passed by reference, however it is possible
+for them to become temporarily out of sync, or for other situations to occure
+which are not possible with references. In some cases it is possible to distinguish
+the behavior of an object passed by reference and one that is mirrored.<br>
+       <br>
+       Numbers, cons cells, vectors, strings, and symbols are copied.<br>
+       Environments, builtin functions, threads, and closures are  passed
+  by reference.<br>
+       Objects are mirrored by default.<br>
+       <br>
+       A&nbsp;function/object recieving a message over the net will have
+the   'from'  dynamic variable bound to the thread of the sender (by default),
+ or possibly  another target in which to direct responses.<br>
+       <br>
+       At the time of this writing handlers (with the exception of threads
+ or  of  unidirectional messages) will need to return or else the sender
+and  any  other  local threads will remain blocked.<br>
+       <br>
+       The dynamic var 'from' is not bound in the case of threads, instead
+ from   is included within the message and is thus defined within the handler
+ (ie:   recieve-case).<br>
+       <br>
+       Application will normally send a message, with the exception of threads, 
+   messages are bidirectional (threads being unidirectional by default), and
+   with the 'from' of the reciever being directed at the current thread.<br>
+       <br>
+       (-&gt; obj . msg), (send-u obj msg)<br>
+       Will send a unidirectional message, with unidirectional messages the 
+ sender   will not block waiting for a return value, for local passes this 
+ will implicitly   create a new thread to handle the message.<br>
+       <br>
+       (&lt;*&gt; obj from . msg), (send-from obj from msg)<br>
+       will send a message (by default bidirectional) with the from of the
+ reciever   being defined by from.<br>
+       <br>
+       (*&gt; obj from . msg), (send-from-u obj from msg)<br>
+       will send a unidirectional message with the from of the reciever referring 
+   to from.<br>
+       <br>
+       the long form of these has the message as an argument, these may be
+ used   to pass dynamically generated messages (in order to avoid needing
+to use  apply to send dynamically generated messages).<br>
+       <br>
+       these can be defined in terms of each other via a macro:<br>
+       (defmacro -&gt; (obj . msg)<br>
+       &nbsp;&nbsp;&nbsp; '(send-u ,obj [,@msg]))<br>
+       <br>
+       (defmacro *&gt; (obj from . msg)<br>
+       &nbsp;&nbsp;&nbsp; '(send-from ,obj ,from [,@msg]))<br>
+       <br>
+       ...<br>
+       <br>
+       or (discouraged):<br>
+       (defmacro send-from (obj from msg)<br>
+       &nbsp;&nbsp;&nbsp; '(apply *&gt; [,obj ,from ,@msg]))<br>
+       <br>
+       ...<br>
+       <br>
+       <br>
+       I will define that the long form exist via functions, and the shorthand
+   forms may or may not be macros.<br>
+       <br>
+       Adresses also exist in the system, an address can be applied and has 
+ the   form:<br>
+       (addr key: . msg)<br>
+       This connects (if not connected allready) to the node indicated via
+ addr   and then sends msg to the specified handler (named via key:).<br>
+       <br>
+       (add-net-handler key: handler)<br>
+       Defines a handler for a given key, the intent of handlers is to allow
+  nodes  to get references and such to things defined on said node.<br>
+       <br>
+       Addresses may be composed or located:<br>
+       (list-&gt;addr def)<br>
+       will create such an addr, def is a list with the form (type ...),<br>
+       type defines how the rest is structured:<br>
+       &nbsp;&nbsp;&nbsp; (ipv4tcp (a b c d) port)<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; defines a tcp address;<br>
+       &nbsp;&nbsp;&nbsp; (ipv4udp (a b c d) port)<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; defines udp addr.<br>
+       <br>
+       Similarly, (addr-&gt;list addr) will decompose an address into said
+ list   form.<br>
+       <br>
+       (find-host name) will locate the address for an indicated host.<br>
+       <br>
+             
+<h3><font color="#999999"><a name="MRP:_Message_Relay_Protocol"></a>MRP: Message
+Relay Protocol (deprecated)</font></h3>
+   <font color="#999999"><font color="#000000">MRP spec contains newer version.</font><br>
+   <br>
+   MRP will give each connection a stack machine. This stack machine will 
+ process  messages from other nodes. It will handle directing messages to
+ remote objects  and will dispatch incomming messages to the appropriate
+objects.<br>
+   <br>
+       An incomming reference will have the full route info to get it back
+ to  the  source.<br>
+   <br>
+   </font>                  
+<h4><font color="#999999"><a name="Encoding"></a>Encoding</font></h4>
+   <font color="#999999">    multibyte values will be in big-endian order.<br>
+   <br>
+       when the stream is in command mode a byte will be read and interpreted:<br>
+       cmd&amp;7:<br>
+       0: number<br>
+       &nbsp;&nbsp;&nbsp; (cmd&gt;&gt;3)&amp;7<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0=unsigned<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1=signed<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2=float<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 3=widenum, 128-1024 bit<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 4=misc/const<br>
+   <br>
+       &nbsp;&nbsp;&nbsp; (cmd&gt;&gt;6)&amp;3<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0=1 byte/u128<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1=2 byte/u128<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2=4 byte/u128<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 3=8 byte/u128<br>
+   <br>
+       &nbsp;&nbsp;&nbsp; misc:<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1=false<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2=true<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 3=null<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 4=eol<br>
+   <br>
+       1: command<br>
+       &nbsp;&nbsp;&nbsp; 2 bytes, upper 4 bits and next byte (forming upper
+  8  of opcode)<br>
+   <br>
+       &nbsp;&nbsp;&nbsp; range:<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0x000-0x0FF: vid/base protocol<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0x100-0x1FF: mrp<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0x200-0xDFF: reserved<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0xE00-0xEFF: extension required<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0xF00-0xFFF: extension optional
+  (all  are MARK ... OP)<br>
+   <br>
+       2: object<br>
+       &nbsp;&nbsp;&nbsp; object has upper 5 bits as a type. this is followed 
+  by  data<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; relating to the the object.<br>
+       &nbsp;&nbsp;&nbsp; 1: data object<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; followed by byte encoding and
+ 32  bit  length.<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; encoding will have the lower 
+3  bits   for data encoding:<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0: raw<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1: deflate<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; encoding will have the next
+3  bits   as a type:<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0: data<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1: byte vector<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2: block<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; the upper 2 bits of encoding 
+are   reserved.<br>
+       &nbsp;&nbsp;&nbsp; 2: symbol<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; contains a byte length and so
+ many   bytes of data.<br>
+       &nbsp;&nbsp;&nbsp; 3: string<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; contains a short length and
+so  many   shorts of data.<br>
+       &nbsp;&nbsp;&nbsp; 4: negotiation<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; contains a short length and
+so  many   bytes of data.<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "keyword" or "var=value"<br>
+       &nbsp;&nbsp;&nbsp; 5: binary command<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; contains a short opcode, a short 
+  length,  and so many bytes of<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; data.<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; these are not to be directed 
+at  the  interpreter, rather they<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; are related to network features. 
+  these  are also not to effect<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; the future behavior of the net 
+ stack/opcodes.<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; unknown binary commands are
+to  be  ignored, space is divided:<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 0-4095: mrp<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 4096-32767: 
+ implementation<br>
+       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 32768-65535:
+  possible  user/implementation<br>
+   <br>
+   </font>                                      
+<h4><font color="#999999"><a name="Opcodes"></a>Opcodes</font></h4>
+             
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+         <tbody>
+           <tr>
+             <td valign="top"><font color="#999999">Name<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Number<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Description<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_NOP<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x000<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Does nothing<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999"> MRPOP_MARK<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x005<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Marks the current stack 
+ position<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_CONS<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x100<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Conses arguments: a b 
+-&gt;  (a . b)<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_RCONS<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x101<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Reverse conses arguments: 
+ a b -&gt; (b . a)<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_LIST<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x102<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Creates a list: MARK
+...  -&gt; (...)<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_LISTI<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x103<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Creates a list with a 
+non  EOL tail: MARK a... b  -&gt;  (a... . b)<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_VECTOR<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x104<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Creates a vector: MARK
+ ... -&gt; #(...)<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_ADDR<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x108<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">addr port type -&gt;
+ADDR<br>
+       type: 1=ipv4udp, 2=ipv4tcp<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999"> MRPOP_RREF<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x109<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">Relative to the sender
+ of the message: refnum type   -&gt; LREF<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_LREF<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10A<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">ADDR refnum type -&gt;
+ LREF<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_DISPATCH<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10B<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">msg from refnum<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_RDISPATCH<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10C<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">msg from refnum cont-id<br>
+       sends SETTER and RETURN to return values.<br>
+       cont-id will be used to sync calls and returns<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_SETTER<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10D<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">setter cont-id<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_RETURN<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10E<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">value cont-id<br>
+       send parts of a return value, setter is to come first<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_YREF<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">0x10F<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">refnum -&gt; obj<br>
+       relative to the reciever, to be used for references to objects on
+reciever.<br>
+         </font>          </td>
+           </tr>
+           <tr>
+             <td valign="top"><font color="#999999">MRPOP_COPY<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999"> 0x110<br>
+         </font>          </td>
+             <td valign="top"><font color="#999999">refnum cont -&gt; sends 
+ RETURN w/flat version<br>
+         </font>          </td>
+           </tr>
+                           
+  </tbody>       
+</table>
+       <font color="#999999"><br>
+       #define MRPVAL_FALSE&nbsp;&nbsp;&nbsp; 1<br>
+       #define MRPVAL_TRUE&nbsp;&nbsp;&nbsp; 2<br>
+       #define MRPVAL_NULL&nbsp;&nbsp;&nbsp; 3<br>
+       #define MRPVAL_EOL&nbsp;&nbsp;&nbsp; 4<br>
+   <br>
+       #define MRPVAL_IPV4UDP&nbsp;&nbsp;&nbsp; 1<br>
+       #define MRPVAL_IPV4TCP&nbsp;&nbsp;&nbsp; 2<br>
+   <br>
+       //RREF/LREF type, low 3 bits type:<br>
+       #define MRPVAL_TYPE_OBJECT&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp; //next
+   6 bits object type<br>
+       #define MRPVAL_TYPE_CONS&nbsp;&nbsp;&nbsp; 2<br>
+   <br>
+       //extended types<br>
+       #define MRPVAL_TYPE_CLOSURE&nbsp;&nbsp;&nbsp; ((1&lt;&lt;3)|1)<br>
+       #define MRPVAL_TYPE_ENV&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ((2&lt;&lt;3)|1) 
+   //environment<br>
+       #define MRPVAL_TYPE_ENVOBJ&nbsp;&nbsp;&nbsp; ((3&lt;&lt;3)|1) //object<br>
+       #define MRPVAL_TYPE_CONTEXT&nbsp;&nbsp;&nbsp; ((4&lt;&lt;3)|1) //interpreter 
+   context/thread<br>
+       #define MRPVAL_TYPE_FUNCTION&nbsp;&nbsp;&nbsp; ((5&lt;&lt;3)|1)<br>
+   </font>                <br>
+             
+<h3><a name="Graphics"></a>Graphics</h3>
+      The console can be summoned via tab, and tab can also make it go away.<br>
+      <br>
+      F2 puts the gui into "3D mode" which is a different space than the
+2D  plane  (later I may allow multiple 3D spaces, but for now there is one...).<br>
+      <br>
+           
+<h4><a name="2D_Mode"></a>2D Mode</h4>
+      Arrows can pan the gui.<br>
+      Delete and end control zoom (this is partly related to my handedness).<br>
+      Input focus follows the mouse, rmb can drag objects.<br>
+      Lmb can be used to pan (ie: by "dragging" the plane).<br>
+      Center can also be used for mouse controlled zoom.<br>
+      <br>
+      (render show: ...) can be use to make objects visible. Some objects 
+are   created in the gui init script but are not shown by default.<br>
+      <br>
+      Render is a general object used for interaction with the local gui. 
+When   a 'render:' handler is called 'render' still refers to the local gui, 
+but   'from' may refer to a non-local one (similar goes for other handlers 
+as well).<br>
+      <br>
+           
+<h4><a name="3D_Mode"></a>3D Mode</h4>
+      3D mode is a seperate space from 2D mode.<br>
+      <br>
+      Controls differ as well:<br>
+      &nbsp;&nbsp;&nbsp; Up/down are forwards/backwards;<br>
+      &nbsp;&nbsp;&nbsp; Left/right control strafing;<br>
+      &nbsp;&nbsp;&nbsp; Delete/end control up/down movement;<br>
+      &nbsp;&nbsp;&nbsp; The mouse controls angles;<br>
+      &nbsp;&nbsp;&nbsp; Mouse+lmb can also control forwards/backwards movement.<br>
+      <br>
+      Up/down angles are constrained to +-90, mostly as I wanted to avoid 
+getting   the camera "upside down" (for some things this could be useful, 
+so I will   consider it). Similarly for now I do not have roll, but may add 
+that later   (it is in my mind complicated and rarely useful...).<br>
+      <br>
+    I will define that this will use right-hand coordinates with +Y as up,
+ and  a CCW face front. The base unit length will be the meter, mass kilogram,
+ force newton, ...<br>
+    <br>
+      (render3d show: ...) can show 3d objects (primitives, groups, entities).<br>
+      <br>
+      (render3d camera: entity) set the entity to be used as a camera.<br>
+      <br>
+      (primitive-3d key opts...) can create a 3d primitive.<br>
+      Key can be: 'cube:', 'cylinder:', 'sphere:' or 'disk:' at present.<br>
+      <br>
+      Cylinder, sphere, and disk are normally aligned along the XY plane.<br>
+      <br>
+      Options are keywords which may be followed by values:<br>
+           
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+        <tbody>
+          <tr>
+            <td valign="top">name: symbol<br>
+            </td>
+            <td valign="top">Allows the primitive to be named.<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">min: vector<br>
+            </td>
+            <td valign="top">Defines the minimum extents (cube).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">max: vector<br>
+            </td>
+            <td valign="top">Defines the maximum extents (also cube).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">radius: scalar<br>
+            </td>
+            <td valign="top">Defines the normal radius (cylinder, sphere, 
+disk).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">radius-top: scalar<br>
+            </td>
+            <td valign="top">Radius at top (cylinder, top is +Z).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">radius-bottom: scalar<br>
+            </td>
+            <td valign="top">Radius at bottom (cylinder, bottom is -Z).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">height: scalar<br>
+            </td>
+            <td valign="top">The height of a cylinder.<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">texture: map<br>
+            </td>
+            <td valign="top">Allows selection of a texture map.<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">translate: vector<br>
+            </td>
+            <td valign="top">Translates primitive by vector (local).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">rotate: vector<br>
+            </td>
+            <td valign="top">Rotates by vector (local).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">scale: vector<br>
+            </td>
+            <td valign="top">Scales by vector (also local).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">identity:<br>
+            </td>
+            <td valign="top"> Resets back to identity value.<br>
+            </td>
+          </tr>
+                       
+  </tbody>      
+</table>
+      <br>
+      Transforms are cummulative, meaning that (annoyingly enough) at present 
+  one has to reset identity to get non-local transforms (though I may add 
+"global"  forms of the transforms for this), and has to take the order into 
+account  when performing transformations.<br>
+      <br>
+      These options can be passed to primitives after creation for the purpose
+   of altering them.<br>
+      <br>
+      (group-3d opts... objs...) creates a group of objects.<br>
+      <br>
+      At present opts is limited to those for transformation and to 'name:' 
+ and  'texture:'.<br>
+      <br>
+      With a group though one can reference named primitives:<br>
+      (define c (group-3d (primitive-3d sphere: name: 'sphere radius: 10)))<br>
+      c.sphere would refer to the inner sphere.<br>
+      <br>
+      (texture opts...)<br>
+      Allows the creation of texture objects.<br>
+      At present only a few options are allowed for textures:<br>
+      &nbsp;&nbsp;&nbsp; name: name, allows the texture to be named;<br>
+      &nbsp;&nbsp;&nbsp; image: file, allows the texture image to be selected.<br>
+      <br>
+      Texture mapping has scope, where each textured primitive adds to the
+ texture   scope. Untextured primitives within the rendering scope of a textured
+ primitive/group   will use the texture of that primitive/group.<br>
+      <br>
+      Entities are objects, that, like the gui, are rendered via a 'render:'
+  handler  (may change to 'render-3d:' to allow objects with seperate 2D/3D
+  appearance).<br>
+    Both prinitives and groups may be passed 'render:' messages in order
+to  cause them to be rendered.<br>
+    <br>
+    Entities will have special slots:<br>
+    &nbsp;&nbsp;&nbsp; origin, vector, will indicate the location of the
+object   (to effect rendered primitives);<br>
+    &nbsp;&nbsp;&nbsp; angles, vector, will indicate the rotation of the
+object   (also to effect primitives);<br>
+    &nbsp;&nbsp;&nbsp; velocity, vector, indicates the current object velocity;<br>
+    &nbsp;&nbsp;&nbsp; mass scalar, will indicate the object mass;<br>
+    &nbsp;&nbsp;&nbsp; bounce scalar, will indicate how much energy is used 
+ in bouncing (relative).<br>
+    &nbsp;&nbsp;&nbsp; friction scalar, will indicate how much energy is
+absorbed   by objects sliding along surface (relative);<br>
+    &nbsp;&nbsp;&nbsp; bbox-max vector, indicates the maximum extents of
+the   entity;<br>
+    &nbsp;&nbsp;&nbsp; bbox-min vector, indicates the minimum extents of
+the   entity;<br>
+    &nbsp;&nbsp;&nbsp; v-offset vector, relative offset if this entity is 
+used  as a camera;<br>
+    &nbsp;&nbsp;&nbsp; v-angles vector, viewing angles if this entity is
+used   as a camera (yaw pitch roll, y-axis up).<br>
+           
+<h4><a name="Physics"></a>Physics</h4>
+      Physics will be centered around entities.<br>
+      <br>
+      (phys add: ent) will add the entity to the physics system.<br>
+      (phys gravity:) will fetch the gravity vector.<br>
+      (phys gravity: vector) will set the gravity vector.<br>
+      <br>
+      For now there will be bounding box collision.<br>
+      bbox-min and bbox-max will refer to the bounding extents of the entity. 
+  Finer collision detection (such as the individual primitives) may be added 
+  later.<br>
+      Entities will have friction, this will indicate how much to slow other
+  entities  that contact it.<br>
+      <br>
+        <br>
+   <br>
+   
+</body>
+</html>

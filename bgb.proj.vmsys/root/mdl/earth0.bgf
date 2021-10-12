@@ -1,0 +1,7 @@
+;BGF
+
+(texture (name earth) (image "mdl/planets/earth0.tga"))
+(texture (name jupiter) (image "mdl/planets/jupiter0.tga"))
+(texture (name saturn) (image "mdl/planets/saturn0.tga"))
+
+(sphere (radius 10) (texture earth))

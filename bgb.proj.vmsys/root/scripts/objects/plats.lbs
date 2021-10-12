@@ -1,0 +1,60 @@
+(defobject func_plat entity-obj
+  ((spawn:)
+   (set! self.solid SOLID_BSP)
+   (set! self.movetype MOVETYPE_PUSH)
+   (self model: self.model)
+   (self origin: self.origin)
+   (if (= self.speed 0)
+       (set! self.speed 100))
+
+   (if (= self.height 0)
+       (set! self.height (- (self.size 2) 8)))
+   (set! self.pos1
+	 (vec+ self.origin
+	       (vector 0 0
+		       (- self.height) )))
+   (set! self.pos2 self.origin)
+   (self origin: self.pos1)
+   (set! self.state STATE_BOTTOM))
+
+  ((think:)
+   (if (= self.state STATE_DOWN)
+       (begin
+	 (print "plat stop\n")
+	 (set! self.state STATE_BOTTOM)
+	 (if (!= self.target "")
+	     (use-targets self.target))
+	 (self origin: self.pos1)
+	 (set! self.velocity #(0 0 0))))
+   (if (= self.state STATE_TOP)
+       (begin
+	 (print "plat down\n")
+	 (set! self.state STATE_DOWN)
+	 (if (!= self.target "")
+	     (use-targets self.target))
+	 (calc-move self.pos1 self.speed)))
+   (if (= self.state STATE_UP)
+       (begin
+	 (print "plat top\n")
+	 (set! self.state STATE_TOP)
+	 (if (!= self.target "")
+	     (use-targets self.target))
+	 (self origin: self.pos2)
+	 (set! self.velocity #(0 0 0))
+	 (set! self.nextthink (+ self.ltime 1)))))
+
+  ((touch: other)
+   (if (= self.state STATE_TOP)
+       (set! self.nextthink (+ self.ltime 1)))
+   (if (and (= self.state STATE_BOTTOM) (= self.targetname "")
+	    (!= self.origin self.pos2))
+       (begin
+	 (print "plat start\n")
+	 (set! self.state STATE_UP)
+	 (calc-move self.pos2 self.speed))))
+
+  ((use:)
+   (if (and (= self.state STATE_BOTTOM) (!= self.origin self.pos2))
+       (begin
+	 (print "plat start\n")
+	 (calc-move self.pos2 self.speed)))))

@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>LANG/BGB, Spec0</title>
+                           
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+  <body>
+       
+<pre><font color="#ff0000">Initial: 2002-09-25<br>Update: 2003-01-06</font><br><br></pre>
+       
+<h1>BGB LANG/BGB</h1>
+       
+<pre><br>This spec will outline differences between scheme as defined by R5RS and SK.<br><br></pre>
+       
+<h2>Syntax</h2>
+    My syntax is intended to be a useful comprimise between s-expressions 
+and  a more conventional syntax. For the most part the lang/bgb syntax will
+map directly  to s-expressions. I have chosen not to introduce any new semantics 
+through  the syntax, thus keeping the reader simple. <br>
+   In this syntax every normal line is interpreted as a list:<br>
+     
+<pre>f x y =&gt; (f x y)<br><br></pre>
+   Lower lines with a higher indentation are considered as sub-lists to the 
+ last line with a lower indentation:<br>
+     
+<pre>begin<br>	f x y <br>		f2 z<br>=&gt; (begin (f x y (f2 z)))<br></pre>
+   I will define that tab will normally pad the indentation up to a multiple 
+ of 8 chars.<br>
+   '\' may be used as a line continuation character, in which case the text 
+ found on the next immediate line is considered as part of the current line.<br>
+     
+<pre>f x y \<br>	z<br>=&gt; (f x y z)<br><br></pre>
+   in this case indentation is considered as unimportant, however no blank
+ lines or comments are allowed on the next line.<br>
+     
+<pre>f x y \<br><br>	z<br><br></pre>
+   Will be considered invalid.<br>
+   '^' will be used to mark an object on a line to be an expression, rather 
+ than a list.<br>
+     
+<pre>^ x =&gt; x</pre>
+   This is intended to allow arguments to be placed on lower lines with relative 
+ ease.<br>
+   <br>
+Multiple objects may be placed after '^' in which case they will all be submitted
+to the function:<br>
+<pre>^ x y z =&gt; x y z</pre>
+<br>
+   Expressions may be wrapped in parenthesis, which will indicate a manual
+ list.<br>
+   This may be useful when it is not desired to code on a lower line, or
+to  avoid increasing nesting. All parenthesis are required to be matched,
+and  the normal indentation rules still apply.<br>
+     
+<pre>f (f<br>	f x)<br>=&gt; (f (f (f x)))<br><br></pre>
+   Comments will be indicated using the c style // and /* */ notations.<br>
+   /* and */ will be allowed to be nested.<br>
+   [ and ] are intended to be an alternate syntax for lists, thus (f x y) 
+and  [f x y] are considered analogous.<br>
+   <br>
+ idea: make a seperation between (...) and [...]. square brackets can be
+used for "soft lists", parens are processed directly however [...] =&gt;
+(list ...). also possible: soft vectors, #[...] becomes (vector ...).<br>
+ {...}, block notation. a block is considered similar to an annonymous lambda. 
+{...} =&gt; (lambda () ...)<br>
+ <br>
+ lists entered directly or vectors with the #(...) notation would be considered 
+immutable...<br>
+ <br>
+ <br>
+   A&nbsp;'dot notation' is also supported. This is detected while parsing
+ symbols, such that:<br>
+     
+<pre>a =&gt; a, a.b =&gt; (a 'b), a.b.c =&gt; ((a 'b) 'c), ...</pre>
+   This can be used when referring to objects or namespaces, ie: self.name, 
+ root-env.system, ...<br>
+   <br>
+ Infix notation is also supported, names beginning with "!$%&amp;*+-/:&lt;+&gt;?^" 
+will be allowed to be infix. If such a name is the second element in a list 
+it will default to being put in functional position. '.' also has a special 
+use here, period prefixing a normal symbol will allow it to be used infix, 
+and '.' prefixing an infix name will indicate that it is a normal symbol.<br>
+ <br>
+ + 1 2 =&gt; (+ 1 2)<br>
+ 1 + 2 =&gt; (+ 1 2)<br>
+ f 1 2 =&gt; (f 1 2)<br>
+ 1 .f 2 =&gt; (f 1 2)<br>
+ f .+ x =&gt; (f + x)<br>
+ <br>
+   Otherwise it is syntactically similar to scheme syntax as defined in R5RS.<br>
+   <br>
+       
+<h2>Notations</h2>
+    LANG/BGB will include keywords, these will be ordinary symbols with the
+exception  that the last character is ':'. key:, a:, a-list:, ... are keywords.<br>
+   <br>
+   Change: Make keywords match symbols with the same base? (equal? x: 'x) 
+=&gt;  #t ?<br>
+   This poses an issue of identity, if (equal? x: 'x) then how does one differentiate 
+ x: from 'x, ie: when such a distinction is needed. A possibility is to have 
+ keywords as symbols within boxes, and to look into the box for comparison. 
+ Given eq? and eqv? compare references, one can have equal? look inside of 
+ boxes...<br>
+   Another possibility would be to have the distinction be made by match, 
+thus:<br>
+     
+<pre>(equal? x: 'x) =&gt; #f<br>(match x: 'x) =&gt;&nbsp;!= #f (match returns either false or a numeric value...)<br></pre>
+   This is presently open.<br>
+   <br>
+   <br>
+   #z is defined as a general nil value. this is used to indicate a logical 
+ response as being neither true or false, or a value as N/A. this is distinguished 
+ from the empty list, which is intended to serve as such...<br>
+       
+<h2>Semantics</h2>
+    LANG/BGB will include dynamic variables.<br>
+   Dynamic variables will be bound using defvar and letvar.<br>
+   <br>
+     
+<pre>defvar var [value]</pre>
+   Will define var as a dynamic var, and, if present, value will be bound 
+to  var.<br>
+   A dynamic var is required to be defined before it is referenced.<br>
+   <br>
+     
+<pre>letvar ((var value)*) body</pre>
+   This is similar to let, however it will bind values within the dynamic 
+environment  rather than the lexical environment.<br>
+   <br>
+     
+<pre>define var value</pre>
+   This is similar to the scheme define, with the exception that at top level 
+ it will mask over rather than assign the previous definition (currently has
+semantics of redefine).<br>
+   <br>
+     
+<pre>redefine var value</pre>
+   This is equivalent to the scheme define (not implemented). <br>
+   <br>
+ 
+<pre>rlet name ((var value)*)<br>	body...</pre>
+ <br>
+ this will be a renamed form of named let. the reason for this rename is
+that named let can be confusing when first seen.<br>
+ <br>
+   patterns will be similar to lambda lists, however they will also be allowed 
+ to contain literals and will allow argument currying.<br>
+   <br>
+     
+<pre>function name (pattern)<br>	body...</pre>
+   This will be the preferred means by which to define a function.<br>
+   An implementation may allow multiple functions to share the same name
+and  differ in argument shape or structure. At present I will not define
+the order  in which definitions will be searched, so it will be considered
+invalid for  function definitions to overlap.<br>
+   <br>
+     
+<pre>plambda (pattern)<br>	body...</pre>
+   This will be similar to lambda, but will preserve pattern for later matching. 
+ I will not define if a plambda can be directly applied to arguments.<br>
+   <br>
+     
+<pre>pattern closure</pre>
+   This will extract the pattern from a closure defined by plambda (not implemented).<br>
+   <br>
+     
+<pre>match pattern arguments</pre>
+   Will return a weight indicating how closely arguments matches pattern, 
+or  #f in the case that pattern and arguments do not match.<br>
+   Pattern matches will be based on whether both have the same general shape, 
+ and that literals are equal.<br>
+ 
+<pre>eval form</pre>
+  In normal cases I will define eval to work within the environment of a
+caller,  thus it may be used for defining new code within the caller.<br>
+ 
+<pre>eval form env</pre>
+  Evaluate form with the lexical environment given in env, and the present
+ dynamic environment.<br>
+  <br>
+  Environments are first class objects. I will define 'current-environment'
+ as being able to take a snapshot of the bindings in existance from where
+it is called.<br>
+ 
+<pre>set! var value</pre>
+  Set! will assign a value to a variable or expression. Conceptually though
+ set! will not distinguish between variables and expressions, a variable
+reference  is considered as equivalent to a symbol identifying the variable,
+which is  equivalent to an expression evaluating to a given location.<br>
+  Expressions will have 2 return values: a reference to the returned object,
+ and a reference to the slot in which that value came from. These 2 values
+ will be referred to as 'ax' and 'rax' respectively.<br>
+  Rax does not necissarily refer to a location though, and can not normally
+ be passed up through statements; it is only visible from direct returns.
+I will define that apply is to clear this value to #z, and it may be cleared
+ in other places as well.<br>
+  Other systems had defined the concept of a setter, however that concept 
+is not viewed as fundamental in this case. A setter will be viewed as a function
+ which returns it's value in rax, and a getter returns it's value in ax.<br>
+  (bind-getter-setter getter setter) will create a function which when called
+ will invoke both functions on the given arguments, placing the getter in
+ax and the setter in rax. This will be one way in which to explicitly return
+ a value in rax.<br>
+  <br>
+  Locatives will be similar to typed, range checked pointers. Conceptually
+ a locative will contain: a lower extent, an upper extent, and a current
+reference.  Normally: lower&lt;=reference&lt;upper. The type will indicate
+the type of  data within the region referred to by this locative, and will
+be the same  as that for vectors.<br>
+  Locatives will also serve as handles for objects such as slots, and to
+allow  an alternate form of string manipulation (these are what will be returned
+ in rax).<br>
+  <br>
+ possible:<br>
+ vec idx value;<br>
+ obj slot value;<br>
+ and, env var value; could possibly be removed.<br>
+ <br>
+  locative? obj<br>
+  Returns #t if obj is a locative, #f otherwise.<br>
+  <br>
+  locative-&gt;integer locative<br>
+  integer-&gt;locative integer<br>
+  These will convert between integers and locatives. I will leave the nature
+ of these an implementation issue.<br>
+  <br>
+  set* locative value<br>
+  Will assign value to the spot referred to by the current reference in locative.<br>
+  <br>
+  contents locative<br>
+  Will extract the value from the spot referred to by the locative's reference.<br>
+  <br>
+  locative-new lower upper type<br>
+  Creates a new locative with the lower and upper bounds defined by lower 
+and upper, and the type type. The reference in a locative is initially set 
+to the lower bounds.<br>
+  <br>
+  locative-copy locative<br>
+  Create a copy of the locative which may be modified independantly of the
+ previous copy.<br>
+  <br>
+  loc++ locative<br>
+  loc-- locative<br>
+  Step the direction of the locative, referring to next and previous elements
+ respectively.<br>
+     
+<h2>Patterns<br>
+ </h2>
+   A pattern is either a literal, a symbol, or a list (which in turn may
+contain  more patterns).<br>
+   2 literals are to match if their values are equal (with the exception
+of  _:, which only requires the other to be a keyword).<br>
+   A symbol will match any other type.<br>
+   A&nbsp;list will match another list with the same length if all the members 
+ match between the lists. 
+<h2> Environments<br>
+ </h2>
+  Environments will be first class objects in LANG/BGB. The environments
+will be  viewed as a stack of layers, with the outer layers being closer
+to the "top  level" and the inner ones being increasingly closer to the current
+lexical  bindings.<br>
+  During evaluation new layers are added on top and removed as execution
+winds  through the functions.<br>
+  At any given point 'current-environment' can be called to make a snapshot
+ of the bindings in place at that time, the position and shape of the environment
+ is considered as static at that point (excluding changes later made to the
+ environment, which are not to effect things created using this env). Other
+ bindings may be added on top or at the current level, however only assignment
+ will be visible within this env (excluding assignment to bindings not in
+place within this env).<br>
+  <br>
+ At present I will define that environments will also preserve syntactic
+bindings.<br>
+ <br>
+  env 'sym<br>
+  Refers to a binding within the env.<br>
+  <br>
+  env 'sym value<br>
+  Assigns a value to the binding within the env.<br>
+       
+<h2>Objects</h2>
+    I will use a prototype object system.<br>
+   Objects will accept messages. An object has slots and handlers. A given
+ slot may hold a certain value.<br>
+   Handlers will be defined using plambda and passed to objects. When an
+object  recieves a handler it will add it to it's list of handlers.<br>
+   A message passed to an object will first be checked against the list of
+ handlers, trying the closest match. Otherwise it will check if the message
+ refers to a slot, or contains a plambda.<br>
+   <br>
+   The general syntax for message passing will be:<br>
+     
+<pre>object message*</pre>
+   <br>
+   Objects will accept a few predefined messages:<br>
+     
+<pre>obj clone:</pre>
+   This will clone the object and cause it to return a copy of itself.<br>
+   <br>
+     
+<pre>obj get: slot</pre>
+   Explicitly get a slot value.<br>
+     
+<pre>obj set: slot value</pre>
+   Explicitly set a slot value.<br>
+   <br>
+   These are intended to allow more manual access to slots, these are capable 
+ of bypassing handlers if such functionality is needed.<br>
+   <br>
+   <br>
+     
+<pre>obj slot-name</pre>
+   Will cause it to return the value associated with a given slot.<br>
+     
+<pre>obj slot-name value</pre>
+   Will bind or assign value to the indicated slot.<br>
+   <br>
+   Worth noting is that it may not be possible to tell the difference between 
+ a slot and a message handler. This is not entirely bad as it allows transparent 
+ invokation of functions as slots, an example of which could be:<br>
+     
+<pre>define triangle (root-obj clone:)<br>triangle 'a 0<br>triangle 'b 0<br>triangle (plambda (c:) (sqrt (exp (self 'a) 2) (exp (self 'b) 2))</pre>
+   For the convienience of defining objects there is the newobject macro:<br>
+   <br>
+     
+<pre>newobject parent . patterns</pre>
+   Parent is cloned, then each of the patterns is applied to the new object.<br>
+   each has the form:<br>
+     
+<pre>(name value)		//the definition of object slots<br>((pattern...) body)	//the definition of object handlers</pre>
+     
+<pre><br></pre>
+   This expands as:<br>
+     
+<pre>let ((obj (parent clone:)))<br>	(patterns)</pre>
+   where:<br>
+     
+<pre>(name value) =&gt; (obj 'name value)<br>((pattern...) body) =&gt; (plambda (pattern...) body)</pre>
+     
+<pre><br></pre>
+     
+<h2>Macros</h2>
+   Macros will be implemented in LANG/BGB. The idea is that a macro will
+take a piece  of code and perform some operation on it, and will return a
+new piece of code to be compiled in place of the macro call. it is also possible
+for macros  to return other macro definitions, in which case they are evaluated 
+just the same as the original macro call.<br>
+   define-syntax name func<br>
+   Defines a macro which is bound to name. Func is a closure accepting a
+single  argument, the form it was invoked as.<br>
+  <br>
+   This is one use for currying, ex:<br>
+   define-syntax add<br>
+   &nbsp;&nbsp;&nbsp; lambda ((_ a b)) `(+ ,a ,b)<br>
+   add 2 3<br>
+   <br>
+   Where without currying it would be necessary to manually destructure the 
+ list.<br>
+   <br>
+   pattern-case key . forms...<br>
+   Where each form is:<br>
+   (pattern body)<br>
+   <br>
+   Matches key against each pattern in forms, and once a match is found,
+returns  the result of executing body.<br>
+   If no match is found the result is undefined.<br>
+   <br>
+   
+<pre>defmacro name (args)<br>	body...</pre>
+  This is a shorthand for macro definition, it exists mostly for typing convinience.<br>
+  <br>
+  ``(pattern...)<br>
+  This is an alternative for quasiquote. ``(pattern...) expands as (doubleqq
+ (pattern...)), and differs from the main quasiquote in that it forms variable
+ renaming. At present this is done through hygenic variables, but later it
+ may automatically rename bound variables (at which time a syntax may be
+in  place to cause capture). Hygenic variables are identified by symbols
+with  the form 'name;', and the renaming will work by replacing such symbols
+with  appropriate gensyms. Later occurances of the same symbol within the
+pattern  will use the same gensym, however the symbols will not be valid
+outside that  pattern.<br>
+ problem: this is presently not sufficient to implement hygenic macros...<br>
+  <br>
+ possible new rule:<br>
+ within the quotation symbols are altered to indicate they refer to a specific 
+environment, which is passed along with the expanded code. new bindings are 
+effectively renamed or bound within the passed environment.<br>
+ syntax first sums up the bindings used within the quotation and generates 
+an env with these bound (having been renamed to gensyms). hygenic symbols 
+could be considered literals which escape the conversion (as normal symbols).<br>
+ also: symbols could be replaced with objects which represent a binding between 
+the actual object and the symbol name. the objects could differentiate variable 
+and syntactic bindings, and could be handled during compilation.<br>
+ they would be replaced by constant forms as appropriate, or be expanded
+in the case of syntax.<br>
+ new binds are just renamed to gensyms.<br>
+ <br>
+  mini . opcodes...<br>
+  This allows statements to be written within the SK "minicode", this can 
+be viewed as a kind of high level assembler and is not intended to be used 
+in general programs (as the nature of the minicode may change).<br>
+  This makes use of ,, (doublemark) in order to allow inlining of statements.<br>
+  During compilation the indicated minicode fragments will be substituted 
+in place of the mini construct, and inlined expressions will be compiled and
+substituted in place.<br>
+  <br>
+<h2>Threads/Messages</h2>
+begin-thread<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; stuff...<br>
+Begin a thread which does stuff then terminates.<br>
+<br>
+thread thunk<br>
+Begin a thread which evaluates thunk then terminates.<br>
+<br>
+recieve-case (pattern handler)*<br>
+Recieves a message and dispatches it to the first handler in which the message
+matches pattern.<br>
+<br>
+recieve<br>
+Recieves a message and returns the value.<br>
+<br>
+pid args*<br>
+Sends a message to pid. the message is prepended with the sender's pid so
+that a response may be sent.<br>
+<h2>Misc</h2>
+ =, synonym for equal?<br>
+==, synonym for eq?<br>
+!=, not equal?<br>
+!==, not eq?<br>
+:=, set!<br>
+ more to be added.<br>
+ <br>
+ Possible Future<br>
+ <br>
+ Modules<br>
+ <br>
+ Modules will exist as environments with a controlled set of bindings.<br>
+ During creation of a module a new binding layer will be created representing 
+the new top level, all lower bindings will be left intact and will exist as
+part of the lexical environment for defined closures.<br>
+ When that form is returned from the layer will be stripped off and used
+as the top level of a new module.<br>
+ <br>
+ module<br>
+ &nbsp;&nbsp;&nbsp; forms...<br>
+ Will create a new annonymous module.<br>
+ <br>
+ defmodule location name<br>
+ &nbsp;&nbsp;&nbsp; forms...<br>
+ Will define a new module.<br>
+ <br>
+ import module<br>
+ Import bindings from module and bind them in the present lexical env (likely 
+using bindings which exist at compile time).<br>
+ <br>
+ also possible:<br>
+ export vars...<br>
+ or: export (modname var)...<br>
+ <br>
+ Create an annonymous module containing vars (second notation supporting
+renaming).<br>
+ <br>
+ <br>
+ import module vars...<br>
+ or: import module (var modname)...<br>
+ Import a controlled set of vars with possible renaming.<br>
+ <br>
+ also:<br>
+ with-import module (vars... | (var modname)...)<br>
+ &nbsp;&nbsp;&nbsp; body...<br>
+ Similar, but imports only temporarily.<br>
+ <br>
+ these forms of import and export could be created using macros:<br>
+ export vars... =&gt;<br>
+ ``(let ((mod (empty-env))) (mod 'var var)... mod)<br>
+ export (modname var)... =&gt;<br>
+  ``(let ((mod (empty-env))) (mod 'modname var)... mod)<br>
+ <br>
+ import and with-import could expand to define's and let's respectively.<br>
+ <br>
+ <br>
+ misc: would need to preserve variable/syntax identity, possible: at present 
+not allow import/export of syntax.<br>
+ idea: generalized import could exist, however the module would need to exist 
+at compile time. runtime importing could exist but be limited to a finate 
+set of variables.<br>
+       
+</body>
+</html>

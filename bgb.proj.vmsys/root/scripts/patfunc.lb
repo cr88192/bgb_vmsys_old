@@ -1,0 +1,4 @@
+function rev (x) (rev x ())
+function rev (() x) x
+function rev ((h . t) x) (rev t (cons h x))
+

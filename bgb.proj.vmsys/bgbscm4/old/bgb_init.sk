@@ -1,0 +1,117 @@
+// define clone vector-copy
+
+defvar self #z /* (current-envobj) */
+
+define-syntax syntax-ref (lambda ((_ x)) `(mini (refer-syntax ,x)))
+
+define-syntax ^ (lambda ((_ x)) x)
+
+//define-syntax define-syntax-real (syntax-ref define-syntax)
+//define-syntax define-syntax (lambda (x)
+//	syntax-case x ()
+//		(_ (name . args) body) `(define-syntax-real ,name (lambda (,args) ,body))
+//		(_ name body) `(define-syntax-real ,name ,body))
+
+
+define-syntax defmacro
+	lambda ((_ name args body))
+		^ `(define-syntax ,name (lambda ((_ ,@args)) ,body))
+
+define-syntax record (lambda ((vars vals exp))
+	^ `((lambda ,vars ,exp) ,vals))
+
+//defmacro defobject (name parents . body)
+//	^ `(define ,name (begin ,@body (current-envobj)))
+
+defmacro function ((name . args) . body)
+	^ `(define (,name ,@args) ,@body)
+
+
+function (syntax-object->datum x)
+	^ x
+
+defmacro record (vars vals exp)
+	^ `((lambda ,vars ,exp) ,vals)
+
+// define-syntax (pattern-case (key . forms)) `(syntax-case ,key () ,@forms)
+
+
+defmacro delay (form) `(make-promise (lambda () ,form))
+function (force x) (x)
+
+function (make-promise x)
+	let ((ready? #f) (result #z))
+		lambda ()
+			if ready? result
+				begin
+					set! ready? #t
+					set! result (x)
+					^ result
+
+define u8vector 4
+define s8vector 8
+define u16vector 5
+define s16vector 9
+define u32vector 6
+define s32vector 10
+define u64vector 7
+define s64vector 11
+define f32vector 2
+define f64vector 3
+
+function (cadr x)
+	car (cdr x)
+function (cddr x)
+	cdr (cdr x)
+function (caddr x)
+	car (cddr x)
+function (cdddr x)
+	cdr (cddr x)
+function (cadddr x)
+	car (cdddr x)
+function (cddddr x)
+	cdr (cdddr x)
+function (caddddr x)
+	car (cddddr x)
+function (cdddddr x)
+	cdr (cddddr x)
+
+
+defmacro define-message (obj pattern body)
+	^ `(,obj handler: (lambda ,pattern ,body))
+
+
+function (nobj-genslots2 kn ((name value) . rest))
+	let ((rem
+			if (null? rest) '()
+				nobj-genslots2 kn rest))
+		^ `((,kn set: ',name ,value) ,@rem)
+
+function (nobj-genslots kn lst)
+	if (null? lst) '()
+		nobj-genslots2 kn lst
+
+function (nobj-genmessages2 kn ((pattern body) . rest))
+	let ((rem
+			if (null? rest) '()
+				nobj-genmessages2 kn rest))
+		^ `((,kn message: (lambda ,pattern ,body)) ,@rem)
+
+function (nobj-genmessages kn lst)
+	if (null? lst) '()
+		nobj-genmessages2 kn lst
+
+defmacro newobject (parent slots . messages)
+	let ((kn (gensym)))
+		^ `(let ((,kn (,parent clone:))) (begin ,@(nobj-genslots kn slots) ,@(nobj-genmessages kn messages) ,kn))
+
+defmacro at (var) `(self get: ',var)
+defmacro at! (var val) `(self set: ',var ,val)
+
+defmacro plambda (pattern body) `(lambda ,pattern ,body)
+
+function (print . args)
+	if(eq? args '()) #z
+		begin
+			display (car args)
+			print (cdr args)

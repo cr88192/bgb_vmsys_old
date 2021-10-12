@@ -1,0 +1,104 @@
+LANG/BGB net interface:
+
+references to many remote objects will be largely transparent, others will be
+copied.
+passed references may be applied and to a lesser extent used in other ways,
+copied objects may be used normally, but will not maintain identity with the
+source objects.
+identity (in this context) will mean that the source object and the object
+recieved when it is passed in a message are necessarily the same, and that
+modifications to the recieved object will be reflected in the source.
+
+numbers, cons cells, vectors, strings, and symbols are copied.
+environments, objects, builtin functions, threads, and closures are passed by
+reference.
+
+
+a function/object recieving a message over the net will have the 'from'
+dynamic variable bound to the thread of the sender (by default), or possibly
+another target in which to direct responses.
+at the time of this writing handlers (with the exception of threads or of
+unidirectional messages) will need to return or else the sender and any other
+local threads will remain blocked.
+
+the dynamic var 'from' is not bound in the case of threads, instead from is
+included within the message and is thus defined within the handler
+(ie: recieve-case).
+
+application will normally send a message, with the exception of threads
+messages are bidirectional (threads being unidirectional by default), and with
+the 'from' of the reciever being directed at the current thread.
+
+(-> obj . msg), (send-u obj msg)
+will send a unidirectional message, with unidirectional messages the sender
+will not block waiting for a return value, for local passes this will
+implicitly create a new thread to handle the message.
+
+(<*> obj from . msg), (send-from obj from msg)
+will send a message (by default bidirectional) with the from of the
+reciever being defined by from.
+
+(*> obj from . msg), (send-from-u obj from msg)
+will send a unidirectional message with the from of the reciever referring to
+from.
+
+the long form of these has the message as an argument, these may be used to
+pass dynamically generated messages (in order to avoid needing to use apply
+to send dynamically generated messages).
+
+these can be defined in terms of each other via a macro:
+(defmacro -> (obj . msg)
+	'(send-u ,obj [,@msg]))
+
+(defmacro *> (obj from . msg)
+	'(send-from ,obj ,from [,@msg]))
+
+...
+
+or (discouraged):
+(defmacro send-from (obj from msg)
+	'(apply *> [,obj ,from ,@msg]))
+
+...
+
+
+I will define that the long form exist via functions, and the shorthand forms
+may or may not be macros.
+
+adresses also exist in the system, an address can be applied and has the form:
+(addr key: . msg)
+this connects (if not connected allready) to the node indicated via addr and
+then sends msg to the specified handler (named via key:).
+
+(add-net-handler key: handler)
+defines a handler for a given key, the intent of handlers is to allow nodes to
+get references and such to things defined on said node.
+
+addresses may be composed or located:
+(list->addr def)
+will create such an addr, def is a list with the form (type ...),
+type defines how the rest is structured:
+	(ipv4tcp (a b c d) port)
+		defines a tcp address;
+	(ipv4udp (a b c d) port)
+		defines udp addr.
+
+similarly (addr->list addr) will decompose an address into said list form.
+
+(find-host name) will locate the address for an indicated host.
+
+this aspect needs work, namely a means in which to more generally identify
+nodes and avoiding manual node reference.
+
+maybe:
+share continuations.
+
+offer a "copy" function to make local copies of remote objects:
+a copy will not maintain identity with the parent;
+a copy of a closure will be dynamically bound to the environment of the
+reciever (from wherever copy was called).
+
+have migrating threads/load balancing.
+have the nodes to some degree able to "auto-sync" (such as syncronizing with
+a control node or such...).
+reference to nodes via url's could be useful.

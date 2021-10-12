@@ -1,0 +1,197 @@
+;BGF
+
+(texture (name skin0) (image "mdl/sw4.tga"))
+(texture (name skin1p) (image "mdl/camo0.tga"))
+(texture (name skin1)
+         (texture skin1p
+          (right 1 0 0) (up 0 1 0) (normal 0 0 1) (scale-st 8 8))
+         (texture skin1p
+          (right 0 1 0) (up 0 0 1) (normal 1 0 0) (scale-st 8 8)))
+;         (texture skin1p
+;          (right -1 0 0) (up 0 0 1) (normal 0 -1 0) (scale-st 8 8)))
+
+(texture (name skin2) (image "mdl/skin1.tga"))
+(texture (name skin3) (image "mdl/brown0.tga"))
+
+(union (name lower-leg0)
+       (sphere (radius 1.5) (texture skin1))
+       (cylinder (origin 0 0 -9) (height 18) (radius 1.5) (texture skin1))
+       (sphere (radius 1.5) (origin 0 0 -18) (texture skin1))
+       (cube (min 0 -2 -20) (max 10 2 -18)) (texture skin3))
+
+(union (name upper-leg0)
+       (sphere (radius 3) (origin 0 0 0) (texture skin1))
+       (cylinder (radius-top 3) (radius-bottom 1.5) (height 16)
+                 (origin 0 0 -8) (texture skin1)))
+
+(union (name hip0)
+       (cylinder (origin 0 -2 9) (height 18)(radius 3) (texture skin1))
+       (cylinder (origin 0 2 9) (height 18)(radius 3) (texture skin1))
+       (cylinder (origin 0 0 9) (height 18)(radius 3) (texture skin1))
+       (cylinder (origin 0 0 0) (height 6) (radius 3) (dir 0 1 0)
+                 (texture skin1))
+       (cylinder (origin 0 -3.5 20) (height 7) (texture skin1)
+                 (radius-bottom 1.5) (radius-top 3) (dir 0 1 0))
+       (sphere (origin 0 -2 18) (radius 3) (texture skin1))
+       (cylinder (origin 0 3.5 20) (height 7) (texture skin1)
+                 (radius-bottom 1.5) (radius-top 3) (dir 0 -1 0))
+       (sphere (origin 0 2 18) (radius 3) (texture skin1))
+       (sphere (origin 0 0 18) (radius 3) (texture skin1)))
+
+(union (name torso0)
+       (union
+        (scale 1 1.8 1)
+        (cylinder (origin 0 0 9) (height 18)(radius 3) (texture skin1))
+        (sphere (origin 0 0 18) (radius 3) (texture skin1)))
+
+       (cylinder (origin 0 0 0) (height 6) (radius 3) (dir 0 1 0)
+                 (texture skin1))
+       (cylinder (origin 0 -3.5 20) (height 7) (texture skin1)
+                 (radius-bottom 1.5) (radius-top 3) (dir 0 1 0))
+       (cylinder (origin 0 3.5 20) (height 7) (texture skin1)
+                 (radius-bottom 1.5) (radius-top 3) (dir 0 -1 0)))
+
+(union (name upper-arm0)
+       (sphere (radius 1.5) (texture skin1))
+       (cylinder (origin 0 0 -5) (height 10) (radius 1.5) (texture skin1))
+       (sphere (radius 1.5) (origin 0 0 -10) (texture skin1)))
+
+(union (name lower-arm0)
+       (cylinder (origin 0 0 -5) (height 10) (radius 1.5) (texture skin1))
+       (sphere (radius 1.5) (origin 0 0 -10) (texture skin1)))
+
+(union (name hand0)
+       (cube (min -1.5 -0.5 -6) (max 1.5 0.5 0)) (texture skin3))
+
+(union (name head0)
+       (cylinder (origin 0 0 2.5) (height 5) (radius 2) (texture skin2))
+       (sphere (origin 0 0 8) (radius 4) (texture skin0)
+               (scale 1 0.75 1) (rotate 0 0 -90)))
+
+(union (name hat0)
+       (disk (origin 0 0 0) (radius 7) (texture skin3))
+       (disk (origin 0 0 0) (radius 7) (texture skin3) (dir 0 0 -1))
+       (cylinder (origin 0 0 1.5) (radius 4) (height 3) (texture skin3))
+       (disk (origin 0 0 3) (radius 4) (texture skin3))
+       (scale 1 0.8 1))
+
+(bone (name skel0)
+      (bone (name hat)
+            (piece hat0)
+            (origin 0 0 30))
+
+      (bone (name head-bone)
+            (piece head0)
+            (origin 0 0 20))
+      (bone (name arm-l)
+            (piece upper-arm0)
+            (origin 0 7 20)
+            (bone (name lower-arm-l)
+                  (piece lower-arm0)
+                  (origin 0 0 -10)
+                  (bone (name hand-l)
+                        (piece hand0)
+                        (origin 0 0 -10))))
+      (bone (name arm-r)
+            (piece upper-arm0)
+            (origin 0 -7 20)
+            (angles 0 0 0)
+            (bone (name lower-arm-r)
+                  (piece lower-arm0)
+                  (origin 0 0 -10)
+                  (angles 0 0 0)
+                  (bone (name hand-r)
+                        (piece hand0)
+                        (origin 0 0 -10))))
+
+      (bone (name hip-bone0)
+            (piece torso0))
+      (bone (name upper-leg-bone-l)
+            (piece upper-leg0)
+            (origin 0 3 0)
+            (bone (name lower-leg-bone-l)
+                  (piece lower-leg0)
+                  (origin 0 0 -16)
+                  (angles 0 0 0)))
+      (bone (name upper-leg-bone-r)
+            (piece upper-leg0)
+            (origin 0 -3 0)
+            (bone (name lower-leg-bone-r)
+                  (piece lower-leg0)
+                  (origin 0 0 -16)
+                  (angles 0 0 0))))
+(frame (name st0)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 45 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 0 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 0 0)))))
+
+(frame (name st1)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 90 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 0 0)))))
+
+(frame (name st2)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 -45 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 45 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 45 0)))))
+
+(frame (name st3)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 0 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 45 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 0 0)))))
+(frame (name st4)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 0 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 90 0)))))
+
+(frame (name st5)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 0 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 45 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 -45 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 45 0)))))
+
+(frame (name st6)
+       (bone skel0
+             (bone upper-leg-bone-l
+                   (angles 0 45 0)
+                   (bone lower-leg-bone-l
+                         (angles 0 0 0)))
+             (bone upper-leg-bone-r
+                   (angles 0 -45 0)
+                   (bone lower-leg-bone-r
+                         (angles 0 45 0)))))

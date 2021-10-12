@@ -1,0 +1,1014 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>BGBSCM API</title>
+                    
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+</head>
+  <body>
+   Initial: 2003-07-28<br>
+Update: 2003-07-29<br>
+   <br>
+<h1>   BGBSCM4 API</h1>
+   <br>
+   I will attempt to document the workings of the LANG/BGB interpreter sufficiently 
+ that one could try to use it in a project.<br>
+   This will not be viewed as "complete", so looking at the source may be 
+needed  to gain a clearer understanding of the code.<br>
+<br>
+<a href="#scmcc.h">scmcc.h</a><br>
+   &nbsp;&nbsp;&nbsp; <a href="#Some_Constants">Some Constants<br>
+</a>&nbsp;&nbsp;&nbsp; <a href="#ConsesLists">Conses/Lists</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Objects">Objects</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Numbers">Numbers</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Strings">Strings</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Symbols">Symbols</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Vectors">Vectors</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Locatives_any_more_not_really_used">Locatives</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#Predicates_for_Types">Predicates for Types</a><br>
+<a href="#Type_Extensions_TypeX">TypeX</a><br>
+<a href="#Print_Interface">Print Interface</a><br>
+<a href="#Misc">Misc</a><br>
+<a href="#Comments">Comments</a><br>
+<br>
+<br>
+<h2><a name="scmcc.h"></a>   scmcc.h</h2>
+   The file scmcc.h contains the main definitions for the interpreter (others 
+ exist but are used for special purposes...).<br>
+   <br>
+   There will be the type 'elem', which is to be used for references to types 
+ under the control of the interpreter.<br>
+   <br>
+<h3><a name="Some_Constants"></a>   Some Constants</h3>
+     
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">Name<br>
+         </td>
+         <td valign="top">Meaning<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_FALSE<br>
+         </td>
+         <td valign="top">false value, #f<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_TRUE<br>
+         </td>
+         <td valign="top">true value, #t<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_NULL<br>
+         </td>
+         <td valign="top">null value, #z<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_EOL<br>
+         </td>
+         <td valign="top">end of list/empty list, ()<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_UNDEFINED<br>
+         </td>
+         <td valign="top">undefined value, used within interpreter to flag
+ errors<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">MISC_EOF<br>
+         </td>
+         <td valign="top">end of file object, result of some operations on
+ ports<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+   <br>
+<h3><a name="ConsesLists"></a>   Conses/Lists</h3>
+   These are macros related to the manipulation of conses and lists.<br>
+     
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">Name<br>
+         </td>
+         <td valign="top">Description<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMCONS(c)<br>
+         </td>
+         <td valign="top">Takes a pointer of type 'elem *' and gives a cons 
+ reference.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMWEAKCONS(c)<br>
+         </td>
+         <td valign="top">Takes a pointer of type 'elem *' and gives a weak 
+ cons reference.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOCONS(c)<br>
+         </td>
+         <td valign="top">Takes a reference to a cons and gives a pointer 
+of  type 'elem *'.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">CONS(a, b)<br>
+         </td>
+         <td valign="top">Takes the 2 references and generates a cons (a
+.  b)<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CAR(c)<br>
+         </td>
+         <td valign="top">Extracts the car of the cons reference c.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CDR(c)<br>
+         </td>
+         <td valign="top">Extracts the cdr of the cons reference c.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CAAR(c)<br>
+         </td>
+         <td valign="top">A&nbsp;compound: CAR(CAR(c))<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CAAAR(c)<br>
+         </td>
+         <td valign="top">...<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CAAAAR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CADR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CDDR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CADDR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CDDDR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CADDDR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> CDDDDR(c)<br>
+         </td>
+         <td valign="top"><br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">...<br>
+         </td>
+         <td valign="top">Other compounds may be added later, these are the 
+ most common in my experience.<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+   <br>
+   A list is a set of cons cells, with car pointing to the value and cdr
+to  the next in the list.<br>
+     
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">Name<br>
+         </td>
+         <td valign="top">Description<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> LENGTH(c)<br>
+         </td>
+         <td valign="top">Get the length of the list referred to by c, EOL/terminals 
+ are not counted, the result is a c integer.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> LIST_REF(a, b)<br>
+         </td>
+         <td valign="top">Refer to element b in list a, b is a c integer.<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+   <br>
+<h3><a name="Objects"></a>   Objects</h3>
+   Objects are types which:<br>
+   Require storage in memory;<br>
+   Are not cons cells.<br>
+   <br>
+     
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">Name<br>
+         </td>
+         <td valign="top">Description<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMOBJECT(c)<br>
+         </td>
+         <td valign="top">Takes a pointer of type 'elem *' and gives an object 
+ reference.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMWEAKOBJECT(c)<br>
+         </td>
+         <td valign="top">Takes a pointer of type 'elem *' and gives a weak 
+ object reference.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOOBJECT(c)<br>
+         </td>
+         <td valign="top">Takes a reference to an object and gives a pointer 
+ of type 'elem *'.<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+   <br>
+<h3><a name="Numbers"></a>   Numbers</h3>
+     
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">Name<br>
+         </td>
+         <td valign="top">Description<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMFIXNUM(c)<br>
+         </td>
+         <td valign="top">Converts a c integer c into an fixnum.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOFIXNUM(c)<br>
+         </td>
+         <td valign="top">Converts a fixnum c into a c integer (may not do
+ type checking, is only safe for fixnums).<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">FIXNUM(a)<br>
+         </td>
+         <td valign="top">Converts a c integer c into an fixnum (this is
+a  shorthand for ELEM_FROMFIXNUM).<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top"> TOINT(a)<br>
+         </td>
+         <td valign="top">Converts a number into a c integer, handles types 
+ besides fixnum as well.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMFLONUM(c)<br>
+         </td>
+         <td valign="top">Converts a c double into a flonum.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOFLONUM(c)<br>
+         </td>
+         <td valign="top">Converts a flonum into a c double.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">FLONUM(a)<br>
+         </td>
+         <td valign="top">Converts a c double into a flonum (shorthand for
+ ELEM_FROMFLONUM).<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">TOFLOAT(a)<br>
+         </td>
+         <td valign="top">Converts a number into a c double (safe for fixnum 
+ or other numbers).<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+  <br>
+ Though not treated like numbers, these are represented in c as integer values.<br>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+     <tbody>
+       <tr>
+         <td valign="top">ELEM_FROMCHAR(c)<br>
+         </td>
+         <td valign="top">Takes a c integer and generates a character value.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOCHAR(c)<br>
+         </td>
+         <td valign="top">Takes a character value and generates a c integer.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMSPECIAL(c)<br>
+         </td>
+         <td valign="top">Takes a c integer and generates a special value
+(the meaning of 'specials' is context dependent).<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOSPECIAL(c)<br>
+         </td>
+         <td valign="top">Takes a special value and generates a c integer.<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_FROMBOOL(c)<br>
+         </td>
+         <td valign="top">Takes a c integer, generating MISC_FALSE if 0,
+MISC_TRUE otherwise<br>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ELEM_TOBOOL(c)<br>
+         </td>
+         <td valign="top">Converts MISC_FALSE to 0, all other values to non-zero
+values.<br>
+         </td>
+       </tr>
+           
+  </tbody>   
+</table>
+   <br>
+   <br>
+   
+<h3><a name="Strings"></a>Strings</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_FROMSTRING(a)<br>
+      </td>
+      <td valign="top">Takes a c string and converts it to a string-object.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_TOSTRING(c)<br>
+      </td>
+      <td valign="top">Takes a string object and converts to a c-string (the
+returned string is not in a stable location).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    ELEM_TOSTRING16(c)<br>
+      </td>
+      <td valign="top">Takes a string object and converts to a short string
+(0 terminated string of shorts).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   STRING(a)<br>
+      </td>
+      <td valign="top">Shorthand for    ELEM_FROMSTRING.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   STRING16(a)<br>
+      </td>
+      <td valign="top">Takes a short string and generates a string-object.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3><a name="Symbols"></a>Symbols</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">ELEM_TOSYMBOL(c)<br>
+      </td>
+      <td valign="top">Takes a symbol object and returns a c-string (volatile).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   SYM(a)<br>
+      </td>
+      <td valign="top">Takes a c-string and returns a symbol-object.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    SYMG(a, b)<br>
+      </td>
+      <td valign="top">Cache the symbol-object of 'b' in the variable referenced
+by a 'a'. 'a' is to initially contain MISC_NULL.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3><a name="Vectors"></a>Vectors</h3>
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   VECTOR_REF(a, b)<br>
+      </td>
+      <td valign="top">Refer to the slot 'b '(c-int) within vector 'a'.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    VECTOR_SET(a, b, c)<br>
+      </td>
+      <td valign="top">Assign the slot 'b' in vector 'a' to value 'c' (reference).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    VECTOR_REFF(a, b)<br>
+      </td>
+      <td valign="top">Refer to the slot 'b '(c-int) within vector 'a', in
+this case the return value is a double containing the numeric value within
+the slot.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    VECTOR_NEW(a)<br>
+      </td>
+      <td valign="top">Creates a new vector with 'a' (c-int) slots.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    VECTOR_LEN(a)<br>
+      </td>
+      <td valign="top">Returns the lenght of the vector 'a' in the form of
+a c-int.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    VECTOR_NEWT(a, b)<br>
+      </td>
+      <td valign="top">Creates a new vector with 'a' (c-int) slots and being
+of type 'b'.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Basic vector types:<br>
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_VARIABLE<br>
+      </td>
+      <td valign="top">Undefined contents.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_ELEMENT<br>
+      </td>
+      <td valign="top">Array of references.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_F32<br>
+      </td>
+      <td valign="top">Array of 32 bit floats.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_F64<br>
+      </td>
+      <td valign="top">Array of 64 bit doubles.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_U8<br>
+      </td>
+      <td valign="top">Array of unsigned bytes.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_U16<br>
+      </td>
+      <td valign="top">Array of unsigned shorts.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_U32<br>
+      </td>
+      <td valign="top">Array of unsigned longs.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_U64<br>
+      </td>
+      <td valign="top">Array of unsigned long longs.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_S8<br>
+      </td>
+      <td valign="top">Array of signed bytes.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_S16<br>
+      </td>
+      <td valign="top">Array of signed shorts.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_S32<br>
+      </td>
+      <td valign="top">Array of signed longs.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">VECTOR_S64<br>
+      </td>
+      <td valign="top">Array of signed long longs.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+    
+<h3><a name="Locatives_any_more_not_really_used"></a>Locatives (any more
+not really used)</h3>
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    ELEM_LOCATIVEP(c)<br>
+      </td>
+      <td valign="top">Nonzero if value is a locative.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    ELEM_FROMLOCATIVE(c)<br>
+      </td>
+      <td valign="top">Get a locative for the pointer c.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    ELEM_TOLOCATIVE(c)<br>
+      </td>
+      <td valign="top">Get the pointer associated with the locative c.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">    ELEM_SETLOCATIVE(a, b)<br>
+      </td>
+      <td valign="top">Set the pointer associated with the locative a to
+b.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3><a name="Predicates_for_Types"></a>Predicates for Types</h3>
+   
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Name<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_FIXNUMP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a fixnum.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">ELEM_STRONGCONSP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a strong cons reference.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_WEAKCONSP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a weak cons reference.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_CONSP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a cons reference.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_STRONGOBJECTP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a strong object reference.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_WEAKOBJECTP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a weak object reference.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_OBJECTP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is an object reference (all types
+which do not fit within an elem and are not conses).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_LONGREFP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a "long reference" (used within
+store to flag special references).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_VECTORP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a vector (basic vector type,
+non-disjoint, ie: for closures, objects, ...).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_BYTEVECTORP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a bytevector.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_NVECTORP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a normal vector (contains references
+or numeric values).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_FUNCTIONP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a builtin function.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_BOXP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a box.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_STRINGP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a string.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_SYMBOLP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a symbol.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_SYMKEYWORDP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a keyword.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_SYMHYGENICP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a "hygenic" symbol.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_SYMNORMALP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a normal symbol (not keyword
+or hygenic).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_WIDENUMP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a widenum (includes flonums,
+bignums, ...).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_TYPEXP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a type-extended object.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_CLOSUREP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a closure.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_ENVP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is an environment.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_ENVOBJP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is an object (ie: within the object
+system).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_CONTEXTP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a context/thread.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_MINIFRAGP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a minicode fragment.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_FLONUMP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a flonum.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_BIGNUMP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a bignum.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_CHARP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a character.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">ELEM_OPCODEP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is an interpreter opcode.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_SPECIALP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is a special.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_EOLP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is MISC_EOL (same as c==MISC_EOL).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_NULLP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is MISC_NULL (same as c==MISC_NULL).<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">   ELEM_UNDEFP(c)<br>
+      </td>
+      <td valign="top">Non-zero if value is MISC_UNDEFINED (same as c==MISC_UNDEFINED).<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h2><a name="Type_Extensions_TypeX"></a>Type Extensions (TypeX)</h2>
+Type extensions have a type info structure:<br>
+typedef struct typexinfo_s {<br>
+struct typexinfo_s *next, *prev;<br>
+char *name;<br>
+elem (*apply)(elem obj, elem rest);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //vm<br>
+elem (*mark)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //gc<br>
+elem (*swizin)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //store<br>
+elem (*swizout)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //store<br>
+elem (*print)(elem obj, typrint_info *inf);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+//print<br>
+elem (*free)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //gc<br>
+elem (*flatten)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //net, copy<br>
+elem (*unflatten)(elem def);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //net, copy<br>
+elem (*mirrors)(elem obj);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //net, mirroring<br>
+elem (*stub)(elem mirrors);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; //net, mirroring<br>
+int (*notify)(elem obj, elem other, elem state);&nbsp;&nbsp;&nbsp; //net,
+sync<br>
+int (*delta)(elem obj, elem var, elem val);&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+//net, sync<br>
+}typexinfo;<br>
+<br>
+This may be extended later as needed.<br>
+<br>
+Type Extensions allow types to be defined which are not normally part of
+the core interpreter and do not need special handling within the interpreter
+(likely most things added onto a system, eg: c-provided objects, user objects,
+...).<br>
+These are not used where special handling is needed within the interpreter
+when the type is encountered (ie: such as something that would force evaluation
+when retrieved from a slot and substitute a value in place, unless such a
+feature were added to typex...).<br>
+<br>
+Functions exist for the purpose of manipulating TypeX:<br>
+elem TyFcn_TypeX(elem sym, int sz, void *buf);<br>
+Creates a reference to a typex object of type sym, with sz bytes, and using
+the contents of buf if non-null.<br>
+<br>
+void *TypeX_Alloc(char *type, int sz);<br>
+Creates a typex object with the given type and a defined size.<br>
+Returns a pointer to the body of the object.<br>
+<br>
+elem TypeX_Sym(elem obj);<br>
+Extracts a symbol containing the type name of an object.<br>
+<br>
+elem TypeX_Func(elem obj);<br>
+Extracts a builtin function representing the apply handler for the object.<br>
+<br>
+void *TypeX_Data(elem obj);<br>
+Gets the body of a typex object.<br>
+<br>
+int TypeX_TypeP(elem obj, char *type);<br>
+Returns a non-zero value if obj is of type 'type'.<br>
+<br>
+These just forward to the handlers within the type info structure.<br>
+int TypeX_Mark(elem obj);<br>
+int TypeX_SwizIn(elem obj);<br>
+int TypeX_SwizOut(elem obj);<br>
+int TypeX_Print(elem obj, typrint_info *inf);<br>
+int TypeX_Free(elem obj);<br>
+elem TypeX_Flatten(elem obj);<br>
+elem TypeX_UnFlatten(elem type, elem def);<br>
+elem TypeX_Mirrors(elem obj);<br>
+elem TypeX_Stub(elem type, elem mirrors);<br>
+int TypeX_Notify(elem obj, elem other, elem state);<br>
+<br>
+These functions will have default behaviors for the cases where the handlers
+are not defined.<br>
+<br>
+typexinfo *TypeX_Lookup(char *name);<br>
+This looks up the type info structure for a given type name, returnning NULL
+if not found.<br>
+<br>
+typexinfo *TypeX_GetInfo(char *name);<br>
+This looks up the type info structure for a given type name, creating a new
+one if needed.<br>
+<br>
+<h2><a name="Print_Interface"></a>Print Interface</h2>
+<br>
+TyPrint is an interface for printing values, it has flags and an info struct.<br>
+<br>
+   TYPRINT_DISPLAY&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 1 //more intended 
+to  look good than be parsed<br>
+   TYPRINT_CODE&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 2 //parsable, but formatted 
+ as code<br>
+   TYPRINT_FORMATTED&nbsp;&nbsp;&nbsp; 4 //strings list w possible format 
+commands<br>
+   TYPRINT_NOOBJ&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 8 //do not display
+object  bodies<br>
+   <br>
+typedef struct typrint_info_s {<br>
+char *buf, *end;<br>
+int flags;<br>
+int ind;<br>
+}typrint_info;<br>
+<br>
+elem TyPrint_PrintDefaults(elem obj);<br>
+Prints using the default flags (currently none), and sends the results to
+the sa_print interface.<br>
+<br>
+elem TyPrint_PrintFlags(elem obj, elem flags);<br>
+Prints using the indicated flags (given as a fixnum), and sends the results
+to the sa_print interface.<br>
+<br>
+elem TyPrint_PrintString(elem obj, elem flags);<br>
+Prints using the indicated flags (given as a fixnum), and returns the results
+in the form of a string object.<br>
+<br>
+<h2><a name="Misc"></a>Misc</h2>
+int Interp_Define(elem def, elem data);<br>
+Define the var 'def' to 'data' within the top level env.<br>
+<br>
+int Interp_DefinePrimative(char *name, elem (*func)(), int pc);<br>
+Define the builtin 'name', using 'func', and accepting pc args (positive
+for a fixed number, negative (base+1) for variable).<br>
+<br>
+pc:<br>
+3 would mean a 3 argument function;<br>
+-1 would mean a variable argument function (it is called with 1 arg representing
+the remainder of the application);<br>
+-3 would mean 2 base arguments, with a third arg containing the rest of the
+args.<br>
+the rest field for a variable argument function is sent in the form of a
+list.<br>
+<br>
+int Interp_DefineSpecial(char *name, elem (*func)(), int pc);<br>
+Define the special 'name', using 'func', and accepting pc args.<br>
+A special is not a builtin, a special, when called, is expected to return
+compiled code fragments for use in the interpreter, and is expected to accept
+the same args as other compile functions (see the compiler code for examples).<br>
+<br>
+elem Interp_Load(elem name);<br>
+Load a script indicated by 'name' and evaluate contents. The syntax is determined
+by the name extension.<br>
+<br>
+<h2><a name="Comments"></a>Comments</h2>
+See the 'main_*' files to see about integration with a project. A custom
+one may be written for compiling the interpreter into a project.<br>
+Anymore usage of the 'main_dll.c'+'main_dll_*.c' files is recommended.<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,18 @@
+(define th0
+  (begin-looped-thread
+   (recieve-case
+    ((from . rest)
+     (print from " recieve " rest "\n")
+     (from th0)))))
+
+(add-net-handler pt0: th0)
+
+(define a (list->addr '(ipv4tcp (192 168 1 100) 8192)))
+
+(define th1
+  (begin-thread
+   (a pt0: 1 2 3)
+   (recieve-case
+    ((from . rest)
+     (print "resp " from " " rest "\n")
+     (from th1)))))

@@ -1,0 +1,78 @@
+; For best results, use something like
+; xterm -fg green -bg black -fn <font>
+; where <font> is something like -adobe-symbol-* or -*-iso8859-7
+; then load this into your favorite scheme interpreter, and
+; run (lambda-matrix n), where n is the number of screen updates it
+; will loop through (if (< n 0), continues indefinitely)
+
+; You also need SLIB for this:
+;(require 'random)
+
+(define terminal-width 80)
+(define terminal-height 24)
+
+; lambda in the -adobe-symbol-* X font
+(define lambda-char "l")
+; lambda in an iso8859-7 encoding
+; (define lambda-char (string (integer->char #o353)))
+
+(define vars ".abijkmn")
+(define (random-var)
+  (string (string-ref vars (random (string-length vars)))))
+
+; these functions produce ANSI terminal escape sequences
+(define csi (string (integer->char #o033) #\[))
+; clear terminal
+(define clear-string (string-append csi "H" csi "J"))
+; string to position cursor at specified terminal row and column (0-based)
+(define (position-string row col)
+  (string-append csi
+                 (number->string (+ row 1)) ";"
+                 (number->string (+ col 1)) "H"))
+; turn bold character display on/off
+(define bold-mode-on-string (string-append csi "1m"))
+(define bold-mode-off-string (string-append csi "m"))
+
+(define (make-column pos height) (cons pos height))
+(define (column-pos column) (car column))
+(define (set-column-pos column pos) (set-car! column pos))
+(define (column-height column) (cdr column))
+
+(define columns (make-vector terminal-width))
+
+(define min-height (quotient terminal-height 4))
+(define max-height (quotient terminal-height 2))
+(define (init-column c)
+  (let ((height (+ min-height
+                   (random (+ (- max-height min-height) 1))))
+        (start (- (random max-height))))
+    (vector-set! columns c (make-column start height))))
+
+(define (update-column c)
+  (let* ((col (vector-ref columns c))
+         (pos (column-pos col))
+         (top (- pos (column-height col))))
+    (if (>= top 0)
+        (display (string-append (position-string top c) " ")))
+    (if (and (>= pos 0) (< pos terminal-height))
+        (display (string-append (position-string pos c) (random-var))))
+    (set! pos (+ pos 1))
+    (if (and (>= pos 0) (< pos terminal-height))
+        (display (string-append (position-string pos c)
+                                bold-mode-on-string
+                                lambda-char
+                                bold-mode-off-string)))
+    (if (< (+ top 1) terminal-height)
+        (set-column-pos col pos)
+        (init-column c))))
+
+(define (lambda-matrix n)
+  (display clear-string)
+  (do ((c 0 (+ c 1)))
+      ((= c (vector-length columns)))
+    (init-column c))
+  (do ((i 0 (+ i 1)))
+      ((= i n))
+    (do ((c 0 (+ c 1)))
+        ((= c (vector-length columns)))
+      (update-column c))))

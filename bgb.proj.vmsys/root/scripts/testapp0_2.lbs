@@ -1,0 +1,15 @@
+(define lab0 (label ""))
+(define entry0 (textentry 16))
+
+(define app
+;  (let ((lab0 (label "")) (entry0 (textentry 16)))
+;    (entry0 (plambda (use:) #z))
+    (dialog "test-app-1" #(0 0)
+            (stack-horizontal
+             (stack-vertical lab0 entry0)
+             (button "OK"
+                     (property lab0 lab0)
+                     (property entry0 entry0)
+                     (handler (use:)
+                              (self.lab0 'text self.entry0.text)
+                              (self.entry0 'text ""))))))

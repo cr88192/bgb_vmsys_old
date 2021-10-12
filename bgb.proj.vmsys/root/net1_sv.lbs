@@ -1,0 +1,33 @@
+(add-net-handler say:
+                 (lambda (rest)
+                   (print rest)))
+(add-net-handler kill:
+                 (lambda ()
+                   (quit)))
+
+
+(function add (x y)
+          (print "add " x " " y "\n")
+          (+ x y))
+
+(define foo (root-obj clone:))
+
+(add-net-handler get-add:
+                 (lambda () add))
+
+(define env (current-env))
+
+(add-net-handler get-env:
+                 (lambda () env))
+
+(add-net-handler render:
+                 (lambda msg
+                   (apply render msg)))
+
+(function copy (f)
+          (eval (req-copy f)))
+
+(add-net-handler apply-thread:
+                 (lambda (f . args)
+                   (send-u (copy f) args)))
+

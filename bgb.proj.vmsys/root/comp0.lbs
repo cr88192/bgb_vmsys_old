@@ -1,0 +1,11 @@
+(cgen-begin 'func)
+
+(cgen-frag (build '(define (fact x)
+                     (if (equal? x 0) 1
+                         (* x (fact (- x 1)))))))
+
+
+;(cgen-frag (build '(define x 3)))
+
+;(cgen-frag (build '(+ 1 (* 2 3))))
+(cgen-end)

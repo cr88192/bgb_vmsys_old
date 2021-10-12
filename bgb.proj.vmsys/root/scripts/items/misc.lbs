@@ -1,0 +1,13 @@
+(defobject fire-obj entity-obj
+  ((spawn:)
+;   (precache-model "mdl/earth0.bgf")
+   (set! self.solid SOLID_NOT)
+   (set! self.movetype MOVETYPE_NONE)
+;   (self model: "mdl/earth0.bgf")
+   (self origin: self.origin)
+   (set! self.angles #(0 0 0))
+   (self spawn2:)))
+
+(define light_flame_large_yellow fire-obj)
+
+;(defobject light_flame_large_yellow fire-obj)

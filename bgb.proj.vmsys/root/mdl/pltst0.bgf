@@ -1,0 +1,13 @@
+;BGF
+
+(texture (name earth) (image "mdl/sw4.tga"))
+
+;(diplane (radius 10) (texture earth)
+;        (height-map "mdl/sw4map4hr.tga")
+;        (height-bias 0.5) (height-range 3))
+
+(texture (name skull) (image "mdl/face/skull0_3.tga"))
+
+(diplane (radius 10) (texture skull)
+        (height-map "mdl/face/skull0map1.tga")
+        (height-bias 0.5) (height-range 3))

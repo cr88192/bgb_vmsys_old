@@ -1,0 +1,63 @@
+function btn-out1 ()
+	print "btn stop\n"
+
+	self origin: self.pos2
+	self.velocity := #(0 0 0)
+	self.pos2 := self.pos1
+	self.pos1 := self.origin
+
+
+function btn-in2 ()
+	print "btn return\n"
+	calc-move self.pos2 self.speed
+	self.th_func := btn-out1
+
+function btn-in1 ()
+	print "btn in\n"
+
+	use-targets self.target
+
+	self origin: self.pos2
+	self.velocity := #(0 0 0)
+	self.pos2 := self.pos1
+	self.pos1 := self.origin
+
+	self.th_func := btn-in2
+	self.nextthink := (self.ltime + 1)
+
+define func_button
+	newobject entity-obj
+		(spawn:)
+			set-movedir
+
+			self.solid := SOLID_BSP
+			self.movetype := MOVETYPE_PUSH
+			self model: self.model
+
+			self origin: self.origin
+
+			if (self.speed = 0)
+				self.speed := 100
+
+			self.pos1 := self.origin
+			self.pos2 :=
+				vec+ self.pos1
+					vec* self.movedir
+						abs ((vecdot self.movedir self.size) - self.lip)
+
+			self 'th_func #z
+
+//			print "door " self.movedir self.size self.pos1 self.pos2 self.speed "\n"
+
+		(think:)
+			if(self.th_func != #z)
+				self.th_func
+
+		(touch: other)
+			if (self.velocity = #(0 0 0))
+				begin
+					print "btn start\n"
+					calc-move self.pos2 self.speed
+					self.th_func := btn-in1
+
+//					self origin: self.pos2

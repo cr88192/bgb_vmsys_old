@@ -1,0 +1,8 @@
+(define gamma (list->addr '(ipv4tcp (192 168 1 100) 8192)))
+(define mu (list->addr '(ipv4tcp (192 168 1 103) 8192)))
+(add-net-handler say:
+                 (lambda (from rest)
+                   (print rest)))
+(add-net-handler kill:
+                 (lambda (from rest)
+                   (quit)))

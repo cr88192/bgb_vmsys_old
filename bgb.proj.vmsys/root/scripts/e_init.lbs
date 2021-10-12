@@ -1,0 +1,422 @@
+;define clone vector-copy
+
+(defvar self #z)
+(defvar from #z)
+
+(define _ #z)
+
+(define-syntax syntax-ref (lambda ((_ x)) `(mini (refer-syntax ,x))))
+
+(define-syntax ^ (lambda ((_ x)) x))
+
+;define-syntax define-syntax-real (syntax-ref define-syntax)
+;(define-syntax define-syntax
+;  (lambda (x)
+;    (syntax-case x ()
+;                 ((_ (name . args) body)
+;                  `(define-syntax-real ,name
+;                     (lambda (,args) ,body)))
+;                 ((_ name body)
+;                  `(define-syntax-real ,name ,body)))))
+
+(define-syntax adqq
+	(lambda ((_ . x))
+		`(clean-syntax (quasiquote ,@x))))
+
+(define-syntax doubleqq
+	(lambda ((_ . x))
+		`(syntax-func ',@x)))
+
+(define-syntax defmacro
+	(lambda ((_ name args body))
+		`(define-syntax ,name (lambda ((_ ,@args)) ,body))))
+
+(defmacro define-symbol-macro (name form)
+  `(define-syntax ,name
+     (lambda x `(,@form))))
+
+(define-syntax record (lambda ((vars vals exp))
+	`((lambda ,vars ,exp) ,vals)))
+
+;defmacro defobject (name parents . body)
+;	^ `(define ,name (begin ,@body (current-envobj)))
+
+;defmacro function (name args . body)
+;	^ `(define (,name ,@args) ,@body)
+
+(defmacro function (name args . body)
+  (adqq
+   (if (bound? ,name)
+       (if (closure? ,name)
+           (let ((x$ (clone null-obj)))
+             (add-handler x$ ,name)
+             (add-handler x$ (lambda ,args ,@body))
+             (set! ,name x$))
+           (add-handler ,name (lambda ,args ,@body)))
+       (define (,name ,@args) ,@body))))
+
+(function syntax-object->datum (x) x)
+
+(defmacro record (vars vals exp)
+  `((lambda ,vars ,exp) ,vals))
+
+; define-syntax (pattern-case (key . forms)) `(syntax-case ,key () ,@forms)
+;(defmacro pattern-case (key . forms)
+;	`(syntax-case ,key () ,@forms))
+
+(defmacro delay (form) `(make-promise (lambda () ,form)))
+(function force (x) (x))
+
+(function make-promise (x)
+          (let ((ready? #f) (result #z))
+            (lambda ()
+              (if ready? result
+                  (begin
+                    (set! ready? #t)
+                    (set! result (x))
+                    (result))))))
+
+(define u8vector 4)
+(define s8vector 8)
+(define u16vector 5)
+(define s16vector 9)
+(define u32vector 6)
+(define s32vector 10)
+(define u64vector 7)
+(define s64vector 11)
+(define f32vector 2)
+(define f64vector 3)
+
+(function cadr (x)
+          (car (cdr x)))
+(function cddr (x)
+          (cdr (cdr x)))
+(function caddr (x)
+          (car (cddr x)))
+(function cdddr (x)
+          (cdr (cddr x)))
+(function cadddr (x)
+          (car (cdddr x)))
+(function cddddr (x)
+          (cdr (cdddr x)))
+(function caddddr (x)
+          (car (cddddr x)))
+(function cdddddr (x)
+          (cdr (cddddr x)))
+
+(function caar (x)
+          (car (car x)))
+(function cdar (x)
+          (cdr (car x)))
+(function cadar (x)
+          (car (cdar x)))
+(function cddar (x)
+          (cdr (cdar x)))
+(function caddar (x)
+          (car (cddar x)))
+(function cdddar (x)
+          (cdr (cddar x)))
+(function cadddar (x)
+          (car (cdddar x)))
+(function cddddar (x)
+          (cdr (cdddar x)))
+
+(function caaar (x)
+          (car (caar x)))
+(function cdaar (x)
+          (cdr (caar x)))
+(function cadaar (x)
+          (car (cdaar x)))
+(function cddaar (x)
+          (cdr (cdaar x)))
+(function caddaar (x)
+          (car (cddaar x)))
+(function cdddaar (x)
+          (cdr (cddaar x)))
+
+(function lcar (x)
+          (let ((y (car x)))
+            (if (closure? y)
+                (let ((z (y)))
+                  (set-car! x z)
+                  z)
+                y)))
+
+(function lcdr (x)
+          (let ((y (cdr x)))
+            (if (closure? y)
+                (let ((z (y)))
+                  (set-cdr! x z)
+                  z)
+                y)))
+
+#|
+(function pcase-rest (k rest)
+          (print "pcase " k " " rest "\n")
+          (if (equal? rest '()) #z
+              `(if (matchv? ',(caar rest) ,k)
+                   (begin ,@(cdar rest))
+                   ,(pcase-rest k (cdr rest)) )))
+|#
+
+(defmacro pattern-case (key . forms)
+         (let ((k (gensym)))
+           `(let ((,k ,key))
+              ,(rlet f ((cur forms))
+                     (if (equal? cur '()) #z
+                         `(if (matchv? ',(caar cur) ,k)
+                              (apply (lambda ,(caar cur) ,@(cdar cur)) ,k)
+                              ,(f (cdr cur)) ))))))
+
+(defmacro r-pattern-case (rf key . forms)
+         (let ((k (gensym)))
+           `(rlet ,rf ((,k ,key))
+              ,(rlet f ((cur forms))
+                     (if (equal? cur '()) #z
+                         `(if (matchv? ',(caar cur) ,k)
+                              (apply (lambda ,(caar cur) ,@(cdar cur)) ,k)
+                              ,(f (cdr cur)) ))))))
+
+(defmacro case-lambda forms
+  (let ((gs0 (gensym)))
+    `(let ((,gs0 (clone null-obj)))
+       ,@(rlet r ((cur forms))
+               (if (eq? cur '())
+                   `(,gs0)
+                   `((add-handler ,gs0
+                                  (lambda ,(caar cur) ,@(cdar cur)))
+                     ,@(r (cdr cur))))))))
+
+(defmacro define-message (obj pattern body)
+	`(,obj handler: (lambda ,pattern ,body)))
+
+
+(function nobj-genslots2 (kn ((name value) . rest))
+          (let ((rem
+                 (if (null? rest) '()
+                     (nobj-genslots2 kn rest))))
+            `((,kn ',name ,value) ,@rem)))
+
+(function nobj-genslots (kn lst)
+          (if (null? lst) '()
+              (nobj-genslots2 kn lst)))
+
+(function nobj-genmessages2 (kn ((pattern body) . rest))
+          (let ((rem
+                 (if (null? rest) '()
+                     (nobj-genmessages2 kn rest))))
+            `((,kn (plambda ,pattern ,body)) ,@rem)))
+
+(function nobj-genmessages (kn lst)
+          (if (null? lst) '()
+              (nobj-genmessages2 kn lst)))
+
+;defmacro newobject (parent slots . messages)
+;	let ((kn (gensym)))
+;		^ `(let ((,kn (,parent clone:))) (begin ,@(nobj-genslots kn slots) ,@(nobj-genmessages kn messages) ,kn))
+
+
+(function nobj2-genbody (kn ((pattern . body) . rest))
+          (let ((rem
+                 (if (null? rest) '()
+                     (nobj2-genbody kn rest))))
+            (if (pair? pattern)
+                `((,kn (plambda ,pattern ,@body)) ,@rem)
+                `((,kn ',pattern ,@body) ,@rem))))
+
+(defmacro newobject (parent . body)
+  (let ((kn (gensym)))
+    `(let ((,kn (,parent clone:)))
+       (begin ,@(nobj2-genbody kn body) ,kn))))
+
+(defmacro defobject (name parent . body)
+  `(define ,name (newobject ,parent ,@body)))
+
+;defmacro at (var) `(self get: ',var)
+;defmacro at! (var val) `(self set: ',var ,val)
+
+(function strip-first (lst n)
+          (if (<= (length lst) n) lst
+              (strip-first (cdr lst) n)))
+
+(function strip-last (lst n)
+          (if (<= (length lst) n) '()
+              (cons (car lst) (strip-last (cdr lst) n))))
+
+(function at-body (x)
+          (if (<= (length x) 2) x
+              (cons (at-body (strip-last x 1)) (strip-first x 1))))
+
+(define-syntax at
+  (lambda ((_ . x))
+    (at-body x)))
+
+(defmacro plambda (pattern . body) `(lambda ,pattern ,@body))
+
+;root-obj (plambda (clone:) (clone self))
+;root-obj (plambda (x)
+;	(clone self))
+
+;function print2 (args)
+;	if(eq? args '()) #z
+;		begin
+;			display (car args)
+;			print2 (cdr args)
+
+;function print args
+;	print2 args
+
+(defmacro unquote-splicing (expr)
+  `(mini ,, ,expr (splice)))
+
+(defmacro apply (func args)
+  `(mini (frame (,, ,args (splice) ,, ,func (apply)))))
+
+(defmacro do-loop (body)
+  (adqq (rlet f$ () ,@body (f$))))
+
+(set-slot root-obj 'parent #z)
+
+(add-handler root-obj
+	(plambda x
+                 (if (eq? self.parent #z) #z
+                     (apply self.parent x))))
+
+(add-handler root-obj
+             (plambda (x)
+                      (if (closure? x)
+                          (add-handler self x)
+                          (get-slot self x))))
+
+(add-handler root-obj
+             (plambda (x y)
+                      (if (symbol? x)
+                          (set-slot self x y))))
+
+(add-handler root-obj
+             (plambda (clone:)
+                      (clone self)))
+
+(add-handler root-obj
+             (plambda (get: x)
+                      (get-slot self x)))
+
+(add-handler root-obj
+             (plambda (set: x y)
+                      (set-slot self x y)))
+
+(defvar pid-msg-queue ())
+
+#!
+function recieve id
+;	mini (ints-off)
+	rlet f ((x pid-msg-queue))
+		if (x = '())
+			begin
+;				print "recieve<" id ">: nothing\n"
+				mini (block)
+				f pid-msg-queue
+			begin
+;				print "recieve<" id ">\n"
+			pid-msg-queue := (cdr x)
+				car x
+;				mini (ints-on)
+!#
+
+(function recieve ()
+          (rlet f ((x (recieve-atom)))
+		(if (x !== #z) x
+                    (f (recieve-atom)))))
+
+#! defmacro recieve-case args
+	adqq
+		rlet f; ()
+			if (pid-msg-queue !== '())
+				let ((x; (car pid-msg-queue)))
+					pid-msg-que := (cdr pid-msg-queue)
+					pattern-case x; ,@args
+				begin
+					mini (block)
+					f;
+!#
+
+(defmacro recieve-case args
+  (adqq
+   (let ((x$ (recieve)))
+     (pattern-case x$ ,@args))))
+
+(defmacro begin-thread body
+  `(thread (lambda () ,@body)))
+
+;defmacro begin-loop body
+;	^ `[call/cc
+;			lambda (break)
+;				rlet x; ()
+;					^ ,@body
+;					x;]
+
+(defmacro begin-loop body
+  `(rlet x ()
+         ,@body
+         x))
+
+(defmacro die ()
+  `(begin-loop (mini (block))))
+
+(defmacro begin-looped-thread body
+  `(begin-thread (begin-loop ,@body)))
+
+(defmacro thread-object (parent . body)
+  (let ((gs0 (gensym)))
+  `(begin-thread
+    (let ((,gs0 (newobject ,parent ,@body)))
+      (begin-loop ,gs0 (recieve))))))
+
+(defmacro with (obj . rest)
+  (rlet f ((c rest) (t '()))
+        (if (== c '())
+            `(begin ,@t)
+            (f (cdr c) 
+               `(,@t (,obj ,@(car c)))))))
+
+(defmacro --> (f . args)
+  `(begin (-> ,f ,@args) (die)))
+
+(function prim-do-vars (((var init step) . rest))
+          (cons var
+                (if (eq? rest '()) rest
+                    (do-vars rest))))
+
+(function prim-do-inits (((var init step) . rest))
+          (cons init
+                (if (eq? rest '()) rest
+                    (do-inits rest))))
+
+(function prim-do-steps (((var init step) . rest))
+          (cons step
+                (if (eq? rest '()) rest
+                    (do-steps rest))))
+
+(defmacro do (vars (test . expr) command)
+  `(letrec ((loop
+             (lambda ,(prim-do-vars vars)
+               (if ,test
+                   (begin
+                     #z
+                     ,@expr)
+                   (begin
+                     ,command
+                     (loop ,@(prim-do-steps vars)))))))
+     (loop ,@(prim-do-inits vars))))
+
+(defmacro let* (vals . rest)
+  (if (eq? vals '())
+      `(begin ,@rest)
+      `(let (,(car vals))
+         (let* ,(cdr vals) ,@rest))))
+
+(defmacro values x
+  `(list ,@x))
+
+(defmacro call-with-values (f g)
+  `(apply ,g (,f)))

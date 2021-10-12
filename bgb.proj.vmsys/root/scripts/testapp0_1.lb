@@ -1,0 +1,11 @@
+//render-show
+
+define app
+	dialog "test-app-1" #(0 0)
+		let ((lab0 (label "")) (entry0 (textentry 16)))
+			stack-horizontal
+				stack-vertical lab0 entry0
+				button "OK"
+					handler (use:)
+						lab0 'text entry0.text
+						entry0 'text ""

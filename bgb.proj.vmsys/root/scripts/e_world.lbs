@@ -1,0 +1,348 @@
+(define cyl0 (primitive-3d cylinder: radius: 1 height: 2))
+
+(define area-obj
+  (newobject root-obj
+             (things '())
+
+             ((show-things:)
+              (rlet f ((cur self.things))
+                    (if (eq? cur '()) #z
+                        (begin
+                          ((car cur) show:)
+                          (f (cdr cur))))))
+
+             ((add: x)
+              (self 'things (cons x self.things)))))
+
+(define world (area-obj clone:))
+
+(define entity-obj
+  (newobject root-obj
+             (class-major 'entity)
+             (origin #(0 0 0))
+             (angles #(0 0 0))
+             (velocity #(0 0 0))
+             (mass #f)
+             (bbox-min #(0 0 0))
+             (bbox-max #(0 0 0))
+             (model cyl0)
+
+             ((init:)
+              (world add: self)
+              (self show:))
+
+             ((show:)
+              (render3d show: self.model)
+              (render3d show: self)
+              (phys add: self))
+
+             ((hide:)
+              (render3d hide: self.model)
+              (render3d hide: self)
+              (phys remove: self))
+
+             ((render:)
+              (self.model identity:)
+              (self.model translate: self.origin)
+              (self.model rotate: self.angles))))
+
+(define wall-obj
+  (newobject entity-obj
+             (class-minor 'wall)
+             (nograv #t)
+
+             ((new: min max)
+              (let ((obj (self clone:)))
+                (obj init: min max)
+                obj))
+
+             ((init: min max)
+              (world add: self)
+
+              (self 'bbox-min min)
+              (self 'bbox-max max)
+              (self 'model (primitive-3d cube: min: min max: max))
+              (self show:))
+
+             #;((render:) #z)))
+
+(define sprite-obj
+  (newobject entity-obj
+             (class-major 'entity)
+             (origin #(0 0 0))
+             (angles #(0 0 0))
+             (velocity #(0 0 0))
+             (mass #f)
+             (bbox-min #(0 0 0))
+             (bbox-max #(0 0 0))
+             (model cyl0)
+             (frame 0)
+
+             ((init:)
+              (world add: self)
+              (self show:))
+
+             ((show:)
+              (render3d show: self.model)
+              (render3d show: self)
+              (phys add: self))
+
+             ((render:)
+              (self.model origin: self.origin)
+              (self.model frame: self.frame)
+              (self.model front: (vec-forward self.angles)))))
+
+(define frames-missile0
+  (list
+   (list
+    (texture image: "sprites/missile0/missile0ft.tga"
+             normal: #(0 0 -1) up: #(0 1 0))
+    (texture image: "sprites/missile0/missile0lf.tga"
+             normal: #(-1 0 0) up: #(0 1 0))
+    (texture image: "sprites/missile0/missile0rt.tga"
+             normal: #(1 0 0) up: #(0 1 0))
+    (texture image: "sprites/missile0/missile0bk.tga"
+             normal: #(0 0 1) up: #(0 1 0)))))
+
+(define spr-missile0 (sprite height: 0.10 radius: 0.05 frames: frames-missile0))
+
+(define missile-obj
+  (newobject sprite-obj
+             (class-minor 'missile)
+             (mass 1)
+             (nograv #t)
+             (bbox-min #(-0.1 -0.1 -0.1))
+             (bbox-max #(0.1 0.1 0.1))
+             (model spr-missile0)
+
+             ((think:)
+              (self 'velocity self.direction)
+              (if (> (- (time) self.ftime) 5)
+                  (self hide:)))
+
+             ((impact: other)
+              (other damage: 25 self self.owner)
+              (self hide:))
+
+             ((new: org ang owner)
+              (let ((obj (self clone:)))
+                (obj 'origin org)
+                (obj 'angles ang)
+                (obj 'owner owner)
+                (obj 'ftime (time))
+                (obj 'direction (vec* (vec-forward ang) 100))
+                (obj 'model (self.model clone:))
+                (obj init:)
+                obj))
+             ))
+
+;(define bottom (wall-obj new: #(-100 -110 -100) #(100 -100 100)))
+;(define top (wall-obj new: #(-100 100 -100) #(100 110 100)))
+
+;(define front (wall-obj new: #(-100 -100 -110) #(100 100 -100)))
+;(define back (wall-obj new: #(-100 -100 100) #(100 100 110)))
+
+;(define left (wall-obj new: #(-110 -100 -100) #(-100 100 100)))
+;(define right (wall-obj new: #(100 -100 -100) #(110 100 100)))
+
+(wall-obj new: #(-10000 -110 -10000) #(10000 -100 10000))
+
+(function delta-timer ()
+          (let ((t (time)))
+            (lambda ()
+              (let ((last t))
+                (set! t (time))
+                (- t last)))))
+
+(define cam0
+  (newobject entity-obj
+             (origin #[0 0 40])
+             (v-angles #[0 0 0])
+             (v-offset #[0 0 1])
+             (bbox-min #[-1 -1 -1])
+             (bbox-max #[1 1 1])
+             (velocity #[0 0 0])
+             (nograv #f)
+             (mass 1)
+             (bounce 0.5)
+             (friction 0.5)
+             (fire-time 0)
+             ((render:) #z)
+             ((rst:)
+              (self 'origin #(0 0 0))
+              (self 'velocity #(0 0 0)))
+
+             ((fly-at: obj)
+              (let* ((d
+                      (if (object? obj)
+                          (vec- obj.origin self.origin)
+                          (vec- obj self.origin)))
+                     (nv (vecnorm d))
+                     (l (veclen d)))
+
+                (self 'velocity
+                      (vec+ (vec* nv 1000) (vec* #(0 5 0) (/ l 1000)) ))
+              ))
+
+             ((fire:)
+              (self 'angles #[(self.v-angles 1) (self.v-angles 0) 0])
+              (if (> (- (time) self.fire-time) 0.5)
+                  (begin
+                    (self 'fire-time (time))
+                    (missile-obj new:
+                                 (vec+ self.origin
+                                       (vec* (vec-forward self.angles) 2))
+                                 self.angles self))))))
+(phys add: cam0)
+(render show-3d: cam0)
+
+(render3d camera: cam0)
+(phys gravity: #(0 -10 0))
+
+(define sph0 (primitive-3d sphere: radius: 10
+                           texture: (texture image: "textures/cs/parket.tga")))
+(define cube0 (primitive-3d cube: min: #(-100 -10 -100) max: #(100 10 100)))
+(define g
+  (group-3d rotate: #(90 0 0)
+            cyl0
+            (group-3d translate: #(0 0 15)
+                      sph0)))
+;(render show-3d: g)
+
+(define spr-ghost0
+  (list
+   (list
+    (texture image: "sprites/ghost/ghost0ft.tga"
+             normal: #(0 0 -1) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost0lf.tga"
+             normal: #(-1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost0rt.tga"
+             normal: #(1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost0bk.tga"
+             normal: #(0 0 1) up: #(0 1 0)))
+   (list
+    (texture image: "sprites/ghost/ghost1ft.tga"
+             normal: #(0 0 -1) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1lf.tga"
+             normal: #(-1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1rt.tga"
+             normal: #(1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1bk.tga"
+             normal: #(0 0 1) up: #(0 1 0)))
+))
+
+(define spr-bird0
+  (list
+   (list
+    (texture image: "sprites/bird0/bird0ft.tga"
+             normal: #(0 0 -1) up: #(0 1 0))
+    (texture image: "sprites/bird0/bird0lf.tga"
+             normal: #(-1 0 0) up: #(0 1 0))
+    (texture image: "sprites/bird0/bird0rt.tga"
+             normal: #(1 0 0) up: #(0 1 0))
+    (texture image: "sprites/bird0/bird0bk.tga"
+             normal: #(0 0 1) up: #(0 1 0)))
+   #;(list
+    (texture image: "sprites/ghost/ghost1ft.tga"
+             normal: #(0 0 -1) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1lf.tga"
+             normal: #(-1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1rt.tga"
+             normal: #(1 0 0) up: #(0 1 0))
+    (texture image: "sprites/ghost/ghost1bk.tga"
+             normal: #(0 0 1) up: #(0 1 0)))
+))
+
+(define spr0 (sprite height: 1 radius: 0.5 frames: spr-bird0))
+
+(define ghost0 (sprite-obj clone:))
+(ghost0 'origin #[0 0 0])
+(ghost0 'angles #[0 0 0])
+(ghost0 'v-angles #[0 0 0])
+(ghost0 'v-offset #[0 8 0])
+(ghost0 'bbox-min #[-0.5 -0.5 -0.5])
+(ghost0 'bbox-max #[0.5 0.5 0.5])
+(ghost0 'model spr0)
+(ghost0 'velocity #[0 0 0])
+(ghost0 'nograv #f)
+(ghost0 'mass 1)
+(ghost0 'bounce 1)
+(ghost0 'timer0 (delta-timer))
+
+(ghost0 (plambda (think:)
+                 (self 'angles (vec+ self.angles #(0 1 0)))
+                 (phys-move self
+                            (vec* (vec-forward self.angles) 25) (self.timer0)
+                            #;
+                            (vec+ self.velocity
+                                  (vec* (vec-forward self.angles) 1)))
+                 #;(self 'velocity
+                       (vec+ self.velocity
+                             (vec*
+                              (vecnorm
+                               (vec- cam0.origin self.origin)) 25)))))
+
+(ghost0 init:)
+;(render3d show: spr0)
+
+(define spr-tree0
+  (list
+   (list
+    (texture image: "sprites/tree/tree0.tga"))
+   (list
+    (texture image: "sprites/tree/dead0.tga"))))
+
+(define spr1 (sprite height: 10 radius: 2 frames: spr-tree0))
+(render3d show: spr1)
+
+(define tree0 (sprite-obj clone:))
+(tree0 'origin #[40 -95 40])
+(tree0 'bbox-min #[-2 -5 -2])
+(tree0 'bbox-max #[2 5 2])
+(tree0 'bounce 0.5)
+(tree0 'friction 0.5)
+(tree0 'model spr1)
+(tree0 'health 100)
+(tree0 (plambda (damage: pts obj owner)
+                (self 'health (- self.health pts))
+                (if (<= self.health 0)
+                    (self 'frame 1))))
+(tree0 init:)
+
+(define ball0 (entity-obj clone:))
+(ball0 'origin #[0 40 0])
+(ball0 'v-angles #[0 0 0])
+(ball0 'v-offset #[0 12 0])
+(ball0 'bbox-min #[-10 -10 -10])
+(ball0 'bbox-max #[10 10 10])
+(ball0 'model sph0)
+(ball0 'velocity #[0 0 0])
+(ball0 'mass 1)
+(ball0 'bounce 0.75)
+;(ball0 (plambda (render:)
+;                (sph0 identity:)
+;                (sph0 translate: self.origin)
+;                (sph0 render:)
+;                ))
+
+(ball0 init:)
+
+(define cube1 (primative-3d cube: min: #(-10 -10 -10) max: #(10 10 10)))
+(define box1 (entity-obj clone:))
+(box1 'origin #[0 -40 0])
+(box1 'bbox-min #[-10 -10 -10])
+(box1 'bbox-max #[10 10 10])
+(box1 'model cube1)
+(box1 'velocity #[0 0 0])
+(box1 'mass 1)
+(box1 'bounce 0.75)
+;(box1 (plambda (render:)
+;               (self 'velocity #[(self.velocity 0) (self.velocity 1) 20])
+;               (cube1 identity:)
+;               (cube1 translate: self.origin)
+;               (cube1 render:)))
+
+(box1 init:)
+
+(phys on:)
+(sky box: "bkgtst")

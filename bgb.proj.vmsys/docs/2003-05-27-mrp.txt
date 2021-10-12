@@ -1,0 +1,132 @@
+BGB Message Relay Protocol
+
+make network interface a stack machine (like vid driver).
+it will handle directing messages to remote pids and will dispatch
+incomming messages to appropriate pids.
+
+an incomming pid will have the full route info to get it back to the
+source.
+
+I could also use a named export system to handle directing undirected
+messages to appropriate handlers (each export could have a name, and the
+messages could be directed at that name).
+
+encoding:
+multibyte values will be in big-endian order.
+
+when the stream is in command mode a byte will be read and interpreted:
+cmd&7:
+0: number
+	(cmd>>3)&7
+		0=unsigned
+		1=signed
+		2=float
+		3=widenum, 128-1024 bit
+		4=misc/const
+
+	(cmd>>6)&3
+		0=1 byte/u128
+		1=2 byte/u128
+		2=4 byte/u128
+		3=8 byte/u128
+
+	misc:
+		1=false
+		2=true
+		3=null
+		4=eol
+
+1: command
+	2 bytes, upper 4 bits and next byte (forming upper 8 of opcode)
+
+	range:
+		0x000-0x0FF: vid/base protocol
+		0x100-0x1FF: mrp
+		0x200-0xDFF: reserved
+		0xE00-0xEFF: extension required
+		0xF00-0xFFF: extension optional (all are MARK ... OP)
+
+2: object
+	object has upper 5 bits as a type. this is followed by data
+		relating to the the object.
+	1: data object
+		followed by byte encoding and 32 bit length.
+		encoding will have the lower 3 bits for data encoding:
+			0: raw
+			1: deflate
+		encoding will have the next 3 bits as a type:
+			0: data
+			1: byte vector
+			2: block
+		the upper 2 bits of encoding are reserved.
+	2: symbol
+		contains a byte length and so many bytes of data.
+	3: string
+		contains a short length and so many shorts of data.
+	4: negotiation
+		contains a short length and so many bytes of data.
+		"keyword" or "var=value"
+	5: binary command
+		contains a short opcode, a short length, and so many bytes of
+		data.
+		these are not to be directed at the interpreter, rather they
+		are related to network features. these are also not to effect
+		the future behavior of the net stack/opcodes.
+		unknown binary commands are to be ignored, space is divided:
+			0-4095: mrp
+			4096-32767: implementation
+			32768-65535: possible user/implementation
+
+opcodes:
+I will start at 0x100 (avoiding clashes with vid protocol space).
+
+#define GFXOP_NOP	0 //do nothing
+#define GFXOP_MARK	5 //mark stack pos
+
+#define MRPOP_CONS	0x100	//a b -> (a . b)
+#define MRPOP_RCONS	0x101	//a b -> (b . a)
+#define MRPOP_LIST	0x102	//MARK ... -> (...)
+#define MRPOP_LISTI	0x103	//MARK a... b -> (a... . b)
+#define MRPOP_VECTOR	0x104	//MARK ... -> #(...)
+
+#define MRPOP_ADDR	0x108	//addr port type -> ADDR
+				//type: 1=ipv4udp, 2=ipv4tcp
+
+#define MRPOP_RREF	0x109	//refnum type -> LREF
+	//relative to the sender of the message
+
+#define MRPOP_LREF	0x10A	//ADDR refnum type -> LREF
+
+#define MRPOP_DISPATCH	0x10B	//msg from refnum
+#define MRPOP_RDISPATCH	0x10C	//msg from refnum cont-id
+	//sends SETTER and RETURN to return values.
+	//cont-id will be used to sync calls and returns
+
+#define MRPOP_SETTER	0x10D	//setter cont-id
+#define MRPOP_RETURN	0x10E	//value cont-id
+	//send parts of a return value, setter is to come first.
+
+#define MRPOP_YREF	0x10F	//refnum -> obj
+	//relative to the reciever, to be used for references to objects
+	//on reciever.
+#define MRPOP_COPY	0x110	//refnum cont -> sends RETURN w/flat version
+
+
+#define MRPVAL_FALSE	1
+#define MRPVAL_TRUE	2
+#define MRPVAL_NULL	3
+#define MRPVAL_EOL	4
+
+#define MRPVAL_IPV4UDP	1
+#define MRPVAL_IPV4TCP	2
+
+//RREF/LREF type, low 3 bits type:
+#define MRPVAL_TYPE_OBJECT	1	//next 6 bits object type
+#define MRPVAL_TYPE_CONS	2
+
+//extended types
+#define MRPVAL_TYPE_CLOSURE	((1<<3)|1)
+#define MRPVAL_TYPE_ENV		((2<<3)|1) //environment
+#define MRPVAL_TYPE_ENVOBJ	((3<<3)|1) //object
+#define MRPVAL_TYPE_CONTEXT	((4<<3)|1) //interpreter context/thread
+#define MRPVAL_TYPE_FUNCTION	((5<<3)|1)

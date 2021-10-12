@@ -1,0 +1,18 @@
+shader syntax overview:
+
+a shader variable will consist of a name followed by either a value or a group. a value will be a single token(run of non whitespace characters, or a quoted string). a group will consist of an opening bracket followed by 0 or more variables, and a closing bracket. the brackets will need to have both before and after whitespace (as they are read as tokens).
+
+at the top level the name will refer to either a texture or model name, depending on what this is realavent to.
+
+textures:
+a texture shader will either alter or replace an existing texture (as found in the bsp). several basic vars apply to textures:
+alpha: this is how transparent/opaqe a texture is, 0.0=totally trasparent, 1.0=totaly opaqe
+blend: this tells how the texture is to be blended against the background, it consists of 2 blending names in a quoted string (I will not go into more detail).
+scroll: this is 2 vars in a quoted string that tell how much a texture will scroll per second, it is currently in a fractional texture width fasion right now.
+
+layers: this tells how many layers a texture has, this will override whatever was there before.
+layer#: these will be the layers, each will be a group containing vars to define the layer.
+texture: tells the graphic to use for a layer/frame, this is in a short form only giving the base name. textures will be located in "textures/" and will be suffixed by ".tga" and "_map.tga" depending on whether it is a base or map.
+
+frames: indicates how many frames are in this layer.
+frame#: group defining each frame, use texture here.

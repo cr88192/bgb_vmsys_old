@@ -1,0 +1,26 @@
+I will try to note some places where I had gotten source/data/... (I am not
+terribly great at keeping track of this).
+
+gazos, linux, quake, crystal space, and a few others had offered some
+code/data (I was careful to avoid using any known copyrighted data though).
+
+
+I did not create the fonts.
+
+unifont was created by Roman Czyborra (czyborra.com).
+I guess credit is supposed to be given to him when the fonts are used.
+
+some text associated with etl-16:
+"This distribution contains a subset of ISO 10646 (Unicode)
+character set implemented as fixed-width bitmapped fonts,
+supplied in Binary Distribution Format (BDF).  The fonts are
+based on Naoto Takahashi's <Naoto.Takahashi@imag.fr> ETL font
+collection, with Armenian and Georgian glyphs added by Mark
+Leisher <mleisher@crl.nmsu.edu>.".
+
+I put a little effort trying to find where I got some of the fonts so I could
+offer at least some credit to the creators.
+
+
+I appologize to anyone whose code/data was used and they were not properly
+credited. please inform me of such.

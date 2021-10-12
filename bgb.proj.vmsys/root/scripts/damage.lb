@@ -1,0 +1,55 @@
+/*
+function can-damage? (targ inflictor)
+	if (targ.movetype == MOVETYPE_PUSH)
+		let ((trace
+			traceline inflictor.origin
+				vec* (vec+ targ.absmin targ.absmax) 0.5
+				^ #t self))
+			or
+				trace.fraction == 1
+				trace.ent == targ
+		or
+			== (traceline inflictor.origin targ.origin #t self).fraction 1
+			== (traceline inflictor.origin (vec+ targ.origin #(15 15 0)) #t self).fraction 1
+			== (traceline inflictor.origin (vec+ targ.origin #(-15 -15 0)) #t self).fraction 1
+			== (traceline inflictor.origin (vec+ targ.origin #(-15 15 0) #t self).fraction 1
+			== (traceline inflictor.origin (vec+ targ.origin #(15 -15 0) #t self).fraction 1
+*/
+
+function can-damage? (targ inflictor)
+	^ #t
+
+
+function damage-radius (inflictor attacker damage ignore)
+	rlet f ((head
+		edict-find-radius world inflictor.origin (damage + 40) ))
+
+		if (head != #z)
+			begin
+//				print "ent: " head.classname "\n"
+				let ((org 0) (points 0))
+					org :=
+						vec+ head.origin
+							vec* (vec+ head.mins head.maxs) 0.5
+					points :=
+						0.5 * (veclen (vec- inflictor.origin head.origin))
+
+//					print inflictor.origin head.origin (vec- inflictor.origin head.origin) "\n"
+//					print points " pts 1\n"
+
+					if (points < 0)
+						points := 0
+
+					points := (damage - points)
+
+//					print points " pts 2\n"
+
+					if (head == attacker)
+						points := (points * 0.5)
+
+//					print points " pts 3\n"
+
+					if (and (points > 0) (head != ignore))
+						if (can-damage? head inflictor)
+							head damage: points attacker inflictor
+				f (edict-find-radius head inflictor.origin (damage + 40))

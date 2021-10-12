@@ -1,0 +1,13 @@
+render-show
+	dialog "test-app-0" #(0 0)
+		let ((lab0 #z) (entry0 #z))
+			stack-horizontal
+				stack-vertical
+					lab0 := (label "")
+					entry0 := (textentry 16)
+
+				button "OK"
+					handler (use:)
+						lab0.text := entry0.text
+						entry0.text := ""
+				

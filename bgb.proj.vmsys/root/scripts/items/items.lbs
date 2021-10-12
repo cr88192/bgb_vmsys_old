@@ -1,0 +1,2 @@
+(load "scripts/items/weapons.lbs")
+(load "scripts/items/misc.lbs")

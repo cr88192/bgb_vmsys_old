@@ -1,0 +1,32 @@
+(define sv-addr (list->addr '(ipv4tcp (127 0 0 1) 8192)))
+
+(define r-add (sv-addr get-add:))
+(define r-env (sv-addr get-env:))
+
+#!
+(define r-heap-obj (render-obj clone:))
+(r-heap-obj 'origin #(500 500))
+(r-heap-obj 'size #(125 12))
+(r-heap-obj 'height 12)
+
+(define r-heap-usage (r-env 'heap-usage))
+(define r-heap-size (r-env 'heap-size))
+
+(r-heap-obj
+ (plambda (render:)
+          (from text:
+           (string-append "Heap: "
+                          (number->string (r-heap-usage)) "/"
+                          (number->string (r-heap-size)))
+           self.origin
+           self.height
+           #(255 255 255 255))))
+!#
+
+;(function r-copy (f)
+;          (eval (r-env.closure-body f)))
+
+(function copy (f)
+          (eval (req-copy f)))
+
+(define foo r-env.foo)

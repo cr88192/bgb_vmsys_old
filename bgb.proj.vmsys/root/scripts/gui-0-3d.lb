@@ -1,0 +1,251 @@
+define geometry-obj
+	newobject root-obj
+		class-major 'geometry
+
+define container-3d-obj
+	newobject render-obj
+		class-major 'widget
+		class-minor 'container-3d
+
+		v-origin #(0 0)
+		v-angle #(0 0 0)
+		children '()
+		(render:)
+			render-container-3d self
+		(use:)
+			set-screen-3d self
+		(add: x)
+			self 'children (cons x self.children)
+			x 'owner self
+			if (and (object? x) (member? x 'name) (x.name != #z))
+				self x.name x
+
+define geometry-group-obj
+	newobject geometry-obj
+		class-major 'geometry
+		class-minor 'group
+		children '()
+		(render:)
+//			print "group render: " self.children "\n"
+			render-group-3d self
+		(add: x)
+//			print "group add obj\n"
+			self 'children (cons x self.children)
+			x 'owner self
+			if (and (object? x) (member? x 'name) (x.name != #z))
+				self x.name x
+
+define geometry-polygon-obj
+	newobject geometry-obj
+		class-major 'geometry
+		class-minor 'polygon
+		vertices #[]
+		(render:)
+//			print "poly render: " self.vertices "\n"
+			render-polygon-3d self
+
+define geometry-polyhedron-obj
+	newobject geometry-obj
+		class-major 'geometry
+		class-minor 'polyhedron
+		vertices #[]
+		children '()
+		(render:)
+//			print "poly render: " self.vertices "\n"
+			render-polyhedron-3d self
+		(add: x)
+//			print "group add obj\n"
+			self 'children (cons x self.children)
+			x 'owner self
+			if (and (object? x) (member? x 'name) (x.name != #z))
+				self x.name x
+
+define geometry-face-obj
+	newobject geometry-obj
+		class-major 'geometry
+		class-minor 'face
+		vertices '()
+
+function polygroup (name . args)
+	let ((obj (geometry-group-obj clone:)))
+		if (name != #z)
+			obj 'name name
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					if (object? (car cur))
+						obj add: (car cur)
+					if (pair? (car cur))
+						f (car cur)
+					f (cdr cur)
+		^ obj
+
+function polygon (name . args)
+	let ((obj (geometry-polygon-obj clone:)) (vecs '()))
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					if (vector? (car cur))
+						vecs := (cons (car cur) vecs)
+					if (pair? (car cur))
+						f (car cur)
+					f (cdr cur)
+		obj 'vertices (list->vector (reverse vecs))
+		^ obj
+
+/*
+function geometry-face (name vecs lst . args)
+	let ((obj (geometry-polygon-obj clone:)) (verts '()))
+		rlet f ((cur lst))
+			if (cur == '()) #z
+				begin
+					verts := (cons (list-ref vecs (car cur)) verts)
+					f (cdr cur)
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) title
+					f (cdr cur)
+		obj 'vertices (list->vector (reverse verts))
+		^ obj
+*/
+
+function polyhedron (name . args)
+	let ((obj (geometry-polyhedron-obj clone:)) (vecs '()))
+		if (name != #z)
+			obj 'name name
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					if (object? (car cur))
+						obj add: (car cur)
+					if (vector? (car cur))
+						vecs := (cons (car cur) vecs)
+					if (pair? (car cur))
+						f (car cur)
+					f (cdr cur)
+		obj 'vertices (list->vector (reverse vecs))
+		^ obj
+
+function polyface (name vertices . args)
+	let ((obj (geometry-face-obj clone:)))
+		if (name != #z)
+			obj 'name name
+		obj 'vertices vertices
+		rlet f ((cur args))
+			if (cur == '()) #z
+				begin
+					if (closure? (car cur))
+						(car cur) obj
+					f (cdr cur)
+		^ obj
+
+
+define cont3d (container-3d-obj clone:)
+cont3d 'origin #[0 0]
+cont3d 'size #[1000 1000]
+cont3d 'v-origin #[32 32 -50]
+cont3d 'v-angle #[0 0 0]
+
+define poly3d (geometry-polygon-obj clone:)
+poly3d 'vertices #[#(-10 10 100) #(-10 -10 100) #(10 -10 100) #(10 10 100)]
+
+cont3d add: poly3d
+
+/*
+define vertices \
+	[#(16 16 16) #(-16 16 16) #(16 -16 16) #(-16 -16 16) \
+	#(16 16 -16) #(-16 16 -16) #(16 -16 -16) #(-16 -16 -16)]
+
+cont3d add:
+	geometry-group 'cube
+		geometry-face 'front	vertices [1 3 2 0]
+		geometry-face 'back		vertices [4 6 7 5]
+		geometry-face 'left		vertices [5 7 3 1]
+		geometry-face 'right	vertices [0 2 6 4]
+		geometry-face 'top		vertices [5 1 0 4]
+		geometry-face 'bottom	vertices [3 7 6 2]
+*/
+
+define tex-0 [(render-load-image "grid0.tga")]
+
+cont3d add:
+	polyhedron 'cube \
+			#(16 16 16) #(-16 16 16) #(16 -16 16) #(-16 -16 16) \
+			#(16 16 -16) #(-16 16 -16) #(16 -16 -16) #(-16 -16 -16)
+		polyface 'front		[1 3 2 0]
+		polyface 'back		[4 6 7 5]
+		polyface 'left		[5 7 3 1]
+		polyface 'right		[0 2 6 4]
+		polyface 'top		[5 1 0 4]
+		polyface 'bottom	[3 7 6 2]
+
+
+cont3d add:
+	polygroup 'move0
+		property origin #(0 32 0)
+		property scale #(1 1 1)
+		polyhedron 'pyramid \
+				#(16	-16		16)	\
+				#(-16	-16		16)	\
+				#(16	-16		-16) \
+				#(-16	-16		-16) \
+				#(0		16		0)
+			polyface	'bottom	[1 3 2 0]
+			polyface	'front	[4 1 0]
+			polyface	'back	[4 2 3]
+			polyface	'left	[4 3 1]
+			polyface	'right	[4 0 2]
+
+//define vertices \
+//	[#(16 16 16) #(-16 16 16) #(16 -16 16) #(-16 -16 16) \
+//	#(16 16 -16) #(-16 16 -16) #(16 -16 -16) #(-16 -16 -16)]
+
+cont3d add:
+	polygroup 'sp-cube
+		property origin #(-64 0 0)
+
+		polyhedron 'cube \
+				#(16 16 16  1 0 0 1) #(-16 16 16  1 0 0 1) #(16 -16 16  1 0 0 1) #(-16 -16 16  1 0 0 1) \
+				#(16 16 -16  1 0 0 1) #(-16 16 -16  1 0 0 1) #(16 -16 -16  1 0 0 1) #(-16 -16 -16  1 0 0 1)
+			polyface 'front		[1 3 2 0]
+			polyface 'back		[4 6 7 5]
+			polyface 'left		[5 7 3 1]
+			polyface 'right		[0 2 6 4]
+			polyface 'top		[5 1 0 4]
+
+			polyface 'bottom	[3 7 6 2]
+
+cont3d add:
+	polygroup 'cube2
+		property origin #(64 0 0)
+
+		polygon 'front	#(-16 16 16 0 1)	#(-16 -16 16 0 0)	#(16 -16 16 1 0)	#(16 16 16 1 1)
+			property texture tex-0
+		polygon 'back	#(16 16 -16 0 1)	#(16 -16 -16 0 0)	#(-16 -16 -16 1 0)	#(-16 16 -16 1 1)
+			property texture tex-0
+		polygon 'left	#(-16 16 -16 0 1)	#(-16 -16 -16 0 0)	#(-16 -16 16 1 0)	#(-16 16 16 1 1)
+			property texture tex-0
+		polygon 'right	#(16 16 16 0 1)		#(16 -16 16 0 0)	#(16 -16 -16 1 0)	#(16 16 -16 1 1)
+			property texture tex-0
+		polygon 'top	#(-16 16 -16 0 1)	#(-16 16 16 0 0)	#(16 16 16 1 0)		#(16 16 -16 1 1)
+			property texture tex-0
+		polygon 'bottom	#(-16 -16 16 0 1)	#(-16 -16 -16 0 0)	#(16 -16 -16 1 0)	#(16 -16 16 1 1)
+			property texture tex-0
+
+
+begin-thread
+	rlet f ()
+		cont3d.sp-cube 'angle #[0 ((time) * 360) 0]
+		sleep 0.010
+		f
+
+//render-show poly3d
+render-show cont3d

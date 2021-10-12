@@ -1,0 +1,113 @@
+for macros I will implement a variation of syntax-case.
+for this there will be an actual macro-time environment.
+
+the encoding of syntax objects has not really been resolved yet. one
+possibility would be to have 2 trees, one for the symbolic encoding
+and the other for the semi-resolved encoding.
+syntax objects may be represented as vectors, with slot 0 being the
+symbolic representation and slot 1 being the semi-resolved
+representation.
+
+there will be 2 steps in the compile process, the first will be macro
+expansion and the second compilation. the output of the first stage is
+to be an expanded syntax tree using semi-resolved symbols, with the
+second stepping along that tree performing actual compilation.
+
+thought: first it may be possible to maintain a single step process,
+just by inlining macro expansion and compilation, thus in each step
+it will try to expand macros and then compile the results.
+
+2002-09-12:
+make the syntax special rename definitions.
+(syntax (let ((x 2) (y 3)) (+ x y))) => (let ((#:0 2) (#:1 3)) (+ #:0 #:1))
+for the time being syntax objects will just be s-exprs.
+
+2002-09-16:
+car and cdr can be defined in terms of argument currying:
+(define (car (h . t)) h)
+(define (cdr (h . t)) t)
+consider argument currying a possibly useful feature.
+
+pattern matched multimethods could be useful. consider it discouraged for
+multiple functions to have overlapping definitions.
+
+(defmacro name args body) => (define-syntax name (lambda ((args)) body))
+
+consider 'name;' notation for explicit hygenic variables.
+
+2002-09-17:
+make define-syntax similar to define:
+(define-syntax name value)
+(define-syntax (name . arg
+
+2002-09-20:
+object semantics:
+plans are to change objects, making them no longer environments in their own rights.
+because closures want the environment to be structurally constant after creation, and
+because lexical bindings can not be changed arbitrarily (conceptually), I am considering
+lexical scope and prototype objects incompatible.
+
+another idea at present is to bind objects in the dynamic env.
+during object creation part of the dynamic env will be marked, and at creation time any
+bindings existing between the mark and the end of the env will be considered part of the object.
+
+2002-09-21:
+possible:
+only allow external manipulation (for now). code which interacts with objects will need to use "self" for such purposes.
+message passing will be more so be the basis of objects.
+
+there could be:
+(define-message obj pattern body)
+as a means by which to define messages for objects, this will be considered sugaring.
+
+'get: name' and 'set: name value' messages could be used for assigning/retrieving slots.
+set could be used as an implicit define.
+
+messages sent to pipes or objects could be considered as having an implicit return
+value (just in many cases, ie: sockets, these will be non-blocking, mundane values...).
+
+the most recent message handlers will have default priority over older ones, thus care
+is to be taken when defining handlers which mask others.
+
+during lookup there will be an implicit 'this-trace' used to locate the next possible handler.
+
+a "closest match" teqnique could be used, in this case the matcher returns the number
+of matches which were made, or #f if it is not a match. in this way the closest match
+may be found (the one with the heighest count).
+
+
+methods:
+there may be a conceptual pool of methods, all of which may work with given
+types but are not defined as such. a given method is considered as having the
+property of uniqueness. methods are identified by a name and by identity.
+
+an object may contain a group of method references, each of which defines
+which slot the object can be used in, and the method identity.
+
+when selecting an appropriate method a list will be maintained of all canidate
+methods, and which slots it is known compatible with the message.
+for each object, it will scan against the methods list of that object, taking
+note of all objects which have the same name and can take the object in the desired slot.
+
+once a given method is identified as having all slots filled it is invoked with
+the given arguments and the result is returned.
+
+sadly message handlers and methods can not be considered analogous in this
+context, and neither behave like closures.
+
+for now I may skip out on methods...
+
+2002-09-22:
+methods may just have patterns, like closures. in this case a method is a group
+of closures with identical patterns.
+
+an object could have a "properties" slot, this would refer to a properties object
+which is roughly analogous to type-general information. conceptually modifying the
+properties object for a given type could effect all objects of that type.
+
+within the properties object will be a slot called "methods".
+this will contain a list, full of lists with the form (pattern slot1 slot2 ... slotn),
+where n is the length of the pattern.
+each slot will contain a list of closures which will accept the given object in the given slot.
+this will follow the shape of pattern as well, as such: ((A (B C) D) listA (listB listC) listD).
+any literal slots in pattern are to just contain ().

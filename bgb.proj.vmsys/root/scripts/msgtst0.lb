@@ -1,0 +1,32 @@
+define mtst
+	begin-thread
+		rlet f ()
+//			display "msgtst\n"
+			recieve-case
+				(from cnt t) (print "trip across " cnt " threads took " ((time-ms) - t) " ms\n")
+			f
+
+//sys-root 'step
+//	begin-thread
+//		rlet f ()
+//			display "step\n"
+//			mini (block)
+//			f
+
+define mtst2
+	begin-thread
+		rlet f ((cnt 0) (t (time-ms)) (nextpid mtst))
+			nextpid cnt t
+//			print "took: " ((time-ms) - t) "ms with " cnt " threads\n"
+			print "send msg " cnt "\n"
+
+			if(cnt < 1000)
+				f (cnt + 1) (time-ms)
+					begin-thread
+						rlet f2 ((chain nextpid) (msg (recieve)))
+//							print "message<" cnt ">: " msg "\n"
+							apply chain (cdr msg)
+							f2 chain (recieve)
+				nextpid cnt t
+
+// sys-root.mtst one: 2 "three" 4 'five

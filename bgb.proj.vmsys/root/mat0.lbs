@@ -1,0 +1,78 @@
+; For best results, use something like
+; xterm -fn -*-*-medium-r-normal-*-20-*-*-*-*-*-iso8859-7 -fg green -bg black
+; then load this into your favorite scheme interpreter, and
+; run (lambda-matrix n), where n is the number of screen updates it
+; will loop through (if (< n 0), continues indefinitely)
+
+; You also need SLIB for this:
+; (require 'random)
+
+(define terminal-width 80)
+(define terminal-height 24)
+
+; ESC character
+(define esc (integer->char #o033))
+; the code for lambda in an iso8859-7 encoding
+(define lambda-char (integer->char #o353))
+
+; these functions display ANSI/VT100 terminal escape sequences
+
+; clear terminal
+(define clear-string (list->string (list esc #\[ #\H esc #\[ #\J)))
+
+; string to position cursor at specified terminal row and column (0-based)
+(define (position-string row col)
+  (string-append (string esc) "["
+(number->string (+ row 1)) ";"
+(number->string (+ col 1)) "H"))
+
+; strings to turn bold character display on/off
+(define bold-mode-on-string (list->string (list esc #\[ #\1 #\m)))
+(define bold-mode-off-string (list->string (list esc #\[ #\m)))
+
+(define columns (make-vector terminal-width '()))
+(define (make-column height pos) (cons height pos))
+(define (column-height column) (car column))
+(define (column-pos column) (cdr column))
+
+(define min-height (quotient terminal-height 4))
+(define max-height (quotient terminal-height 2))
+(define (init-column n)
+  (let ((height (+ min-height
+   (random (+ (- max-height min-height) 1))))
+(start (- (random terminal-height))))
+    (vector-set! columns n (make-column height start))))
+
+; produces nicer updates by skipping columns
+(define colskip 17)
+
+(define (lambda-matrix n)
+  (display clear-string)
+  (do ((c 0 (+ c 1)))
+      ((= c (vector-length columns)))
+    (init-column c))
+  (do ((i 0 (+ i 1)))
+      ((= i n))
+    (do ((b 0 (+ b 1)))
+        ((= b colskip))
+      (do ((c b (+ c colskip)))
+          ((>= c (vector-length columns)))
+        (let* ((column (vector-ref columns c))
+               (height (column-height column))
+               (pos (column-pos column))
+               (top (- pos height)))
+          (if (>= top 0)
+              (display (string-append (position-string top c)
+                                      " ")))
+          (if (and (>= pos 0) (< pos terminal-height))
+              (display (string-append (position-string pos c)
+                                      (string lambda-char))))
+          (set! pos (+ pos 1))
+          (if (and (>= pos 0) (< pos terminal-height))
+              (display (string-append (position-string pos c)
+                                      bold-mode-on-string
+                                      (string lambda-char)
+                                      bold-mode-off-string)))
+          (if (< top terminal-height)
+              (vector-set! columns c (make-column height pos))
+              (init-column c)))))))

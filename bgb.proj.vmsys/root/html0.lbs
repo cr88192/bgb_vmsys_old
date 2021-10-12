@@ -1,0 +1,75 @@
+(define hp (load-xml-file "pub/index.html"))
+
+(defvar html-curpos #(0 0))
+(defvar html-linebase #(0 0))
+(defvar html-color #(255 255 255 255))
+(defvar html-size 12)
+
+(define html-icon (string #\x20e3))
+
+(define html-obj
+  (newobject render-obj
+             (class-minor 'text)
+             (body hp)
+             (origin #(0 0))
+             (height 12)
+             (color #(255 255 255 255))
+             (size #(32 32))
+
+             ((disp-form: form)
+              (pattern-case form
+                            ((html: attr . rest)
+                             (self disp-lst: rest))
+
+                            ((head: attr . rest))
+
+                            ((body: attr . rest)
+                             (self disp-lst: rest))
+
+                            ((a: attr . rest)
+                             (letvar ((html-color #(0 0 255 255)))
+                                     (self disp-lst: rest)))
+
+                            ((br: attr . rest)
+                             (set! html-linebase (vec+ html-linebase #(0 -12)))
+                             (set! html-curpos html-linebase))
+
+                            ((img: attr . rest)
+                             (let ((s "<image>"))
+                               (render-text s html-curpos
+                                            html-size html-color)
+                               (set! html-curpos
+                                     (vec+ html-curpos
+                                           #[(* ((string-rect s) 0) 8) 0]))))
+
+
+                            (x
+                             (let ((s (print-string x)))
+                               (render-text s html-curpos
+                                            html-size html-color)
+                               (set! html-curpos
+                                     (vec+ html-curpos
+                                           #[(* ((string-rect s) 0) 8) 0]))))
+                            ))
+
+             ((disp-lst: lst)
+              (rlet f ((cur lst))
+                    (if (eq? cur '()) #z
+                        (begin
+                          (self disp-form: (car cur))
+                          (f (cdr cur))))))
+
+             ((render:)
+              (render-text html-icon self.origin
+                           24 #(0 255 0 255) font: "unicode")
+              (letvar ((html-curpos self.origin)
+                       (html-linebase self.origin)
+                       (html-color self.color)
+                       (html-size self.height))
+
+                      (self disp-lst: self.body)
+                      ))))
+
+;(print "\n\n")
+;(disp-lst hp)
+(render show: html-obj)

@@ -1,0 +1,29 @@
+(define man0-text-obj
+  (label
+   (string-append
+    "this is BGB UI\n\n"
+    "arrow keys can move the viewpoint\n"
+    "del zooms in, end zooms out\n"
+    "pressing enter over an object can use the object\n"
+    "the mouse can also drag some objects\n"
+    "\n"
+    "this is at present not intended for general users\n"
+    "tab can be used to access the console, where one "
+    "can enter LBs commands\n"
+    "eg: (load \"foo.lbs\") will load foo.lbs, relative to 'root'\n"
+    "(render show: square-obj) will show the object 'square-obj'\n"
+    "'net1_cl.lbs' and 'net1_sv.lbs' can help one with net stuff\n"
+    "these will likely require modification to work right...\n"
+    "\n"
+    "if all else fails, RTFM, or use the source/example scripts...\n")
+   #;(property height 48)))
+
+(define man0-btn-obj
+  (button "remove self and help"
+          (property origin #(0 -72))
+          (handler (use:)
+                   (render hide: man0-text-obj)
+                   (render hide: man0-btn-obj))))
+
+(render show: man0-text-obj)
+(render show: man0-btn-obj)

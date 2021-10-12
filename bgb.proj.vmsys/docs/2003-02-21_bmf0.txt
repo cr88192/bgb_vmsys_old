@@ -1,0 +1,91 @@
+rename to bgf as that seems unused...
+
+I will try to design a model format with these goals:
+be simple to support in tools;
+be as flexible as possible;
+allow tools to work with only partial understanding of the data.
+
+this will require a consistent structure.
+
+I will make the basic unit a line. lines (with the excpetion of blank lines and line continuations) will not be allowed to start with whitespace. a line will be divided into tokens, the first token (the "keyword") will be the concern of the tool (remaining tokens may be important to more advanced tools).
+
+a token will be a sequence of non-whitespace characters, however quotes (single or double) will be used to enclose tokens which contain spaces (this will not be allowed for structural tokens).
+
+lines may be broken with '\' and the subsequent line will be required to start with whitespace (preferably a single tab, but others may be allowed). a line break may not occure within a token.
+I will define that lines should be limited to 80 chars but tools should support up to 256.
+
+tokens will be case sensitive (but not necissarily case preserving).
+
+basic keywords:
+#
+	will denote a comment
+$
+	will denote a line of ascii data
+BEGIN type [args...]
+	will begin a block of lines
+END
+	will end a block of lines
+
+
+the first line will flag the file:
+BMF version extensions...
+	will indicate the base version and extensions (extensions will be considered tool
+	specific). extension names and extended keywords are preferably unique, ie:
+	'group-ext' for extensions, and 'group-keyword' for extended keywords. group is the
+	name of whoever/whatever is defining the extension.
+	cur version 0.1
+this may be ommited if the processing tool is not capable of generating a useful header.
+
+BEGIN VERTICES map
+begins a group of vertices, map (if >0) will flag the index of the first vertex, otherwise a stack ordering is used (almost equivalent to having map 0).
+in stack ordering the most recent vertex group has index 0, followed by each of the previous vertex groups. map is to be the negative count of vertices until the last group.
+
+VERTEX enc vals...
+will define a vertex.
+enc will indicate the layout of the vertex, this will use chars for each member:
+XYZ, coords;
+ST, horizontal/vertical texture coord;
+RGBA, color components of point;
+s, seam;
+others, left undefined, use may be tool specific.
+
+BEGIN FRAME name [args...]
+similar to vertices.
+name is a name for this frame. this contains vertices.
+
+BEGIN FRAMEANIM name [args...]
+grouping of frames, flags that they are to go in a loop.
+
+BEGIN FRAMESET name map [args...]
+also similar to vertices, all frames have the same structure. this may contain anims or frames. may be structurally used in place of vertices.
+
+
+POLYIDX w vec[w] tenc [vals...]
+defines an indexed poly, w is the number of vertices and each vec is an index into the vertex array. w is positive for ccw ordering and negative for cw ordering.
+tenc will indicate the layout of the remaining "texture" values (or may be '-' for none).
+it will similarly be a char array:
+
+T, skin/texture;
+O, origin where in space is the origin of the texture;
+t, translate (like o but aligned on normal);
+s, scale;
+r, rotate about normal;
+N, normal (defaults either surface or a plane) indicates alignment of texture plane
+S, direction of positive S (len=1/scale)
+
+f, front (quake mdl)
+
+all values are single tokens, thus vector values need be quoted. values in a quoted vector are space seperated.
+
+POLYVEC enc w vec[w] tenc [vals...]
+similar to POLYIDX, enc is the vertex encoding, rest are similar.
+each vec is a quoted vector conforming to enc.
+
+BEGIN BRUSH
+begins a group of polygons, defined as convex.
+
+BEGIN GROUP name
+begins a group of objects.
+
+KEY var val
+defines a key, possibly representing a game value or similar.

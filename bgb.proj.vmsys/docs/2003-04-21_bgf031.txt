@@ -1,0 +1,235 @@
+BGF 0.3.1
+
+Goals:
+be simple to support in tools;
+be reasonably flexible;
+allow tools to work with only partial understanding of the data (this
+does not require that everything in the model be used);
+be generally adapted to a reasonable range of uses (such as basic models,
+animated models, or worlds).
+
+Syntax:
+
+syntax will be based on s-expressions.
+
+a symbol is a sequence of letters, numbers, or the characters
+"!$%&*+-/:<=>?@_", and is required not to start with a number.
+symbols will not be case sensitive.
+
+numbers will start with a number or '-' followed by a number, I will define
+decimal integer, hex integer ('0x' notation), and float (digits + '.' or
+'e').
+
+strings are enclosed in double quotes '"'. some escape sequences are
+allowed: \" doublequote, \n newline, \\ backslash, ...
+
+# will be used to escape special types or values:
+
+change:
+	#f #t #z, false, true, null.
+now: TRUE FALSE NULL
+
+vectors:
+#(...) dimensions=1
+
+vectors may be nested:
+	#(#(1 0 0 0) #(0 1 0 0) #(0 0 1 0) #(0 0 0 1))
+
+; will indicate the start of a line comment.
+#! and !# will be used for block comments.
+
+there will also be lists, lists will be groups of objects enclosed in '('
+and ')'.
+
+at present other syntax will be reserved.
+
+Notation:
+I will write literal names in all caps, lower-case names will be variable.
+'.' will indicate that the following variable is the rest of the list.
+... will indicate the possible presence or more data/options.
+
+definitions at higher levels of indentation will indicate what options are
+possible with that type.
+
+General Structure:
+there will be a "top level" consisting of top-level bound objects.
+
+the first element in a list will indicate the primative type, primatives
+will be either built-in or may possibly be declared.
+
+I will define that the first line be:
+(BGF v)
+where v is the version, this will be a string (presently "0.3.1").
+
+
+Properties:
+
+(NAME name)
+	names an object (so that it may be referred to by name).
+
+(ORIGIN x y z)
+	origin relative to parent.
+
+(LENGTH l)
+	length of a primative.
+
+(NORMAL x y z)
+	direction of normal vector for planes.
+
+(ANGLES p q r)
+	angles for the primative.
+
+(PIECE name)
+	references an object defined at top-level.
+
+
+(DIR x y z)
+	direction of a primative.
+
+(HEIGHT h)
+	height of a primative.
+
+(RADIUS l)
+	radius of a primative.
+
+(RADIUS-BOTTOM l)
+(RADIUS-TOP l)
+	radius at these points, used for tweened primatives.
+
+(MIN x y z)
+(MAX x y z)
+	extents of primatives, relative to primative origin.
+
+
+(TRANSLATE x y z)
+(SCALE x y z)
+(ROTATE p q r)
+	perform transformations on the objects.
+	I will define that the order matter, these will work in the order
+	defined.
+
+
+Textures:
+(TEXTURE ...)
+(TEXTURE refer ...)
+	texture definition. if refer is present it is a symbol referring
+	to a defined texture.
+
+	(NAME name)
+	(IMAGE file)
+
+	(NORMAL x y z)	;these will indicate a planar texture
+	(RIGHT x y z)
+	(UP x y z)
+	(SCALE-ST s t)
+	(ORIGIN x y z)
+
+Texture-Properties:
+(NAME name)
+	name for texture, binds at top level. it is acceptable to refer to
+	a texture in a definition so allowing textures to be extended
+	(this does look backwards though).
+
+(SCALE-ST s t)
+	scale s and t along normal plane.
+
+(ORIGIN x y z)
+	origin of texture plane.
+
+(NORMAL x y z)
+	define texture normal for plane.
+
+(UP x y z)
+	define the positive t direction.
+	(normal . up)=0, right=up x normal
+
+(RIGHT x y z)
+	define the positive s direction.
+	(normal . up)=0, right=up x normal
+
+(IMAGE file)
+	refer to an image located in "file".
+
+Primatives:
+(BONE ...)
+	will define part of a skeletal model.
+	(NAME name)
+	(ORIGIN x y z)
+	(LENGTH l)
+	(NORMAL x y z)
+	(ANGLES p q r)
+	(PIECE name)
+	(BONE ...)
+
+(SPHERE ...)
+(CYLINDER ...)
+(CUBE ...)
+(DISK ...)
+	defines a primative.
+	(ORIGIN x y z)
+	(DIR x y z)
+	(RADIUS l)
+	(RADIUS-BOTTOM l)
+	(RADIUS-TOP l)
+	(HEIGHT h)
+	(MIN x y z)
+	(MAX x y z)
+	(TEXTURE name ...)
+	(TEXTURE ...)
+
+(UNION ...)
+	(TRANSLATE x y z)
+	(SCALE x y z)
+	(ROTATE p q r)
+	(TEXTURE-PLANE name ...)
+
+Mesh:
+(VERTEX x y z ...)
+	define a vertex object at the given coords.
+	(ST s t)
+		a position in texture space of this vertex.
+	(RGBA r g b a)
+		a color for this vertex.
+	(SEAM s)
+		seam value: 0=undefined, 1=front, 2=seam, 3=back.
+
+(VERTICES ...)
+	a group of VERTEX objects.
+
+
+(POLYIDX verts ...)
+	indexed poly, verts is a list of vertex indices.
+	this will use the closest vertex group in scope.
+	(TEXTURE name ...)
+	(TEXTURE ...)
+
+(POLYVEC verts ...)
+	like POLYIDX except that vecs is a list of vertices.
+	each vertex has the form: (x y z ...)
+		(ST s t)
+		(RGBA r g b a)
+		(SEAM s)
+	(TEXTURE name ...)
+	(TEXTURE ...)
+
+Animation:
+(FRAME ...)
+	defines a frame.
+	(NAME name)
+	(VERTICES ...)
+	(BONE name ...)
+
+(FRAMESET ...)
+	group of frames that may be used for a model, contains frames.
+	(FRAME ...)
+
+(BONE name ...)
+	defines the state of a bone.
+	(ORIGIN x y z)
+	(ANGLES p q r)
+
+Structural:
+(PROTO name ...)
+	declare an object as a top-level primative prototype.
+	when used in prefix position contents will be treated as if this
+	were a union of the contents and of the properties given to it.

@@ -1,0 +1,17 @@
+defobject tst0 ()
+	function new ()
+		clone self
+
+function fact (x)
+	if (eqv? x 0) 1
+		* x (fact (- x 1))
+
+//begin
+//	define x (tst0 new)
+//	begin (begin
+//		tst 1)
+//	tst	a b \
+//		c d
+//begin \
+//'a
+

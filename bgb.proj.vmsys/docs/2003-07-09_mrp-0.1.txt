@@ -1,0 +1,185 @@
+I will post my ideas here, this will be based on "MRP", which is the
+protocol used in my current project. it was designed without much thought
+put into design, and involves some crud from a previous protocol used
+elsewhere in the project.
+for sake of naming I will call this "attempt to define MRP 0.1".
+
+since this is just an idea, feel free to comment (or flame me for
+content/ignorance/crossposting/... if so desired).
+
+basics (yes, I know, this is horridly long):
+each node will be viewed as a unique entity;
+a node is identified partly by a guid and partly by it's current net
+address;
+any node made be connected to a number of other nodes;
+the protocol will be a simplistic stack machine and make use of dynamic
+typing;
+there will be (for now) a reference counting shared gc.
+
+this is at present not very general and would likely need a fair amount of
+work to generalize.
+
+each fragment of a message will begin with a header byte indicating the type
+and encoding of the rest of the associated data. these will not define
+specific protocol operations, but will mostly flag types.
+
+the lower 3 bits will define the base type:
+0: numbers;
+1: command opcode;
+2: object.
+
+
+Numbers:
+the next 3 bits will define an additional type, qualifying the numeric type.
+0: unsigned ineger;
+1: signed integer;
+2: ieee float;
+3: widenum (signed integer);
+4: misc/constant types.
+
+2 bits after (the 2 high order bits) this will give the numeric length,
+which (with the exception of widenum) has the following values:
+0: single byte;
+1: 16 bit word;
+2: 32 bit word;
+3: 64 bit word.
+
+and for widenum:
+0: 128 bit;
+1: 256 bit;
+2: 512 bit;
+3: 1024 bit.
+
+after the header will be the bytes defining the value.
+these values are in big-endian order.
+
+misc: will have an extra type field at the low end of the value, this will
+be 4 bits:
+0: misc constants;
+1: characters.
+
+misc constants have a set of values (the rest of the value field):
+1: false;
+2: true;
+3: null;
+4: eol;
+5-7: reserved;
+7-15: extensions.
+16+: reserved.
+
+Command Opcodes:
+will have the upper 4 bits of the header form the upper 4 for the opcode,
+and the next byte as the lower 8. this gives a total of 12 bits for an
+opcode.
+
+the next bit after the type will be used as a width indicator, this will
+expand the opcode to 24 bits (the next 3 bytes after header, high-low
+ordering). the upper 4 bits of the header byte will be reserved.
+this is intended for future extension.
+
+the basic space will be divided into blocks of 256 opcodes:
+0/1 are reserved for mrp;
+2: is reserved for implementation extensions;
+3: optional extensions (all have the form MARK ... <opcode>, and are ignored
+if unknown);
+4/5: are for extensions that may be configured;
+6-15: are reserved.
+
+
+Object:
+this will use the upper 5 bits of the header byte as a type.
+0: is currently unused;
+1: data object;
+2: symbol;
+3: string;
+4-15: reserved for mrp base types;
+16-23: implementation;
+24-31: reserved.
+
+Data Object:
+includes a byte defining encoding and a 32 bit word length. bit 31 will be
+reserved and must be set to 0.
+
+lower 3 compression, next 3 type, upper 2 reserved.
+compression:
+0: raw;
+1: deflate (optional).
+
+type:
+0: raw data;
+1: bytevector;
+2: block (this will contain a block of mrp data/opcodes, optional).
+
+Symbol/String:
+both will have the form:
+16 bit length, followed by that many 16 bit words of data.
+if the msb is set up the length then an additional word follows indicating
+the low end of the length.
+null terminators will not be included, all character values will map to
+unicode values.
+
+
+Opcodes:
+0: nop, '';
+1: pop, 'a ->';
+2: mark, '-> MARK';
+3: cons, 'a b -> (a . b)';
+4: list, 'MARK ... -> (...)';
+5: listi, 'MARK ... b -> (... . b)';
+6: vector, 'MARK ... -> #(...)';
+7: dropped-reference '<ref> ->';
+all references from the source node were dropped.
+
+8-15: reserved;
+16: addr, '<ip> <port> <type> -> NODE-ADDR';
+type: 1, ipv4udp; 2, ipv4tcp.
+
+17: node-id, '<guid> -> NODE-ADDR';
+18: yref, '<obj-id> -> REF'
+reference to object on target node.
+
+19: rref, '<obj-id> <obj-type> -> REF';
+reference to object on source node.
+
+20: lref, '<on ADDR> <obj-id> <obj-type> -> REF';
+refernece to object on a distant node.
+
+21: dispatch, '<cont-id> <message> <from REF> <to REF> ->';
+dispatch message to object indicated in 'to'.
+if cont-id is 0 then no return value is to be sent.
+
+22: setter (may be ignored/not-sent), '<value REF> <cont-id> ->';
+returns a setter-object associated with a given reference.
+
+23: return '<value> <cont-id> ->';
+return value from a dispatch.
+
+24: stub-object, '<mirrors> -> obj';
+sends an object stub.
+
+25: mirror, '<of REF> <cont-id> ->';
+sent to request that a flat form of 'of' be sent (via return) to 'cont-id'.
+
+26: notify-stub, '<to REF> <from REF> ->';
+message sent from new stubs to objects to notify them of existance.
+
+27: notify-mirror, '<to REF> <from REF> ->';
+sent from stubs after they activate to indicate their activation.
+
+28: notify-removed, '<to REF> <from REF> ->';
+sent to indicate the mirror has gone away.
+
+29: delta, '<stamp> <pairs> <to REF> <from REF> ->';
+sent to indicate a state change in one of the mirrors.
+
+objects/deltas will be represented as lists of pairs.
+each pair will have the form:
+(pattern value).
+
+pattern may be a symbol or list:
+'<key:>' will indicate a value slot;
+'<sym>' will indicate a method of variable arguments;
+(<patterns>*) will indicate a method recieving 'patterns' as args.
+
+values are out of scope for this, as the current definition depends on
+specifics of my lang.

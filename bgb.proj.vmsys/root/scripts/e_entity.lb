@@ -1,0 +1,86 @@
+//called by engine:
+//code to help set up entities
+
+load "scripts/defs.lb"
+
+function vec3-sub (x y)
+	^ #[((x 0) - (y 0)) ((x 1) - (y 1)) ((x 2) - (y 2))]
+
+add-handler entity-obj
+	plambda x
+		apply self.parent x
+
+add-handler entity-obj
+	plambda (x)
+		if (symbol? x)
+			entity-get self x
+			add-handler self x
+
+add-handler entity-obj
+	plambda (x y)
+		if (symbol? x)
+			entity-set self x y
+
+add-handler entity-obj
+	plambda (clone:)
+		entity-clone self
+
+add-handler entity-obj
+	plambda (origin: x)
+		edict-set self.edict 'origin x
+		edict-relink self.edict
+
+add-handler entity-obj
+	plambda (size: x y)
+		edict-set self.edict 'mins x
+		edict-set self.edict 'maxs y
+		edict-set self.edict 'size (vec3-sub x y)
+		edict-relink self.edict
+
+add-handler entity-obj
+	plambda (model: x)
+		edict-set-model self.edict x
+
+add-handler entity-obj
+	plambda (remove:)
+		edict-remove self.edict
+
+add-handler entity-obj
+	plambda (sound: samp)
+		edict-sound self CHAN_BODY samp 1 ATTN_NORM
+
+add-handler entity-obj
+	plambda (sound: samp vol chan attn)
+		edict-sound self chan samp vol attn
+
+
+add-handler entity-obj
+	plambda (forward:)
+		calc-vector self.angles 1
+
+add-handler entity-obj
+	plambda (right:)
+		calc-vector self.angles 2
+
+add-handler entity-obj
+	plambda (up:)
+		calc-vector self.angles 3
+
+add-handler entity-obj
+	plambda (v-forward:)
+		calc-vector self.v_angle 1
+
+add-handler entity-obj
+	plambda (v-right:)
+		calc-vector self.v_angle 2
+
+add-handler entity-obj
+	plambda (v-up:)
+		calc-vector self.v_angle 3
+
+
+defmacro elambda (args . body)
+	`[let ((x; self))
+		lambda ,args
+			letvar ((self x;))
+				,@body]

@@ -1,0 +1,114 @@
+function player-spot ()
+	let ((spot (edict-find world 'classname "info_player_start")))
+		if (spot != #z) spot
+			print "fail info_player_start\n"
+			spot := (edict-find world 'classname "info_player_start2")
+			if (spot != #z) spot
+				print "no spot\n"
+				^ #z
+
+function player-spawn (pt)
+	pt := (player-spot)
+	if (pt == #z)
+		print "bad spot\n"
+
+	print "p1\n"
+	self origin: pt.origin
+
+//	self 'origin (edict-get pt 'origin)
+	self 'angles (edict-get pt 'angles)
+
+	self.classname := "player"
+	self.health := 100
+	self.takedamage := DAMAGE_AIM
+	self.solid := SOLID_SLIDEBOX
+	self.movetype := MOVETYPE_WALK
+	self.show_hostile := 0
+	self.max_health := 100
+	self.flags := FL_CLIENT
+	self.air_finished := (time + 12)
+	self.dmg := 2
+	self.super_damage_finished := 0
+	self.radsuit_finished := 0
+	self.invisible_finished := 0
+	self.invincible_finished := 0
+	self.effects := 0
+	self.invincible_time := 0
+
+	self.attack_finished := time
+//	self 'th_pain player_pain
+//	self 'th_die PlayerDie
+	
+	self.deadflag := DEAD_NO
+// paustime is set by teleporters to keep the player from moving a while
+	self.pausetime := 0
+	
+//	makevectors(spot.angles)
+
+//	self 'origin spot.origin + parm13 * v_right +
+//		parm14 * v_forward + parm15 * v_up + '0 0 1'
+
+	print "p2\n"
+
+//	self 'angles pt.angles
+//	self 'angles_y anglemod(self.angles_y + parm12)
+	self.fixangle := TRUE
+//	self 'v_angle_x parm11
+
+	print "p3\n"
+
+	self model: "progs/player.mdl"
+//	self model: "mdl/human1.bgf"
+
+	self size: VEC_HULL_MIN VEC_HULL_MAX
+	
+	self 'view_ofs #(0 0 16)
+	print "p4\n"
+
+function player-jump ()
+	if (and
+		nonzero? self.button2
+		bit-and? self.flags FL_JUMPRELEASED
+		bit-and? self.flags FL_ONGROUND)
+
+		begin
+			self sound: "player/plyrjmp8.wav"
+			self.velocity :=
+				vec+ self.velocity #(0 0 600)
+			self.flags :=
+				self.flags - FL_JUMPRELEASED
+			self.flags :=
+				self.flags - FL_ONGROUND
+
+		if (zero? self.button2)
+			self.flags :=
+				bit-or self.flags FL_JUMPRELEASED
+
+function player-weapon ()
+	if (and
+		nonzero? self.button0
+		time >= self.attack_finished
+		self.weapon != #z)
+
+		begin
+			print "attack\n"
+			self.weapon owner-use:
+			self.attack_finished := (time + 1)
+
+define player
+	newobject entity-obj
+		(spawn:)
+			player-spawn
+				player-spot
+//			weapon_axe select-owner: self
+			self 'weapon #z
+			print "p5\n"
+
+		(pre-think:)
+			player-jump
+
+		(post-think:)
+			player-weapon
+
+		(damage: val attacker inflictor)
+			print "player pain\n"

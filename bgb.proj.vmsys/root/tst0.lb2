@@ -1,0 +1,55 @@
+print "some text\n"
+
+function func0 ()
+{
+	print "hello\n"
+}
+
+define textlog2-obj
+{
+	newobject render-obj
+	#{
+		log '("TEXT LOG")
+		origin #[0 0]
+		size #[(80 * 12) (60 * 12)]
+		height 12
+
+		(render:)
+		{
+			rlet f ((cur self.log) (org self.origin))
+			{
+				if (eq? cur '()) #z
+				{
+					from render-text: (car cur) org self.height \
+						#(0 255 0 255)
+					f (cdr cur) #[(org 0) ((org 1) + self.height)]
+				}
+			}
+		}
+
+		(add-text: line)
+		{
+			self 'log (cons line self.log)
+		}
+	}
+}
+
+function textlog2 (width height . args)
+{
+	let ((obj (textlog2-obj clone:)))
+	{
+		obj 'origin #[0 0]
+		obj 'size #[(width * 8) (height * 12)]
+		obj 'log ()
+		rlet f ((cur args))
+		{
+			if (cur == ()) #z
+			{
+				if (closure? (car cur))
+				{ (car cur) obj }
+				{ f (cdr cur) }
+			}
+		}
+		^ obj
+	}
+}

@@ -1,0 +1,92 @@
+define	FALSE				0
+define 	TRUE				1
+
+// edict.flags
+define	FL_FLY				1
+define	FL_SWIM				2
+define	FL_CLIENT			8
+define	FL_INWATER			16
+define	FL_MONSTER			32
+define	FL_GODMODE			64
+define	FL_NOTARGET			128
+define	FL_ITEM				256
+define	FL_ONGROUND			512
+define	FL_PARTIALGROUND		1024
+define	FL_WATERJUMP			2048
+define	FL_JUMPRELEASED			4096
+define	FL_FLASHLIGHT			8192
+define	FL_SLICK			16384
+
+// edict.movetype values
+define	MOVETYPE_NONE			0
+define	MOVETYPE_WALK			3
+define	MOVETYPE_STEP			4
+define	MOVETYPE_FLY			5
+define	MOVETYPE_TOSS			6
+define	MOVETYPE_PUSH			7
+define	MOVETYPE_NOCLIP			8
+define	MOVETYPE_FLYMISSILE		9
+define	MOVETYPE_BOUNCE			10
+define	MOVETYPE_BOUNCEMISSILE		11
+
+// edict.solid values
+define	SOLID_NOT			0
+define	SOLID_TRIGGER			1
+define	SOLID_BBOX			2
+define	SOLID_SLIDEBOX			3
+define	SOLID_BSP			4
+
+// range values
+define	RANGE_MELEE			0
+define	RANGE_NEAR			1
+define	RANGE_MID			2
+define	RANGE_FAR			3
+
+// deadflag values
+
+define	DEAD_NO				0
+define	DEAD_DYING			1
+define	DEAD_DEAD			2
+define	DEAD_RESPAWNABLE		3
+
+// takedamage values
+
+define	DAMAGE_NO			0
+define	DAMAGE_YES			1
+define	DAMAGE_AIM			2
+define	CONTENT_EMPTY			-1
+define	CONTENT_SOLID			-2
+define	CONTENT_WATER			-3
+define	CONTENT_SLIME			-4
+define	CONTENT_LAVA			-5
+define	CONTENT_SKY			-6
+
+define	STATE_TOP		 	0
+define	STATE_BOTTOM			1
+define	STATE_UP			2
+define	STATE_DOWN			3
+
+define	CHAN_AUTO			0
+define	CHAN_WEAPON			1
+define	CHAN_VOICE			2
+define	CHAN_ITEM			3
+define	CHAN_BODY			4
+
+define	ATTN_NONE			0
+define	ATTN_NORM			1
+define	ATTN_IDLE			2
+define	ATTN_STATIC			3
+
+define	VEC_ORIGIN			#(0 0 0)
+define	VEC_HULL_MIN			#(-16 -16 -24)
+define	VEC_HULL_MAX			#(16 16 32)
+
+define	VEC_HULL2_MIN			#(-32 -32 -24)
+define	VEC_HULL2_MAX			#(32 32 64)
+
+
+define DOOR_START_OPEN	1
+define DOOR_DONT_LINK	4
+define DOOR_GOLD_KEY	8
+define DOOR_SILVER_KEY	16
+define DOOR_TOGGLE	32

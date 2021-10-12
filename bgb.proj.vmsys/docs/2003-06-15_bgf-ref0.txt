@@ -1,0 +1,473 @@
+Initial: 2002-09-25
+Update: 2003-01-06
+Continue: 2003-06-15
+this is notably out of date but may provide useful info
+
+
+BGB LANG/BGB
+This spec will outline differences between scheme as defined by R5RS and LANG/BGB.
+
+Syntax
+
+This syntax has been dropped, I am not using s-expressions (it is still available for).
+
+My syntax is intended to be a useful comprimise between s-expressions and a
+more conventional syntax. For the most part the lang/bgb syntax will map
+directly to s-expressions. I have chosen not to introduce any new semantics
+through the syntax, thus keeping the reader simple. 
+In this syntax every normal line is interpreted as a list:
+
+f x y => (f x y)
+Lower lines with a higher indentation are considered as sub-lists to the last
+line with a lower indentation:
+
+begin	f x y 		f2 z=> (begin (f x y (f2 z)))
+I will define that tab will normally pad the indentation up to a multiple of 8 chars.
+'\' may be used as a line continuation character, in which case the text found on the next immediate line is considered as part of the current line.
+
+f x y \	z=> (f x y z)
+in this case indentation is considered as unimportant, however no blank lines or comments are allowed on the next line.
+
+f x y \	z
+Will be considered invalid.
+'^' will be used to mark an object on a line to be an expression, rather than a list.
+
+^ x => x
+This is intended to allow arguments to be placed on lower lines with relative ease.
+
+Multiple objects may be placed after '^' in which case they will all be submitted to the function:
+
+^ x y z => x y z
+
+Expressions may be wrapped in parenthesis, which will indicate a manual list.
+This may be useful when it is not desired to code on a lower line, or to avoid increasing nesting. All parenthesis are required to be matched, and the normal indentation rules still apply.
+
+f (f	f x)=> (f (f (f x)))
+Comments will be indicated using the c style // and /* */ notations.
+/* and */ will be allowed to be nested.
+[ and ] are intended to be an alternate syntax for lists, thus (f x y) and [f x y] are considered analogous.
+
+idea: make a seperation between (...) and [...]. square brackets can be used for "soft lists", parens are processed directly however [...] => (list ...). also possible: soft vectors, #[...] becomes (vector ...).
+{...}, block notation. a block is considered similar to an annonymous lambda. {...} => (lambda () ...)
+
+lists entered directly or vectors with the #(...) notation would be considered immutable...
+
+
+A 'dot notation' is also supported. This is detected while parsing symbols, such that:
+
+a => a, a.b => (a 'b), a.b.c => ((a 'b) 'c), ...
+This can be used when referring to objects or namespaces, ie: self.name, root-env.system, ...
+
+Infix notation is also supported, names beginning with "!$%&*+-/:<+>?^" will be allowed to be infix. If such a name is the second element in a list it will default to being put in functional position. '.' also has a special use here, period prefixing a normal symbol will allow it to be used infix, and '.' prefixing an infix name will indicate that it is a normal symbol.
+
++ 1 2 => (+ 1 2)
+1 + 2 => (+ 1 2)
+f 1 2 => (f 1 2)
+1 .f 2 => (f 1 2)
+f .+ x => (f + x)
+
+Otherwise it is syntactically similar to scheme syntax as defined in R5RS.
+
+
+Notations
+LANG/BGB will include keywords, these will be ordinary symbols with the exception that the last character is ':'. key:, a:, a-list:, ... are keywords.
+:key is an alternate form of keyword. these, however, differ in terms of the pattern matcher.
+
+Change: Make keywords match symbols with the same base? (equal? x: 'x) => #t ?
+This poses an issue of identity, if (equal? x: 'x) then how does one differentiate x: from 'x, ie: when such a distinction is needed. A possibility is to have keywords as symbols within boxes, and to look into the box for comparison. Given eq? and eqv? compare references, one can have equal? look inside of boxes...
+Another possibility would be to have the distinction be made by match, thus:
+
+(equal? x: 'x) => #
+(match x: 'x) => != #f (match returns either false or a numeric value...)
+
+#z is defined as a general nil value. this is used to indicate a logical response as being neither true or false, or a value as N/A. this is distinguished from the empty list, which is intended to serve as such...
+
+Semantics
+LANG/BGB will include dynamic variables.
+Dynamic variables will be bound using defvar and letvar.
+
+
+defvar var [value]
+Will define var as a dynamic var, and, if present, value will be bound to var.
+A dynamic var is required to be defined before it is referenced.
+
+
+letvar ((var value)*) body
+This is similar to let, however it will bind values within the dynamic environment rather than the lexical environment.
+
+
+define var value
+This is similar to the scheme define, with the exception that at top level it will mask over rather than assign the previous definition (currently has semantics of redefine).
+
+
+redefine var value
+This is equivalent to the scheme define (not implemented). 
+
+update:
+define behaves as in scheme.
+
+
+rlet name ((var value)*)	body...
+
+this will be a renamed form of named let. the reason for this rename is that named let can be confusing when first seen.
+
+patterns will be similar to lambda lists, however they will also be allowed to contain literals and will allow argument currying.
+
+
+function name (pattern)	body...
+This will be the preferred means by which to define a function.
+An implementation may allow multiple functions to share the same name and differ in argument shape or structure. At present I will not define the order in which definitions will be searched, so it will be considered invalid for function definitions to overlap.
+
+
+plambda (pattern)	body...
+This will be similar to lambda, but will preserve pattern for later matching. I will not define if a plambda can be directly applied to arguments.
+
+
+pattern closure
+This will extract the pattern from a closure defined by plambda (not implemented).
+
+
+match pattern arguments
+Will return a weight indicating how closely arguments matches pattern, or #f in the case that pattern and arguments do not match.
+Pattern matches will be based on whether both have the same general shape, and that literals are equal.
+
+eval form
+In normal cases I will define eval to work within the environment of a caller, thus it may be used for defining new code within the caller.
+
+eval form env
+Evaluate form with the lexical environment given in env, and the present dynamic environment.
+
+Environments are first class objects. I will define 'current-environment' as being able to take a snapshot of the bindings in existance from where it is called.
+
+set! var value
+Set! will assign a value to a variable or expression. Conceptually though set! will not distinguish between variables and expressions, a variable reference is considered as equivalent to a symbol identifying the variable, which is equivalent to an expression evaluating to a given location.
+Expressions will have 2 return values: a reference to the returned object, and a reference to the slot in which that value came from. These 2 values will be referred to as 'ax' and 'rax' respectively.
+Rax does not necissarily refer to a location though, and can not normally be passed up through statements; it is only visible from direct returns. I will define that apply is to clear this value to #z, and it may be cleared in other places as well.
+Other systems had defined the concept of a setter, however that concept is not viewed as fundamental in this case. A setter will be viewed as a function which returns it's value in rax, and a getter returns it's value in ax.
+(bind-getter-setter getter setter) will create a function which when called will invoke both functions on the given arguments, placing the getter in ax and the setter in rax. This will be one way in which to explicitly return a value in rax.
+
+[drop:
+{
+
+Locatives will be similar to typed, range checked pointers. Conceptually a locative will contain: a lower extent, an upper extent, and a current reference. Normally: lower<=reference<upper. The type will indicate the type of data within the region referred to by this locative, and will be the same as that for vectors.
+Locatives will also serve as handles for objects such as slots, and to allow an alternate form of string manipulation (these are what will be returned in rax).
+
+possible:
+vec idx value;
+obj slot value;
+and, env var value; could possibly be removed.
+
+locative? obj
+Returns #t if obj is a locative, #f otherwise.
+
+locative->integer locative
+integer->locative integer
+These will convert between integers and locatives. I will leave the nature of these an implementation issue.
+
+set* locative value
+Will assign value to the spot referred to by the current reference in locative.
+
+contents locative
+Will extract the value from the spot referred to by the locative's reference.
+
+locative-new lower upper type
+Creates a new locative with the lower and upper bounds defined by lower and upper, and the type type. The reference in a locative is initially set to the lower bounds.
+
+locative-copy locative
+Create a copy of the locative which may be modified independantly of the previous copy.
+
+loc++ locative
+loc-- locative
+Step the direction of the locative, referring to next and previous elements respectively.
+}]
+
+Patterns
+
+A pattern is either a literal, a symbol, or a list (which in turn may contain more patterns).
+2 literals are to match if their values are equal (with the exception of _:, which only requires the other to be a keyword).
+A symbol will match any other type.
+A list will match another list with the same length if all the members match between the lists. 
+
+Environments
+
+Environments will be first class objects in LANG/BGB. The environments will be viewed as a stack of layers, with the outer layers being closer to the "top level" and the inner ones being increasingly closer to the current lexical bindings.
+During evaluation new layers are added on top and removed as execution winds through the functions.
+At any given point 'current-environment' can be called to make a snapshot of the bindings in place at that time, the position and shape of the environment is considered as static at that point (excluding changes later made to the environment, which are not to effect things created using this env). Other bindings may be added on top or at the current level, however only assignment will be visible within this env (excluding assignment to bindings not in place within this env).
+
+At present I will define that environments will also preserve syntactic bindings.
+
+env 'sym
+Refers to a binding within the env.
+
+env 'sym value
+Assigns a value to the binding within the env.
+
+Objects
+I will use a prototype object system.
+Objects will accept messages. An object has slots and handlers. A given slot may hold a certain value.
+Handlers will be defined using plambda and passed to objects. When an object recieves a handler it will add it to it's list of handlers.
+A message passed to an object will first be checked against the list of handlers, trying the closest match. Otherwise it will check if the message refers to a slot, or contains a plambda.
+
+The general syntax for message passing will be:
+
+object message*
+
+Objects will accept a few predefined messages:
+
+obj clone:
+This will clone the object and cause it to return a copy of itself.
+
+
+obj get: slot
+Explicitly get a slot value.
+
+obj set: slot value
+Explicitly set a slot value.
+
+These are intended to allow more manual access to slots, these are capable of bypassing handlers if such functionality is needed.
+
+
+
+obj slot-name
+Will cause it to return the value associated with a given slot.
+
+obj slot-name value
+Will bind or assign value to the indicated slot.
+
+Worth noting is that it may not be possible to tell the difference between a slot and a message handler. This is not entirely bad as it allows transparent invokation of functions as slots, an example of which could be:
+
+define triangle (root-obj clone:)triangle 'a 0triangle 'b 0triangle (plambda (c:) (sqrt (exp (self 'a) 2) (exp (self 'b) 2))
+For the convienience of defining objects there is the newobject macro:
+
+
+newobject parent . patterns
+Parent is cloned, then each of the patterns is applied to the new object.
+each has the form:
+
+(name value)		//the definition of object slots((pattern...) body)	//the definition of object handlers
+
+This expands as:
+
+let ((obj (parent clone:)))	(patterns)
+where:
+
+(name value) => (obj 'name value)((pattern...) body) => (plambda (pattern...) body)
+
+Macros
+Macros will be implemented in LANG/BGB. The idea is that a macro will take a piece of code and perform some operation on it, and will return a new piece of code to be compiled in place of the macro call. it is also possible for macros to return other macro definitions, in which case they are evaluated just the same as the original macro call.
+define-syntax name func
+Defines a macro which is bound to name. Func is a closure accepting a single argument, the form it was invoked as.
+
+This is one use for currying, ex:
+define-syntax add
+    lambda ((_ a b)) `(+ ,a ,b)
+add 2 3
+
+Where without currying it would be necessary to manually destructure the list.
+
+pattern-case key . forms...
+Where each form is:
+(pattern body)
+
+Matches key against each pattern in forms, and once a match is found, returns the result of executing body.
+If no match is found the result is undefined.
+
+
+defmacro name (args)	body...
+This is a shorthand for macro definition, it exists mostly for typing convinience.
+
+``(pattern...)
+This is an alternative for quasiquote. ``(pattern...) expands as (doubleqq (pattern...)), and differs from the main quasiquote in that it forms variable renaming. At present this is done through hygenic variables, but later it may automatically rename bound variables (at which time a syntax may be in place to cause capture). Hygenic variables are identified by symbols with the form 'name;', and the renaming will work by replacing such symbols with appropriate gensyms. Later occurances of the same symbol within the pattern will use the same gensym, however the symbols will not be valid outside that pattern.
+problem: this is presently not sufficient to implement hygenic macros...
+
+possible new rule:
+within the quotation symbols are altered to indicate they refer to a specific environment, which is passed along with the expanded code. new bindings are effectively renamed or bound within the passed environment.
+syntax first sums up the bindings used within the quotation and generates an env with these bound (having been renamed to gensyms). hygenic symbols could be considered literals which escape the conversion (as normal symbols).
+also: symbols could be replaced with objects which represent a binding between the actual object and the symbol name. the objects could differentiate variable and syntactic bindings, and could be handled during compilation.
+they would be replaced by constant forms as appropriate, or be expanded in the case of syntax.
+new binds are just renamed to gensyms.
+
+mini . opcodes...
+This allows statements to be written within the SK "minicode", this can be viewed as a kind of high level assembler and is not intended to be used in general programs (as the nature of the minicode may change).
+This makes use of ,, (doublemark) in order to allow inlining of statements.
+During compilation the indicated minicode fragments will be substituted in place of the mini construct, and inlined expressions will be compiled and substituted in place.
+
+
+Threads/Messages
+begin-thread
+        stuff...
+Begin a thread which does stuff then terminates.
+
+thread thunk
+Begin a thread which evaluates thunk then terminates.
+
+recieve-case (pattern handler)*
+Recieves a message and dispatches it to the first handler in which the message matches pattern.
+
+recieve
+Recieves a message and returns the value.
+
+pid args*
+Sends a message to pid. the message is prepended with the sender's pid so that a response may be sent.
+
+Misc
+=, synonym for equal?
+==, synonym for eq?
+!=, not equal?
+!==, not eq?
+:=, set!
+more to be added.
+
+Net
+references to many remote objects will be largely transparent, others will be
+copied.
+passed references may be applied and to a lesser extent used in other ways,
+copied objects may be used normally, but will not maintain identity with the
+source objects.
+identity (in this context) will mean that the source object and the object
+recieved when it is passed in a message are necessarily the same, and that
+modifications to the recieved object will be reflected in the source.
+
+numbers, cons cells, vectors, strings, and symbols are copied.
+environments, objects, builtin functions, threads, and closures are passed by
+reference.
+
+
+a function/object recieving a message over the net will have the 'from'
+dynamic variable bound to the thread of the sender (by default), or possibly
+another target in which to direct responses.
+at the time of this writing handlers (with the exception of threads or of
+unidirectional messages) will need to return or else the sender and any other
+local threads will remain blocked.
+
+the dynamic var 'from' is not bound in the case of threads, instead from is
+included within the message and is thus defined within the handler
+(ie: recieve-case).
+
+application will normally send a message, with the exception of threads
+messages are bidirectional (threads being unidirectional by default), and with
+the 'from' of the reciever being directed at the current thread.
+
+(-> obj . msg), (send-u obj msg)
+will send a unidirectional message, with unidirectional messages the sender
+will not block waiting for a return value, for local passes this will
+implicitly create a new thread to handle the message.
+
+(<*> obj from . msg), (send-from obj from msg)
+will send a message (by default bidirectional) with the from of the
+reciever being defined by from.
+
+(*> obj from . msg), (send-from-u obj from msg)
+will send a unidirectional message with the from of the reciever referring to
+from.
+
+the long form of these has the message as an argument, these may be used to
+pass dynamically generated messages (in order to avoid needing to use apply
+to send dynamically generated messages).
+
+these can be defined in terms of each other via a macro:
+(defmacro -> (obj . msg)
+	'(send-u ,obj [,@msg]))
+
+(defmacro *> (obj from . msg)
+	'(send-from ,obj ,from [,@msg]))
+
+...
+
+or (discouraged):
+(defmacro send-from (obj from msg)
+	'(apply *> [,obj ,from ,@msg]))
+
+...
+
+
+I will define that the long form exist via functions, and the shorthand forms
+may or may not be macros.
+
+adresses also exist in the system, an address can be applied and has the form:
+(addr key: . msg)
+this connects (if not connected allready) to the node indicated via addr and
+then sends msg to the specified handler (named via key:).
+
+(add-net-handler key: handler)
+defines a handler for a given key, the intent of handlers is to allow nodes to
+get references and such to things defined on said node.
+
+addresses may be composed or located:
+(list->addr def)
+will create such an addr, def is a list with the form (type ...),
+type defines how the rest is structured:
+	(ipv4tcp (a b c d) port)
+		defines a tcp address;
+	(ipv4udp (a b c d) port)
+		defines udp addr.
+
+similarly (addr->list addr) will decompose an address into said list form.
+
+(find-host name) will locate the address for an indicated host.
+
+this aspect needs work, namely a means in which to more generally identify
+nodes and avoiding manual node reference.
+
+maybe:
+share continuations.
+
+offer a "copy" function to make local copies of remote objects:
+a copy will not maintain identity with the parent;
+a copy of a closure will be dynamically bound to the environment of the
+reciever (from wherever copy was called).
+
+have migrating threads/load balancing.
+have the nodes to some degree able to "auto-sync" (such as syncronizing with
+a control node or such...).
+reference to nodes via url's could be useful.
+
+Gui
+seperate.
+
+Possible Future
+
+Modules
+
+Modules will exist as environments with a controlled set of bindings.
+During creation of a module a new binding layer will be created representing the new top level, all lower bindings will be left intact and will exist as part of the lexical environment for defined closures.
+When that form is returned from the layer will be stripped off and used as the top level of a new module.
+
+module
+    forms...
+Will create a new annonymous module.
+
+defmodule location name
+    forms...
+Will define a new module.
+
+import module
+Import bindings from module and bind them in the present lexical env (likely using bindings which exist at compile time).
+
+also possible:
+export vars...
+or: export (modname var)...
+
+Create an annonymous module containing vars (second notation supporting renaming).
+
+
+import module vars...
+or: import module (var modname)...
+Import a controlled set of vars with possible renaming.
+
+also:
+with-import module (vars... | (var modname)...)
+    body...
+Similar, but imports only temporarily.
+
+these forms of import and export could be created using macros:
+export vars... =>
+``(let ((mod (empty-env))) (mod 'var var)... mod)
+export (modname var)... =>
+``(let ((mod (empty-env))) (mod 'modname var)... mod)
+
+import and with-import could expand to define's and let's respectively.
+
+
+misc: would need to preserve variable/syntax identity, possible: at present not allow import/export of syntax.
+idea: generalized import could exist, however the module would need to exist at compile time. runtime importing could exist but be limited to a finate set of variables.

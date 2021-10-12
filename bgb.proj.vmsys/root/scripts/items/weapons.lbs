@@ -1,0 +1,67 @@
+(define weapon_proto
+  (newobject entity-obj
+	     ((setup: gmodel vmodel)
+	      (self 'gmodel gmodel)
+	      (self 'vmodel vmodel)
+	      (precache-model self.gmodel)
+	      (set! self.solid SOLID_TRIGGER)
+	      (set! self.movetype MOVETYPE_TOSS)
+	      (self model: self.gmodel)
+	      (self size: #(-16 -16 0) #(16 16 56)))
+
+	     ((owner-equip: owner)
+	      (if (!= owner.weapon #z)
+		  (owner.weapon owner-toss:))
+	      (set! self.owner owner)
+	      (set! owner.weapon self)
+	      (set! owner.weaponmodel self.vmodel)
+	      (set! owner.weaponframe 0)
+	      (set! owner.currentammo 0))
+
+	     ((owner-use:)
+	      (set! self.owner.weaponframe 0)
+	      (set! self.origin self.owner.origin)
+	      (set! self.nextthink (+ time 0.1)))
+
+	     ((owner-toss:)
+	      (set! self.solid SOLID_NOT)
+	      (set! self.movetype MOVETYPE_TOSS)
+	      (self model: self.gmodel)
+	      (self size: #(-16 -16 0) #(16 16 56))
+
+	      (self origin:
+		    (vec+ self.owner.origin
+			  (vec* self.owner.forward 56)))
+	      (set! self.vecocity
+		    (vec+
+		     (vec* self.owner.forward 36)
+		     (vec* self.owner.up 8)))
+	      (set! self.owner #z)
+	      (set! self.owner.weapon #z))
+
+	     ((think:)
+	      (self fire: self.owner.weaponframe)
+	      (set! self.owner.weaponframe
+		    (+ self.owner.weaponframe 1))
+	      (if (<= self.owner.weaponframe self.frames)
+		  (begin
+		    (self 'nextthink (+ time 0.1)))
+		  (self.owner 'weaponframe 0)))
+
+	     ((touch: other)
+	      (if (= other.classname "player")
+		  (begin
+		    (set! self.solid SOLID_NOT)
+		    (set! self.movetype MOVETYPE_NONE)
+		    (self model: "")
+		    (self owner-equip: other))))))
+
+(load "scripts/items/axe.lb")
+(load "scripts/items/rocket.lb")
+
+(define weapon_supershotgun weapon_axe)
+(define weapon_nailgun weapon_rocketlauncher)
+(define weapon_supernailgun weapon_axe)
+(define weapon_grenadelauncher weapon_axe)
+(define weapon_lightning weapon_axe)
+

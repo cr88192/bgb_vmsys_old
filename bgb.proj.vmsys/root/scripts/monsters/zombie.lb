@@ -1,0 +1,114 @@
+function ai-walk (dist)
+	move-to-goal dist
+
+function zom_stand_frame ()
+	self 'frame (self.frame + 1)
+	if (self.frame >= 15)
+		self 'frame 0
+	self 'th_func zom_stand_frame
+	self 'nextthink (time + 0.1)
+//	print "doki\n")
+
+function zom_stand ()
+	begin
+		self 'frame 1
+		zom_stand_frame
+		print "stand\n"
+
+function zom_walk_frame ()
+	if (self.targ_ent == #z)
+		self 'targ_ent
+			edict-find world 'classname "player"
+	if (self.targ_ent != #z)
+		self.goalentity := self.targ_ent
+
+	move-to-goal 2
+	self 'frame (self.frame + 1)
+	if (self.frame >= 34)
+		self 'frame 15
+	self 'th_func zom_walk_frame
+	self 'nextthink (time + 0.1)
+//	print "doki\n")
+
+function zom_walk ()
+	self 'frame 15
+
+	self 'th_func zom_walk_frame
+	self 'nextthink (time + 0.5)
+
+//	let ((e (edict-find world 'classname "player")))
+//		if(e != #z)
+//			self 'goalentity e
+	self 'targ_ent #z
+
+//	zom_walk_frame
+	print "walk\n"
+
+function zom_die ()
+	self remove:
+
+//	self 'frame 0
+//	zom_step
+	
+
+function zom_start ()
+	drop-to-floor
+
+	zom_walk
+
+
+// stand9 stand10 stand11 stand12 stand13 stand14 stand15
+
+define monster_zombie
+	newobject entity-obj
+		(spawn:)
+			print "zombie spawn\n"
+			precache-model "progs/zombie.mdl"
+			precache-model "progs/h_zombie.mdl"
+			precache-model "progs/zom_gib.mdl"
+
+			precache-model "progs/v_axe.mdl"
+
+			precache-sound "zombie/z_idle.wav"
+			precache-sound "zombie/z_idle1.wav"
+			precache-sound "zombie/z_shot1.wav"
+			precache-sound "zombie/z_gib.wav"
+			precache-sound "zombie/z_pain.wav"
+			precache-sound "zombie/z_pain1.wav"
+			precache-sound "zombie/z_fall.wav"
+			precache-sound "zombie/z_miss.wav"
+			precache-sound "zombie/z_hit.wav"
+			precache-sound "zombie/idle_w2.wav"
+
+			self 'solid SOLID_SLIDEBOX
+			self 'movetype MOVETYPE_STEP
+			self 'takedamage DAMAGE_AIM
+
+			self model: "progs/zombie.mdl"
+			self size: #(-16 -16 -24) #(16 16 40)
+			self 'health 60
+
+//			self 'touch zom_stand
+//			self 'th_pain zom_start
+			self 'th_die zom_die
+
+			self 'th_func zom_start
+//			print "zom_time " time "\n"
+			self 'nextthink (time + 0.5)
+
+		(think:)
+			self.th_func
+
+//		(touch:)
+//			print "zom_touch\n"
+//			let ((e (global-get 'other)))
+//				if((edict-get e 'classname) = "player")
+//					self 'goalentity e
+//
+		(damage: val attacker inflictor)
+			print "zom_pain\n"
+			self.health := (self.health - val)
+			if (self.health <= 0)
+				begin
+					print "zom_dead\n"
+					self remove:

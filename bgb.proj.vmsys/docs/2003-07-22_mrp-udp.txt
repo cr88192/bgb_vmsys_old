@@ -1,0 +1,69 @@
+a reliable udp transport for mrp.
+control socket at 8192/UDP.
+other sockets will exist at other port numbers.
+all io will be done via the main socket for that node, thus connection id's will be used to identify the connection...
+
+sequence id's will be used to sync flow. in general it will assume that packets get through in order, and the sender will assume that packets get through.
+
+message:
+{
+'MRP';
+byte type;
+byte data[];
+}
+
+type:
+0: ignore
+1: connect
+2: con reply
+3: data
+4: ack
+
+connect:
+{
+byte ver;		//currently 0.0
+u24 cl_conid;	//connection id of client
+} //8
+
+con reply:
+{
+byte stat;		//1=accept, 2=reject
+byte fill;
+u24 cl_conid;	//connection id of client
+u24 sv_conid;	//connection id on server
+} //12
+
+data:
+{
+short from_conid;	//connection id of sender
+short dest_conid;	//connection id on reciever
+short sequence;	//sequence number of this packet
+short from_seq;	//sequence number of last recieved
+byte data[];
+}
+
+when a packet is recieved than another is to be sent with from_seq set appropriately. if no data is sent then it is not needed to update the sequence number. if multiple copies of the same packet are recieved than multiple acks are to be sent.
+future packets may be buffered until earlier ones are recieved. the sender is to keep sending packets (possibly with some delay) until a packet is recieved with from_seq >= the packet sequence number. the reciever is to set the recieved sequence number to the highest it has consecutively.
+
+at present it will work in a ping/pong type fashion, with an initial delay of 50ms between attempted sends. the delay before resend could be adjusted based on ping, ie: set to 1.5*ping. this delay could be made less with more packet loss, ie: 1.5*ping/(avg_loss+1), though a means would need to be present to seperate "loss" from "didn't get there fast enough". actually the first response should adjust the ping and inherently drop the loss (need more thought on this?...).
+
+
+idea: simplify to a simpler data/ack packets. this could be simpler and better for ping.
+data:
+{
+u24 dest_conid;	//connection id on reciever
+u24 from_conid;	//connection id of sender
+short sequence;	//sequence number of this packet
+short stamp;	//timestamp of this packet
+byte data[];
+} //14
+
+ack:
+{
+u24 dest_conid;	//connection id on reciever
+u24 from_conid;	//connection id of sender
+short sequence;	//sequence number of acknowleged
+short stamp;	//timestamp of data packet sent
+} //14
+
+sequence numbers just increment and wrap around at 65536.
